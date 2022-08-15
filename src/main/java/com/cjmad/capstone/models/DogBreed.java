@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dogbreed")
+@Table(name = "dog_breed")
 public class DogBreed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

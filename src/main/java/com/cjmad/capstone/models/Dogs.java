@@ -42,17 +42,17 @@ public class Dogs {
 
     public Dogs() {}
 
-    public Dogs(long id, String dog_name, String breed_id, String dog_description, String dog_sex, Integer dob, Integer weight, String dog_img, Boolean loveable) {
-        this.id = id;
-        this.dog_name = dog_name;
-        this.breed_id = breed_id;
-        this.dog_description = dog_description;
-        this.dog_sex = dog_sex;
-        this.dob = dob;
-        this.weight = weight;
-        this.dog_img = dog_img;
-        this.loveable = loveable;
-    }
+//    public Dogs(long id, String dog_name, String breed_id, String dog_description, String dog_sex, Integer dob, Integer weight, String dog_img, Boolean loveable) {
+//        this.id = id;
+//        this.dog_name = dog_name;
+//        this.breed_id = breed_id;
+//        this.dog_description = dog_description;
+//        this.dog_sex = dog_sex;
+//        this.dob = dob;
+//        this.weight = weight;
+//        this.dog_img = dog_img;
+//        this.loveable = loveable;
+//    }
 
     public Dogs(String dog_name, String breed_id, String dog_description, String dog_sex, Integer dob, Integer weight, String dog_img, Boolean loveable, User user) {
         this.dog_name = dog_name;
@@ -136,6 +136,14 @@ public class Dogs {
 
     public void setLoveable(Boolean loveable) {
         this.loveable = loveable;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 
