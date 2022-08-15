@@ -2,6 +2,7 @@ package com.cjmad.capstone.controllers;
 
 import com.cjmad.capstone.models.Dogs;
 import com.cjmad.capstone.models.User;
+import com.cjmad.capstone.repositories.DogRepository;
 import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/dogs")
 public class DogController {
-    private final DogsRepository dogsRepository;
+    private final DogRepository dogsRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public DogController(DogsRepository dogsRepository, PasswordEncoder passwordEncoder){
+    public DogController(DogRepository dogsRepository, PasswordEncoder passwordEncoder){
         this.dogsRepository = dogsRepository;
         this.passwordEncoder = passwordEncoder;
     }

@@ -2,6 +2,7 @@ package com.cjmad.capstone.controllers;
 
 import com.cjmad.capstone.models.Events;
 import com.cjmad.capstone.models.User;
+import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class EventController {
 
     @GetMapping
     public List<Events> getUsers() {
-        return EventsRepository.findAll();
+        return eventsRepository.findAll();
     }
 
     @PostMapping
@@ -31,6 +32,6 @@ public class EventController {
 
     @GetMapping("/event-{id}")
     public Events getEvent(@PathVariable long id) {
-        return eventRepository.getReferenceById(id);
+        return eventsRepository.getReferenceById(id);
     }
 }
