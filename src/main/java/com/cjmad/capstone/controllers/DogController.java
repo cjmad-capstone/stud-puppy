@@ -19,13 +19,12 @@ public class DogController {
     }
 
     @GetMapping
-    public List<User> getDogs() {
+    public List<Dog> getDogs() {
         return dogRepository.findAll();
     }
 
     @PostMapping
     public Dog createDog(@RequestBody Dog dog) {
-        dog.setPassword(passwordEncoder.encode(dog.getPassword()));
         return dogRepository.save(dog);
     }
 
