@@ -22,7 +22,6 @@
     * This allows us to make fetches with React to retrieve the data from our backend and use it however we want.
 * Routing is through the frontend using React Router
     * Example in the [App.jsx](./frontend/src/App.jsx) file
-*
 
 ### Deployment
 
