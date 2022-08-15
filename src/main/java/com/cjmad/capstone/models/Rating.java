@@ -13,11 +13,11 @@ public class Rating {
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "dog_id")
     private Dogs dogs;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "users_id")
     private User user;
 

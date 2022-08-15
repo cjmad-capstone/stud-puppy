@@ -20,9 +20,9 @@ public class Events {
     @Column(name = "time")
     private Integer time;
 
-    @OneToMany
+    @ManyToOne
             @JoinColumn(name = "users_id")
-    private long users_id;
+    private User user;
 
     public Events(){}
 
@@ -32,12 +32,12 @@ public class Events {
         this.time = time;
     }
 
-    public Events(long id, String event_description, Integer date, Integer time, long users_id) {
+    public Events(long id, String event_description, Integer date, Integer time, User user) {
         this.id = id;
         this.event_description = event_description;
         this.date = date;
         this.time = time;
-        this.users_id = users_id;
+        this.user = user;
     }
 
     public long getId() {
@@ -72,11 +72,11 @@ public class Events {
         this.time = time;
     }
 
-    public long getUsers_id() {
-        return users_id;
+    public  User getUser() {
+        return user;
     }
 
-    public void setUsers_id(long users_id) {
-        this.users_id = users_id;
+    public void setUser(User user) {
+        this.user= user;
     }
 }

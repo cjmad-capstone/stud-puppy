@@ -1,6 +1,7 @@
 package com.cjmad.capstone.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -28,9 +29,13 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @OneToMany
+    @JoinColumn(name = "dog_id")
+    private List<Dogs> dogs;
+
+
     public User() {
     }
-
 
     public User(Long id, String username, String address, String owner_name, String email, String password) {
         this.id = id;
@@ -87,7 +92,6 @@ public class User {
         this.password = password;
     }
 
-
     public void setId(long id) {
         this.id = id;
     }
@@ -115,4 +119,13 @@ public class User {
     public void setOwner_name(String owner_name) {
         this.owner_name = owner_name;
     }
+
+    public List<Dogs> getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(List<Dogs> dogs) {
+        this.dogs = dogs;
+    }
+
 }

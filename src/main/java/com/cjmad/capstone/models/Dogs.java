@@ -36,7 +36,7 @@ public class Dogs {
     private Boolean loveable;
    //'submissive and breedable"//
 
-    @OneToMany
+    @ManyToOne
             @JoinColumn(name = "user_id")
     private User user;
 
@@ -52,6 +52,18 @@ public class Dogs {
         this.weight = weight;
         this.dog_img = dog_img;
         this.loveable = loveable;
+    }
+
+    public Dogs(String dog_name, String breed_id, String dog_description, String dog_sex, Integer dob, Integer weight, String dog_img, Boolean loveable, User user) {
+        this.dog_name = dog_name;
+        this.breed_id = breed_id;
+        this.dog_description = dog_description;
+        this.dog_sex = dog_sex;
+        this.dob = dob;
+        this.weight = weight;
+        this.dog_img = dog_img;
+        this.loveable = loveable;
+        this.user = user;
     }
 
     public long getId() {
