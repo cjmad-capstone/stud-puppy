@@ -9,6 +9,13 @@
 * [Yarn](https://yarnpkg.com/)
     1. run `npm install --global yarn`
 
+### Installing Frontend Dependencies / Fix "vite: command not found"
+
+#### Generally needs to be done whenever pulling from main
+
+* cd into frontend folder(if not already in) `cd frontend`
+* run `yarn install`
+
 ### Running Frontend Dev Server
 
 * cd into the frontend folder `cd frontend`
