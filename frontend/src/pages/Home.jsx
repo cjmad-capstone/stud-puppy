@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
+import { pt } from '../utils/anim/pageTransitions.js';
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -11,13 +13,18 @@ const Home = () => {
         axios.get('/api/users/').then(res => setUsers(res.data));
     }, []);
     return (
-        <div>
-            {
-                users.map((user, idx) => {
-                    return (<div>yo</div>);
-                })
-            }
-        </div>
+        <motion.main
+            {...pt}
+        >
+
+            <div>
+                {
+                    users.map((user, idx) => {
+                        return (<div key={idx}>yo</div>);
+                    })
+                }
+            </div>
+        </motion.main>
     );
 };
 export default Home;
