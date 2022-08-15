@@ -1,5 +1,6 @@
 package com.cjmad.capstone.controllers;
 
+import com.cjmad.capstone.models.Events;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +11,26 @@ import java.util.List;
 @RequestMapping("/api/events")
 public class EventController {
 
-    private final EventRepository eventRepository;
+    private final EventsRepository eventsRepository;
     private final UserRepository userRepository;
 
-    public EventController(EventRepository eventRepository, UserRepository userRepository){
-        this.eventRepository = eventRepository;
+    public EventController(EventsRepository eventsRepository, UserRepository userRepository){
+        this.eventsRepository = eventsRepository;
         this.userRepository = userRepository;
     }
 
     @GetMapping
-    public List<Event> getUsers() {
-        return EventRepository.findAll();
+    public List<Events> getUsers() {
+        return EventsRepository.findAll();
     }
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event){
-        return eventRepository.save(event);
+    public Events createEvent(@RequestBody Events event){
+        return eventsRepository.save(event);
     }
 
     @GetMapping("/event-{id}")
-    public Event getEvent(@PathVariable long id) {
+    public Events getEvent(@PathVariable long id) {
         return eventRepository.getReferenceById(id);
     }
 }
