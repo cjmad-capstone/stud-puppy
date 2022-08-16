@@ -5,6 +5,7 @@ import { Theme } from 'react-daisyui';
 import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
+import { Profile } from './pages/Profile';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                     <Route path={''} element={<Home/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                     <Route path={'/register'} element={<Register/>}/>
+                    <Route path={'/profile'} element={<Profile/>}/>
                 </Routes>
             </AnimatePresence>
         </Theme>
