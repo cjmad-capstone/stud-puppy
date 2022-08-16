@@ -1,5 +1,7 @@
 package com.cjmad.capstone.controllers;
 
+import com.cjmad.capstone.models.Dog;
+import com.cjmad.capstone.models.Event;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,5 +37,14 @@ public class UserController {
         return userRepository.getReferenceById(id);
     }
 
+    @GetMapping("/{id}/dogs")
+    public List<Dog> getUsersDogs(@PathVariable long id) {
+        return userRepository.getReferenceById(id).getDogs();
+    }
+
+    @GetMapping("/{id}/events")
+    public List<Event> getUsersEvents(@PathVariable long id) {
+        return userRepository.getReferenceById(id).getEvents();
+    }
 
 }

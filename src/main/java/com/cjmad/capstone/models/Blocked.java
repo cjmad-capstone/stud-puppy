@@ -17,17 +17,18 @@ public class Blocked {
 
     @OneToOne
     @JoinColumn(name = "dog_id")
-    private Dogs dogs;
+    private Dog dogs;
 
-    public Blocked() {}
+    public Blocked() {
+    }
 
-    public Blocked(long id, User user, Dogs dogs) {
+    public Blocked(long id, User user, Dog dogs) {
         this.id = id;
         this.user = user;
         this.dogs = dogs;
     }
 
-    public Blocked(User user, Dogs dogs) {
+    public Blocked(User user, Dog dogs) {
         this.user = user;
         this.dogs = dogs;
     }
@@ -48,11 +49,11 @@ public class Blocked {
         this.user = user;
     }
 
-    public Dogs getDogs() {
+    public Dog getDogs() {
         return dogs;
     }
 
-    public void setDogs(Dogs dogs) {
+    public void setDogs(Dog dogs) {
         this.dogs = dogs;
     }
 }
