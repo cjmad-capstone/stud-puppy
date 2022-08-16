@@ -1,25 +1,27 @@
 package com.cjmad.capstone.security;
 
-import com.cjmad.capstone.services.UserDetailsLoader;
+
+import com.cjmad.capstone.jwt.JwtTokenConfigurer;
+import com.cjmad.capstone.jwt.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsLoader usersLoader;
-
-    public SecurityConfig(UserDetailsLoader usersLoader) {
-        this.usersLoader = usersLoader;
-    }
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -27,38 +29,24 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         http
-                .cors().and().csrf().disable()
-                /* Login configuration */
-                .formLogin()
-                .loginPage("/auth/login")
-                .defaultSuccessUrl("/") // user's home page, it can be any URL
-                .permitAll() // Anyone can go to the login page
-                /* Logout configuration */
-                .and()
-                .logout()
-                .logoutSuccessUrl("/auth/login?logout") // append a query string value
-                /* Pages that can be viewed without having to log in */
-                .and()
-                .authorizeRequests()
-                .antMatchers("/", "/ads") // anyone can see the home and the ads pages
+                .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                .antMatchers("/auth/*", "/api/*")
                 .permitAll()
-                /* Pages that require authentication */
-                .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/posts/create", // only authenticated users can create ads
-                        "/posts/{id}/edit" // only authenticated users can edit ads
-                )
-                .authenticated()
-        ;
-        return http.build();
+                .anyRequest()
+                .authenticated();
+        http.apply(new JwtTokenConfigurer(tokenProvider));
     }
 
 }

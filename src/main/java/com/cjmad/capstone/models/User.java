@@ -26,13 +26,13 @@ public class User {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "img", nullable = false)
+    @Column(name = "img")
     private String img;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Transient
+    @org.springframework.data.annotation.Transient
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -41,6 +41,10 @@ public class User {
 
     @OneToMany
     private List<Event> events;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 
     public User() {
@@ -57,4 +61,8 @@ public class User {
         this.dogs = copy.dogs;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
