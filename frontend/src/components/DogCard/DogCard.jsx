@@ -10,8 +10,8 @@ const DogCard = ({ imgPath, name, className, children, ...rest }) => {
                 </h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <div className="card-actions justify-end">
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline">Products</div>
+                    <div className="badge badge-outline">User Profile</div>
+                    <div className="badge badge-outline">Dog Profile</div>
                 </div>
             </div>
         </div>

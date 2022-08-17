@@ -6,12 +6,15 @@ import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import DogCard from "./components/DogCard/DogCard.jsx";
+
 
 function App() {
     const location = useLocation();
     return (
         <Theme dataTheme="dracula">
-            <Nav />
+            <Nav/>
+            <DogCard />
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                     <Route path={''} element={<Home />} />
