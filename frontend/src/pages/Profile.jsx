@@ -1,15 +1,14 @@
 import { getCurrentUser } from '../utils/user/userActions.js';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { withAuth } from '../utils/auth/withAuth.jsx';
+import { pt } from '../utils/anim/pageTransitions.js';
+import { motion } from 'framer-motion';
 
-export const Profile = () => {
-    const user = getCurrentUser();
-    const nav = useNavigate();
-    useEffect(() => {
-        nav('/login');
-    }, []);
-    if (!user) return null;
+const Profile = () => {
     return (
-        <div>Test</div>
+        <motion.main {...pt}>
+            <div>Test</div>
+        </motion.main>
     );
 };
+
+export default withAuth(Profile, '/login');

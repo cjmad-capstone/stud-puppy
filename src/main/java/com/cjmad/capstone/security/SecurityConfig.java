@@ -1,8 +1,8 @@
 package com.cjmad.capstone.security;
 
 
-import com.cjmad.capstone.jwt.JwtTokenConfigurer;
-import com.cjmad.capstone.jwt.JwtTokenProvider;
+import com.cjmad.capstone.security.jwt.JwtTokenConfigurer;
+import com.cjmad.capstone.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,4 +50,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
-

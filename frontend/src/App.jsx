@@ -5,20 +5,19 @@ import { Theme } from 'react-daisyui';
 import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
-import { Profile } from './pages/Profile';
-
+import Profile from './pages/Profile';
 
 function App() {
     const location = useLocation();
     return (
         <Theme dataTheme="dracula">
-            <Nav/>
-            <AnimatePresence exitBeforeEnter>
+            <Nav />
+            <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
-                    <Route path={''} element={<Home/>}/>
-                    <Route path={'/login'} element={<Login/>}/>
-                    <Route path={'/register'} element={<Register/>}/>
-                    <Route path={'/profile'} element={<Profile/>}/>
+                    <Route path={''} element={<Home />} />
+                    <Route path={'/login'} element={<Login />} />
+                    <Route path={'/register'} element={<Register />} />
+                    <Route path={'/profile'} element={<Profile />} />
                 </Routes>
             </AnimatePresence>
         </Theme>

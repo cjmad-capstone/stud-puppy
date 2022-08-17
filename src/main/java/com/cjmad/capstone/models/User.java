@@ -3,9 +3,12 @@ package com.cjmad.capstone.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,10 +20,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "address", nullable = false)
@@ -43,7 +46,6 @@ public class User {
     private List<Event> events;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
     private Role role;
 
 
@@ -59,6 +61,12 @@ public class User {
         this.name = copy.name;
         this.password = copy.password;
         this.dogs = copy.dogs;
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public User(String username, String password) {

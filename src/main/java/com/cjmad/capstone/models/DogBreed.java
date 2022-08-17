@@ -1,14 +1,17 @@
 package com.cjmad.capstone.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "dog_breed")
+@Table(name = "breeds")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -20,9 +23,9 @@ public class DogBreed {
     @Column(name = "breed_name", nullable = false)
     private String breedName;
 
-    @OneToOne
-    @JoinColumn(name = "dog_id")
-    private Dog dogs;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "breeds")
+    private List<Dog> dogs;
 
 
     public DogBreed() {
