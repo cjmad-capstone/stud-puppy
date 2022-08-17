@@ -1,6 +1,7 @@
 package com.cjmad.capstone.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class Dog {
             joinColumns={@JoinColumn(name="dog_id")},
             inverseJoinColumns={@JoinColumn(name="breed_id")}
     )
-    @JsonManagedReference
+    @JsonBackReference
     private List<DogBreed> breeds;
 
     @Column(nullable = false)
