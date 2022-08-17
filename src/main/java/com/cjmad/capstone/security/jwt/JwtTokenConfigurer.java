@@ -1,4 +1,4 @@
-package com.cjmad.capstone.jwt;
+package com.cjmad.capstone.security.jwt;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

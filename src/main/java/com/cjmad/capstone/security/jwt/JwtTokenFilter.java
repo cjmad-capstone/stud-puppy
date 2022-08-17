@@ -1,4 +1,4 @@
-package com.cjmad.capstone.jwt;
+package com.cjmad.capstone.security.jwt;
 
 import java.io.IOException;
 import java.util.Date;

@@ -2,6 +2,7 @@ package com.cjmad.capstone.controllers;
 
 import com.cjmad.capstone.models.Dog;
 import com.cjmad.capstone.repositories.DogRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class DogController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Dog> getDogs() {
         return dogsRepository.findAll();
     }

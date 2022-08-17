@@ -1,6 +1,6 @@
 package com.cjmad.capstone.controllers;
 
-import com.cjmad.capstone.jwt.JwtTokenProvider;
+import com.cjmad.capstone.security.jwt.JwtTokenProvider;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.RoleRepository;
 import com.cjmad.capstone.repositories.UserRepository;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/auth")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -37,11 +37,19 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody User user) {
         JSONObject jsonObject = new JSONObject();
         try {
+            if (userRepository.existsByUsername(user.getUsername())) {
+                jsonObject.put("error", "Username is already taken!");
+                return new ResponseEntity<>(jsonObject.toString(), HttpStatus.BAD_REQUEST);
+            }
+            if (userRepository.existsByEmail(user.getEmail())) {
+                jsonObject.put("error", "Email is already in use!");
+                return new ResponseEntity<>(jsonObject.toString(), HttpStatus.BAD_REQUEST);
+            }
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setRole(roleRepository.findByName(ROLES.ROLE_USER.toString()));
             User savedUser = userRepository.saveAndFlush(user);
-            jsonObject.put("message", savedUser.getName() + " saved succesfully");
-            return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+            jsonObject.put("message", savedUser.getUsername() + " saved succesfully");
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
         } catch (JSONException e) {
             try {
                 jsonObject.put("exception", e.getMessage());
@@ -60,7 +68,7 @@ public class AuthController {
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             if (authentication.isAuthenticated()) {
                 String username = user.getUsername();
-                jsonObject.put("name", authentication.getName());
+                jsonObject.put("username", authentication.getName());
                 jsonObject.put("authorities", authentication.getAuthorities());
                 jsonObject.put("token", tokenProvider.createToken(username, userRepository.findByUsername(username).getRole()));
                 return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);

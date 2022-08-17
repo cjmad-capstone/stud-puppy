@@ -1,4 +1,4 @@
-package com.cjmad.capstone.jwt;
+package com.cjmad.capstone.security.jwt;
 
 import java.io.Serializable;
 import java.util.Base64;
@@ -37,8 +37,7 @@ public class JwtTokenProvider implements Serializable {
         claims.put("auth", role);
 
         Date now = new Date();
-        // 2 minute
-        long validityInMilliseconds = 50 * 60 * 60;
+        long validityInMilliseconds = 50 * 60 * 60 * 60;
         return Jwts.builder().setClaims(claims).setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + validityInMilliseconds))
                 .signWith(SignatureAlgorithm.HS256, secretKey).compact();
