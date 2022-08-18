@@ -4,10 +4,13 @@ import com.cjmad.capstone.models.Dog;
 import com.cjmad.capstone.models.Event;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -33,18 +36,24 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable long id) {
-        return userRepository.getReferenceById(id);
+    public Optional<User> getUser(@PathVariable long id) {
+        return userRepository.findById(id);
     }
 
     @GetMapping("/{id}/dogs")
     public List<Dog> getUsersDogs(@PathVariable long id) {
-        return userRepository.getReferenceById(id).getDogs();
+        return userRepository.findById(id).orElseThrow().getDogs();
     }
 
     @GetMapping("/{id}/events")
     public List<Event> getUsersEvents(@PathVariable long id) {
         return userRepository.getReferenceById(id).getEvents();
     }
+
+    @GetMapping("/me")
+    public User getCurrentUser() {
+        return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
 
 }

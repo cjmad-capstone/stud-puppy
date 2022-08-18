@@ -1,5 +1,6 @@
 package com.cjmad.capstone.models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,12 +36,14 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @org.springframework.data.annotation.Transient
     @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     private List<Dog> dogs;
+
 
     @OneToMany
     private List<Event> events;
@@ -61,6 +64,8 @@ public class User {
         this.name = copy.name;
         this.password = copy.password;
         this.dogs = copy.dogs;
+        this.events = copy.events;
+        this.role = copy.role;
     }
 
     public User(String username, String email, String password) {
@@ -73,4 +78,6 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+
 }

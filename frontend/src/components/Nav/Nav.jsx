@@ -19,24 +19,21 @@ const Nav = () => {
     const [searchOpen, setSearchOpen] = useState(false);
     const searchIn = useRef();
     const { user } = useContext(UserContext);
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     return (
         <nav
-            className={`m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 text-slate-50 shadow-xl font-brand`}
+            className={`relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand`}
         >
             <Link to={'/'}>
                 <span className={`${styles.link} hidden md:block`}>
                     See The Pets
                 </span>
-                <span className={`text-3xl block md:hidden`}>
+                <span className={`text-3xl block md:hidden text-slate-50`}>
                     <AiFillHome />
                 </span>
             </Link>
             <motion.div
-                className={`text-4xl mx-auto cursor-pointer flex gap-1 items-center`}
+                className={`text-4xl mx-auto cursor-pointer flex gap-1 items-center text-slate-50`}
             >
                 <motion.input
                     ref={searchIn}
@@ -80,7 +77,10 @@ const Nav = () => {
 
                 {/*Mobile Nav*/}
                 <div className="dropdown dropdown-end block md:hidden ">
-                    <label tabIndex="0" className="btn btn-ghost btn-circle">
+                    <label
+                        tabIndex="0"
+                        className="btn btn-ghost btn-circle text-slate-50"
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"

@@ -1,21 +1,27 @@
 package com.cjmad.capstone.controllers;
 
 import com.cjmad.capstone.models.Dog;
+import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.DogRepository;
+import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/dogs")
 public class DogController {
     private final DogRepository dogsRepository;
 
-    public DogController(DogRepository dogsRepository) {
+    private final UserRepository userRepository;
+
+    public DogController(DogRepository dogsRepository, UserRepository userRepository) {
         this.dogsRepository = dogsRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -26,12 +32,13 @@ public class DogController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public Dog createDog(@RequestBody Dog dog) {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        dog.setOwner(user);
         return dogsRepository.save(dog);
     }
 
     @GetMapping("/{id}")
-    public Dog getDogs(@PathVariable long id) {
-        return dogsRepository.getReferenceById(id);
+    public Optional<Dog> getDogs(@PathVariable long id) {
+        return dogsRepository.findById(id);
     }
 }

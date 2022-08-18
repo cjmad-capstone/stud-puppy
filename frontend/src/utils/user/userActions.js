@@ -1,3 +1,5 @@
+import { authHeader } from '../auth/authHeader.js';
+
 export const authenticateUser = async ({ username, password }) => {
     try {
         const response = await fetch('/auth/login', {
@@ -41,4 +43,19 @@ export const registerUser = async ({ username, email, address, password }) => {
 
 export const logoutUser = () => localStorage.removeItem('user');
 
-export const getCurrentUser = () => JSON.parse(localStorage.getItem('user'));
+export const getCurrentUser = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) return Promise.reject(null);
+    try {
+        const response = await fetch(`/api/users/me`, {
+            method: 'GET',
+            headers: {
+                ...authHeader(),
+            },
+        });
+        const data = await response.json();
+        return Promise.resolve(data);
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};

@@ -1,8 +1,7 @@
 package com.cjmad.capstone.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +30,6 @@ public class Dog {
             joinColumns={@JoinColumn(name="dog_id")},
             inverseJoinColumns={@JoinColumn(name="breed_id")}
     )
-    @JsonBackReference
     private List<DogBreed> breeds;
 
     @Column(nullable = false)
@@ -42,6 +40,9 @@ public class Dog {
 
     @Column(nullable = false)
     private Date dob;
+
+    @Column(nullable = false)
+    private int age;
 
     @Column(nullable = false)
     private double weight;
@@ -60,10 +61,19 @@ public class Dog {
     public Dog() {
     }
 
-    public Dog(String name, List<DogBreed> breeds, String description, String sex, Date dob, double weight, String img, Boolean loveable) {
+    public Dog(String name,
+               List<DogBreed> breeds,
+               String description,
+               int age,
+               String sex,
+               Date dob,
+               double weight,
+               String img,
+               Boolean loveable) {
         this.name = name;
         this.breeds = breeds;
         this.description = description;
+        this.age = age;
         this.sex = sex;
         this.dob = dob;
         this.weight = weight;
