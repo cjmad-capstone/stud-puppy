@@ -7,7 +7,7 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = React.useState();
 
     useLayoutEffect(() => {
-        setUser(getCurrentUser());
+        getCurrentUser().then((user) => setUser(user));
     }, []);
 
     return (

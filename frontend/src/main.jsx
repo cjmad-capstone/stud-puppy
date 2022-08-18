@@ -5,6 +5,7 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Theme } from 'react-daisyui';
 
 const queryClient = new QueryClient();
 

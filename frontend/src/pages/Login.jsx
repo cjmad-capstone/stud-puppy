@@ -2,7 +2,11 @@ import Button from '../components/Button/Button.jsx';
 import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { authenticateUser, registerUser } from '../utils/user/userActions.js';
+import {
+    authenticateUser,
+    getCurrentUser,
+    registerUser,
+} from '../utils/user/userActions.js';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -70,7 +74,9 @@ const Login = () => {
                             ...data,
                         });
                         if (!res.error) {
-                            userContext.setUser(res);
+                            getCurrentUser().then((user) =>
+                                userContext.setUser(user)
+                            );
                             navigate('/profile');
                         } else {
                             setError(res.error);

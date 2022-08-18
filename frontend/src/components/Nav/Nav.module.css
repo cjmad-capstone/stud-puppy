@@ -1,3 +1,3 @@
 .link {
-	@apply font-medium hover:text-indigo-700 transition-colors;
+	@apply font-medium hover:text-indigo-700 transition-colors text-slate-50;
 }
