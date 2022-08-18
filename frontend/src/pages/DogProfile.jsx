@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Nav from "../components/Nav/Nav.jsx";
 import Button from "../components/Button/Button.jsx";
 
-const Profile = () => {
+const DogProfile = () => {
     return (
         <motion.main {...pt}>
             <div>
@@ -83,4 +83,4 @@ const Profile = () => {
     );
 };
 
-export default withAuth(Profile, '/login');
+export default DogProfile;
