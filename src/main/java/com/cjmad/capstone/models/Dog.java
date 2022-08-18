@@ -30,7 +30,6 @@ public class Dog {
             joinColumns={@JoinColumn(name="dog_id")},
             inverseJoinColumns={@JoinColumn(name="breed_id")}
     )
-    @JsonBackReference
     private List<DogBreed> breeds;
 
     @Column(nullable = false)

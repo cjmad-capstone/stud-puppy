@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import DogCard from '../components/DogCard/DogCard.jsx';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { user } = useContext(UserContext);
@@ -37,8 +38,8 @@ const Profile = () => {
 
             {/*Dog Cards*/}
             <div className={`flex gap-3`}>
-                {userDogs?.map((dog) => (
-                    <DogCard dog={dog} key={dog.id} />
+                {userDogs?.map((dog, idx) => (
+                    <DogCard dog={dog} key={idx} />
                 ))}
             </div>
         </motion.main>

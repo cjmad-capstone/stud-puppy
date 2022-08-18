@@ -22,7 +22,7 @@ const Nav = () => {
 
     return (
         <nav
-            className={`m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand`}
+            className={`relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand`}
         >
             <Link to={'/'}>
                 <span className={`${styles.link} hidden md:block`}>

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/dogs")
@@ -37,7 +38,7 @@ public class DogController {
     }
 
     @GetMapping("/{id}")
-    public Dog getDogs(@PathVariable long id) {
-        return dogsRepository.getReferenceById(id);
+    public Optional<Dog> getDogs(@PathVariable long id) {
+        return dogsRepository.findById(id);
     }
 }

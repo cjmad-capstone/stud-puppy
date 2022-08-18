@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function DogCard({ dog }) {
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -13,7 +15,11 @@ function DogCard({ dog }) {
                 </h2>
                 <p>{dog?.description}</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
+                    <Link to={`/dog/${dog.id}`}>
+                        <button className="btn btn-primary">
+                            View Profile
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

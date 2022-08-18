@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 
 import { useLayoutEffect } from 'react';
+import DogProfile from './pages/DogProfile.jsx';
 
 function App() {
     const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
                     <Route path={'/login'} element={<Login />} />
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
+                    <Route path={'/dog/:id'} element={<DogProfile />} />
                 </Routes>
             </AnimatePresence>
         </>

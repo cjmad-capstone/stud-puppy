@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
+import DogCard from '../components/DogCard/DogCard.jsx';
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -16,16 +17,14 @@ const Home = () => {
         return res.json();
     };
 
-    const { data } = useQuery(['dogs'], fetchDogs);
-
-    console.log(data);
+    const { data: dogs } = useQuery(['dogs'], fetchDogs);
 
     return (
-        <motion.main {...pt}>
-            <div>
-                {users.map((user, idx) => {
-                    return <div key={idx}>yo</div>;
-                })}
+        <motion.main {...pt} className={`p-4`}>
+            <div className={`flex gap-3 flex-wrap justify-center`}>
+                {dogs?.map((dog, idx) => (
+                    <DogCard dog={dog} key={idx} />
+                ))}
             </div>
         </motion.main>
     );
