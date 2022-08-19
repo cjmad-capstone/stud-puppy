@@ -14,7 +14,6 @@ const UserProvider = ({ children }) => {
     useLayoutEffect(() => {
         fetchUser().then((user) => setUser(user));
     }, []);
-
     return (
         <UserContext.Provider value={{ user, setUser, logout }}>
             {children}
