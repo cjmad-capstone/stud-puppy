@@ -133,7 +133,7 @@ const DogProfile = () => {
                     />
                     {/*Right card*/}
                     <div className="card w-full  md:w-1/4 ">
-                        <div className="card-body">
+                        <div className="card-body md:px-0">
                             <h2 className="text-xl">Meet the Owner</h2>
                             <div className={`flex items-center`}>
                                 <figure
