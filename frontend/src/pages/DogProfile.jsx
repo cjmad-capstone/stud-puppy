@@ -1,4 +1,4 @@
-import { getCurrentUser } from '../utils/user/userActions.js';
+import { fetchUser } from '../utils/user/userActions.js';
 import { withAuth } from '../utils/auth/withAuth.jsx';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { motion } from 'framer-motion';

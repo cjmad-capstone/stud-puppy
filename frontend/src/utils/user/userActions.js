@@ -41,10 +41,8 @@ export const registerUser = async ({ username, email, address, password }) => {
     }
 };
 
-export const logoutUser = () => localStorage.removeItem('user');
-
-export const getCurrentUser = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+export const fetchUser = async () => {
+    const user = getCurrentUser();
     if (!user) return Promise.reject(null);
     try {
         const response = await fetch(`/api/users/me`, {
@@ -58,4 +56,12 @@ export const getCurrentUser = async () => {
     } catch (e) {
         return Promise.reject(e);
     }
+};
+
+export const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem('user'));
+};
+
+export const logoutUser = () => {
+    localStorage.removeItem('user');
 };

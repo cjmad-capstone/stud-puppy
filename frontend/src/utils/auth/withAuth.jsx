@@ -1,7 +1,6 @@
-import { getCurrentUser } from '../user/userActions.js';
+import { fetchUser, getCurrentUser } from '../user/userActions.js';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 
 export const withAuth = (Component, redirect) => (props) => {
     const user = getCurrentUser();
@@ -10,7 +9,5 @@ export const withAuth = (Component, redirect) => (props) => {
         if (!user) navigator(redirect);
     }, [user]);
 
-
-    return user ? <Component {...props}/> : null;
-
+    return user ? <Component {...props} /> : null;
 };

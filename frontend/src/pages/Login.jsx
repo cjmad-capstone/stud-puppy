@@ -4,7 +4,7 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { useContext, useEffect, useRef, useState } from 'react';
 import {
     authenticateUser,
-    getCurrentUser,
+    fetchUser,
     registerUser,
 } from '../utils/user/userActions.js';
 import { useNavigate } from 'react-router-dom';
@@ -74,7 +74,7 @@ const Login = () => {
                             ...data,
                         });
                         if (!res.error) {
-                            getCurrentUser().then((user) =>
+                            fetchUser().then((user) =>
                                 userContext.setUser(user)
                             );
                             navigate('/profile');
