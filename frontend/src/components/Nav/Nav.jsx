@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styles from './Nav.module.css';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
-import { getCurrentUser } from '../../utils/user/userActions.js';
+import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
 
 const Nav = () => {
@@ -33,7 +33,7 @@ const Nav = () => {
                 </span>
             </Link>
             <motion.div
-                className={`text-4xl mx-auto cursor-pointer flex gap-1 items-center text-slate-50`}
+                className={`relative text-4xl mx-auto cursor-pointer flex gap-1 items-center text-slate-50`}
             >
                 <motion.input
                     ref={searchIn}
