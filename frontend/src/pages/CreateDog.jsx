@@ -34,7 +34,7 @@ const FormPage = ({ children }) => {
     );
 };
 
-const BasicInfo = ({ nextStep, visible }) => {
+const BasicInfo = ({ nextStep, visible, formData, setFormData }) => {
     const schema = yup.object({
         name: yup.string().required('Name is required'),
     });
@@ -46,7 +46,6 @@ const BasicInfo = ({ nextStep, visible }) => {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log(errors);
     return (
         <FormPage>
             <h1 className={`text-4xl font-brand font-bold`}>
@@ -77,16 +76,30 @@ const BasicInfo = ({ nextStep, visible }) => {
                 <input
                     {...register('name')}
                     type="text"
-                    placeholder="Type here"
+                    placeholder="Type here..."
+                    defaultValue={formData.name}
                     className="input input-bordered w-full"
                 />
             </div>
-            <Button onClick={handleSubmit(() => nextStep())}>Next</Button>
+            <Button
+                onClick={handleSubmit((data) => {
+                    setFormData((prev) => ({ ...prev, ...data }));
+                    nextStep();
+                })}
+            >
+                Next
+            </Button>
         </FormPage>
     );
 };
 
-const MoreInfo = ({ previousStep, nextStep, visible }) => {
+const MoreInfo = ({
+    previousStep,
+    nextStep,
+    visible,
+    formData,
+    setFormData,
+}) => {
     const schema = yup.object({
         age: yup
             .number()
@@ -107,20 +120,35 @@ const MoreInfo = ({ previousStep, nextStep, visible }) => {
                 </label>
                 <input
                     {...register('age')}
-                    onKeyDown={(e) => handleKeyPress(e, nextStep)}
                     type="number"
                     className="input input-bordered w-full"
                 />
             </div>
             <div className={`flex`}>
                 <Button onClick={() => previousStep()}>Previous</Button>
-                <Button onClick={() => nextStep()}>Next</Button>
+                <Button
+                    onClick={() =>
+                        handleSubmit((data) => {
+                            setFormData((prev) => ({ ...prev, ...data }));
+                            nextStep();
+                        })
+                    }
+                >
+                    Next
+                </Button>
             </div>
         </FormPage>
     );
 };
 
 const CreateDog = () => {
+    const [formData, setFormData] = useState({
+        name: null,
+        age: null,
+        location: null,
+        loveable: null,
+    });
+
     const [step, setStep] = useState(0);
     const nextStep = () => {
         setStep((step) => step + 1);
@@ -138,13 +166,21 @@ const CreateDog = () => {
 
     return (
         <motion.main className={`p-4 flex`} ref={main}>
+            <div className="absolute">{JSON.stringify(formData)}</div>
             <AnimatePresence mode="wait">
                 {[
-                    <BasicInfo key="basicInfo" nextStep={nextStep} />,
+                    <BasicInfo
+                        key="basicInfo"
+                        nextStep={nextStep}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />,
                     <MoreInfo
                         key="moreInfo"
                         previousStep={previousStep}
                         nextStep={nextStep}
+                        formData={formData}
+                        setFormData={setFormData}
                     />,
                 ].filter((el, index) => index === step)}
             </AnimatePresence>
