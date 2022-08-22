@@ -6,6 +6,7 @@ import Nav from '../components/Nav/Nav.jsx';
 import Button from '../components/Button/Button.jsx';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import {Navbar} from "react-daisyui";
 
 const DogProfile = () => {
     const { id } = useParams();
