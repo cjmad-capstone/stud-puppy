@@ -62,7 +62,7 @@ const FormPage = ({
     }, [nextStepAction]);
 
     return (
-        <div className={`relative my-auto mx-auto w-1/3`}>
+        <div className={`relative my-auto mx-auto min-w-1/3`}>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -97,7 +97,7 @@ const FormPage = ({
                     )}
                 </AnimatePresence>
                 {children}
-                <div className={`flex`}>
+                <div className={`flex flex-wrap`}>
                     {previousStep && (
                         <Button onClick={() => previousStep()}>Previous</Button>
                     )}
