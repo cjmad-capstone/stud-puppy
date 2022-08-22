@@ -25,6 +25,7 @@ function App() {
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
+                    <Route path={'/events/:id'} element={<Event />} />
                 </Routes>
             </AnimatePresence>
         </>
