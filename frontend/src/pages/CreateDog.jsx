@@ -1,14 +1,66 @@
 import { withAuth } from '../utils/auth/withAuth.jsx';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../components/Button/Button.jsx';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert } from 'react-daisyui';
 import { errorIcon } from '../components/icons/icons.jsx';
+import {
+    createSearchParams,
+    useLocation,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom';
+import { useValidate } from '../utils/hooks/useValidate.js';
 
-const FormPage = ({ children }) => {
+const validationSchema = {
+    name: yup.string().required('Name is required'),
+    age: yup
+        .number()
+        .typeError('Age must be a number')
+        .required('Age is required'),
+    breed: yup.string().required('Breed is required'),
+};
+
+const FormPage = ({
+    children,
+    handleSubmit,
+    setFormData,
+    previousStep,
+    nextStep,
+    errors,
+}) => {
+    const [params] = useSearchParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const errorMsgs = Object.values(errors).map((error) => error.message);
+    const nextStepAction = useCallback(
+        handleSubmit((data) => {
+            setFormData((prev) => ({ ...prev, ...data }));
+            const oldParams = Object.fromEntries(
+                new URLSearchParams(location.search)
+            );
+            // Adding the query parameters after each step to persist form data
+            navigate({
+                pathname: location.href,
+                search: `${createSearchParams({ ...oldParams, ...data })}`,
+            });
+            nextStep();
+        }),
+        [handleSubmit, nextStep, setFormData, navigate]
+    );
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Enter') nextStepAction();
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [nextStepAction]);
+
     return (
         <div className={`relative my-auto mx-auto w-1/3`}>
             <motion.div
@@ -17,8 +69,44 @@ const FormPage = ({ children }) => {
                 exit={{ opacity: 0, transition: { delay: 0.25 } }}
                 className={` flex flex-col items-center gap-4  justify-center p-4 bg-base-100 rounded-xl`}
             >
+                <AnimatePresence>
+                    {errorMsgs.length > 0 && (
+                        <motion.div
+                            initial={{
+                                height: 0,
+                                scaleY: 0,
+                                opacity: 0,
+                            }}
+                            animate={{
+                                height: 'auto',
+                                scaleY: 1,
+                                opacity: 1,
+                            }}
+                            exit={{
+                                height: 0,
+                                scaleY: 0,
+                                opacity: 0,
+                            }}
+                        >
+                            <Alert status="error" icon={errorIcon}>
+                                {errorMsgs?.map((error) => (
+                                    <div key={error}>{error}</div>
+                                ))}
+                            </Alert>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 {children}
+                <div className={`flex`}>
+                    {previousStep && (
+                        <Button onClick={() => previousStep()}>Previous</Button>
+                    )}
+                    {nextStep && (
+                        <Button onClick={() => nextStepAction()}>Next</Button>
+                    )}
+                </div>
             </motion.div>
+            {/*Background*/}
             <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{
@@ -34,41 +122,23 @@ const FormPage = ({ children }) => {
     );
 };
 
-const BasicInfo = ({ nextStep, visible, formData, setFormData }) => {
-    const schema = yup.object({
-        name: yup.string().required('Name is required'),
+const DogName = ({ nextStep, formData, setFormData }) => {
+    const [params] = useSearchParams();
+    const { register, handleSubmit, errors } = useValidate({
+        name: validationSchema.name,
     });
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        resolver: yupResolver(schema),
-    });
     return (
-        <FormPage>
+        <FormPage
+            errors={errors}
+            nextStep={nextStep}
+            setFormData={setFormData}
+            handleSubmit={handleSubmit}
+        >
             <h1 className={`text-4xl font-brand font-bold`}>
                 Tell us a little about your furry friend...
             </h1>
             <div className="form-control w-full">
-                <AnimatePresence>
-                    {Object.keys(errors).length > 0 && (
-                        <motion.div
-                            initial={{ height: 0, scaleY: 0, opacity: 0 }}
-                            animate={{
-                                height: 'auto',
-                                scaleY: 1,
-                                opacity: 1,
-                            }}
-                            exit={{ height: 0, scaleY: 0, opacity: 0 }}
-                        >
-                            <Alert status="error" icon={errorIcon}>
-                                {errors.name?.message}
-                            </Alert>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
                 <label className="label">
                     <span className="label-text">What's their name?</span>
                 </label>
@@ -81,81 +151,56 @@ const BasicInfo = ({ nextStep, visible, formData, setFormData }) => {
                     className="input input-bordered w-full"
                 />
             </div>
-            <Button
-                onClick={handleSubmit((data) => {
-                    setFormData((prev) => ({ ...prev, ...data }));
-                    nextStep();
-                })}
-            >
-                Next
-            </Button>
         </FormPage>
     );
 };
-
-const MoreInfo = ({
-    previousStep,
-    nextStep,
-    visible,
-    formData,
-    setFormData,
-}) => {
-    const schema = yup.object({
-        age: yup
-            .number()
-            .min(0, 'Age must be a positive number')
-            .max(100, "I doubt they're that old")
-            .required('Age is required'),
-    });
-
-    const { register, handleSubmit, errors } = useForm({
-        resolver: yupResolver(schema),
+const DogAge = ({ previousStep, nextStep, formData, setFormData }) => {
+    const { register, handleSubmit, errors } = useValidate({
+        age: validationSchema.age,
     });
 
     return (
-        <FormPage>
+        <FormPage
+            errors={errors}
+            nextStep={nextStep}
+            previousStep={previousStep}
+            setFormData={setFormData}
+            handleSubmit={handleSubmit}
+        >
             <div className="form-control w-full">
                 <label className="label">
-                    <span className="label-text">How old are they?</span>
+                    <span className="label-text">
+                        How old is {formData.name}?
+                    </span>
                 </label>
+
                 <input
                     {...register('age')}
-                    type="number"
+                    type="text"
+                    placeholder="Type here..."
+                    defaultValue={formData.age}
                     className="input input-bordered w-full"
                 />
-            </div>
-            <div className={`flex`}>
-                <Button onClick={() => previousStep()}>Previous</Button>
-                <Button
-                    onClick={() =>
-                        handleSubmit((data) => {
-                            setFormData((prev) => ({ ...prev, ...data }));
-                            nextStep();
-                        })
-                    }
-                >
-                    Next
-                </Button>
             </div>
         </FormPage>
     );
 };
 
 const CreateDog = () => {
+    const [params] = useSearchParams();
+
     const [formData, setFormData] = useState({
-        name: null,
-        age: null,
-        location: null,
-        loveable: null,
+        name: params.get('name'),
+        age: params.get('age'),
+        location: params.get('location'),
+        loveable: params.get('loveable'),
     });
 
     const [step, setStep] = useState(0);
     const nextStep = () => {
-        setStep((step) => step + 1);
+        setStep((prev) => prev + 1);
     };
-    const previousStep = () => {
-        setStep((step) => step - 1);
-    };
+    const previousStep = () => setStep((prev) => prev - 1);
 
     const main = useRef();
     useEffect(() => {
@@ -169,13 +214,13 @@ const CreateDog = () => {
             <div className="absolute">{JSON.stringify(formData)}</div>
             <AnimatePresence mode="wait">
                 {[
-                    <BasicInfo
+                    <DogName
                         key="basicInfo"
                         nextStep={nextStep}
                         formData={formData}
                         setFormData={setFormData}
                     />,
-                    <MoreInfo
+                    <DogAge
                         key="moreInfo"
                         previousStep={previousStep}
                         nextStep={nextStep}
