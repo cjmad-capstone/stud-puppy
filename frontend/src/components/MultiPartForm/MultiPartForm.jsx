@@ -1,8 +1,9 @@
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../Button/Button.jsx';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import nav from '../Nav/Nav.jsx';
 
 const FormInputContainer = ({ label, children, className }) => {
     return (
@@ -16,34 +17,43 @@ const FormInputContainer = ({ label, children, className }) => {
 };
 const withFormPage =
     (Component) =>
-    ({ schema, step, setStep, last, setFormData, ...rest }) => {
+    ({ schema, step, setStep, setFormData, onSubmit, ...rest }) => {
         const navigate = useNavigate();
         const { register, handleSubmit, errors } = useValidate({ ...schema });
 
         const errorMsgs = Object.values(errors).map((error) => error.message);
 
-        const changeStep = useCallback(
-            (direction) => {
-                return handleSubmit((data) => {
-                    setFormData((prev) => ({ ...prev, ...data }));
-                    const oldParams = Object.fromEntries(
-                        new URLSearchParams(location.search)
-                    );
-                    // Adding the query parameters after each step to persist form data
-                    navigate({
-                        search: `${createSearchParams({
-                            ...oldParams,
-                            ...data,
-                        })}`,
-                    });
-                    setStep((prev) => prev + direction);
-                })();
-            },
-            [handleSubmit, setFormData, setStep]
-        );
+        const changeStep = (direction) => {
+            handleSubmit((data) => {
+                setFormData((prev) => ({ ...prev, ...data }));
+                const oldParams = Object.fromEntries(
+                    new URLSearchParams(location.search)
+                );
+                // Adding the query parameters after each step to persist form data
+                navigate({
+                    search: `${createSearchParams({
+                        ...oldParams,
+                        ...data,
+                    })}`,
+                });
+                setStep((prev) => prev + direction);
+            })();
+        };
+
+        const container = useRef();
+
+        useEffect(() => {
+            const handleEnter = (e) => {
+                if (e.key === 'Enter') {
+                    changeStep(1);
+                }
+            };
+            document.addEventListener('keydown', handleEnter);
+            return () => document.removeEventListener('keydown', handleEnter);
+        }, []);
 
         return (
-            <div className={`relative`}>
+            <div className={`relative`} ref={container}>
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -106,7 +116,7 @@ const withFormPage =
                             </Button>
                         )}
                         <Button onClick={() => changeStep(1)}>
-                            {last ? 'Submit' : 'Next'}
+                            {onSubmit ? 'Submit' : 'Next'}
                         </Button>
                     </div>
                 </motion.div>

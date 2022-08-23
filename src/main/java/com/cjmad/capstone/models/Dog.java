@@ -42,9 +42,6 @@ public class Dog {
     private Date dob;
 
     @Column(nullable = false)
-    private int age;
-
-    @Column(nullable = false)
     private double weight;
 
     @Column(nullable = false)
@@ -64,7 +61,6 @@ public class Dog {
     public Dog(String name,
                List<DogBreed> breeds,
                String description,
-               int age,
                String sex,
                Date dob,
                double weight,
@@ -73,7 +69,6 @@ public class Dog {
         this.name = name;
         this.breeds = breeds;
         this.description = description;
-        this.age = age;
         this.sex = sex;
         this.dob = dob;
         this.weight = weight;
