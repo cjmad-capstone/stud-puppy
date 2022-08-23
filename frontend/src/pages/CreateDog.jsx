@@ -1,13 +1,49 @@
-import { withAuth } from '../utils/auth/withAuth.jsx';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import * as yup from 'yup';
-import { useSearchParams } from 'react-router-dom';
-import { useValidate } from '../utils/hooks/useValidate.js';
 import {
     FormInputContainer,
-    FormPage,
-} from '../components/FormPage/FormPage.jsx';
+    withFormPage,
+} from '../components/MultiPartForm/MultiPartForm.jsx';
+import * as yup from 'yup';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { pt } from '../utils/anim/pageTransitions.js';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const DogName = withFormPage(({ register, formData }) => {
+    return (
+        <FormInputContainer label={"What's your dog's name?"}>
+            <input
+                className="input input-bordered input-secondary"
+                defaultValue={formData?.name}
+                {...register('name')}
+            />
+        </FormInputContainer>
+    );
+});
+const DogAge = withFormPage(({ register, formData }) => {
+    return (
+        <FormInputContainer label={`How old is ${formData?.name}?`}>
+            <input
+                type="number"
+                className="input input-bordered input-secondary"
+                defaultValue={formData?.age}
+                {...register('age')}
+            />
+        </FormInputContainer>
+    );
+});
+const DogDescription = withFormPage(({ register, formData }) => {
+    return (
+        <FormInputContainer
+            label={`Tell us a little more about your furry friend`}
+        >
+            <textarea
+                className="textarea textarea-secondary"
+                defaultValue={formData?.description}
+                {...register('description')}
+            />
+        </FormInputContainer>
+    );
+});
 
 const validationSchema = {
     name: yup.string().required('Name is required'),
@@ -22,79 +58,9 @@ const validationSchema = {
         .required('Age is required'),
     breed: yup.string().required('Breed is required'),
 };
-
-const DogName = ({ previousStep, nextStep, formData, setFormData }) => {
-    const { register, handleSubmit, errors } = useValidate({
-        name: validationSchema.name,
-    });
-
-    return (
-        <FormPage
-            {...{ errors, previousStep, nextStep, setFormData, handleSubmit }}
-        >
-            <FormInputContainer label="What's their name?">
-                <input
-                    className="input input-bordered input-secondary"
-                    defaultValue={formData.name}
-                    {...register('name')}
-                />
-            </FormInputContainer>
-        </FormPage>
-    );
-};
-const DogAge = ({ previousStep, nextStep, formData, setFormData }) => {
-    const { register, handleSubmit, errors } = useValidate({
-        age: validationSchema.age,
-    });
-
-    return (
-        <FormPage
-            {...{ errors, previousStep, nextStep, setFormData, handleSubmit }}
-        >
-            <FormInputContainer
-                defaultValue={formData.age}
-                register={register('age')}
-                label={`How old is ${formData.name ?? 'your dog'}?`}
-            >
-                <input
-                    className="input input-bordered input-secondary"
-                    type="number"
-                    defaultValue={formData.age}
-                    {...register('age')}
-                />
-            </FormInputContainer>
-        </FormPage>
-    );
-};
-const DogDescription = ({ previousStep, nextStep, formData, setFormData }) => {
-    const { register, handleSubmit, errors } = useValidate({
-        description: validationSchema.description,
-    });
-
-    return (
-        <FormPage
-            errors={errors}
-            previousStep={previousStep}
-            nextStep={nextStep}
-            setFormData={setFormData}
-            handleSubmit={handleSubmit}
-            last
-        >
-            <FormInputContainer
-                label={`Let us get to know ${formData.name}...`}
-            >
-                <textarea
-                    {...register('description')}
-                    defaultValue={formData.description}
-                    className="textarea textarea-bordered"
-                    placeholder="Tell us a bit more"
-                />
-            </FormInputContainer>
-        </FormPage>
-    );
-};
-
 const CreateDog = () => {
+    const [step, setStep] = useState(0);
+
     const [params] = useSearchParams();
 
     const [formData, setFormData] = useState({
@@ -105,40 +71,51 @@ const CreateDog = () => {
         loveable: params.get('loveable'),
     });
 
-    const [step, setStep] = useState(0);
-    const nextStep = () => {
-        setStep((prev) => prev + 1);
-    };
-    const previousStep = () => setStep((prev) => prev - 1);
-
-    const main = useRef();
-    useEffect(() => {
-        setTimeout(() => {
-            main.current?.scrollIntoView();
-        }, 1000);
-    }, []);
-
+    const pageProps = { step, setStep, formData, setFormData };
     return (
-        <motion.main className={`p-4 flex`} ref={main}>
+        <>
             <div className="absolute">{JSON.stringify(formData, null, 2)}</div>
-            <AnimatePresence mode="wait">
-                {[
-                    <DogName
-                        key="basicInfo"
-                        {...{ formData, setFormData, nextStep }}
-                    />,
-                    <DogAge
-                        key="moreInfo"
-                        {...{ formData, setFormData, previousStep, nextStep }}
-                    />,
-                    <DogDescription
-                        key="description"
-                        {...{ formData, setFormData, previousStep, nextStep }}
-                    />,
-                ].filter((el, index) => index === step)}
-            </AnimatePresence>
-        </motion.main>
+
+            <motion.main
+                {...pt}
+                className={'w-full flex flex-col justify-center items-center'}
+            >
+                <form
+                    className={`w-1/2 m-auto`}
+                    onSubmit={(e) => e.preventDefault()}
+                >
+                    <AnimatePresence mode="wait">
+                        {[
+                            <DogName
+                                key="dog-name"
+                                {...{
+                                    ...pageProps,
+                                    schema: { name: validationSchema.name },
+                                }}
+                            />,
+                            <DogAge
+                                key="dog-age"
+                                {...{
+                                    ...pageProps,
+                                    schema: { age: validationSchema.age },
+                                }}
+                            />,
+                            <DogDescription
+                                key="dog-description"
+                                {...{
+                                    ...pageProps,
+                                    schema: {
+                                        description:
+                                            validationSchema.description,
+                                    },
+                                }}
+                            />,
+                        ].filter((_, idx) => idx === step)}
+                    </AnimatePresence>
+                </form>
+            </motion.main>
+        </>
     );
 };
 
-export default withAuth(CreateDog, '/login?ref=create-dog');
+export default CreateDog;
