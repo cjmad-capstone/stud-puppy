@@ -9,7 +9,7 @@ import Profile from './pages/Profile';
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
 import Logout from './pages/Logout.jsx';
-import CreateDog from './pages/CreateDog';
+import CreateDog from './pages/CreateDog.jsx';
 
 function App() {
     const location = useLocation();
