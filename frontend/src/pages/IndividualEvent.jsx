@@ -4,15 +4,15 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
 import EventCard from '../components/EventCard/EventCard.jsx';
+import {useParams} from "react-router-dom";
 
-const AllEvents = () => {
+const IndividualEvent = () => {
+    const { id } = useParams();
+    const { data: event, error } = useQuery(['event', id], () =>
+        fetch(`/api/events/${id}`).then((res) => res.json())
+    );
 
-    const fetchEvents = async () => {
-        const res = await fetch('/api/events')
-        return res.json();
-    };
-
-    const { data: events } = useQuery(['event'], fetchEvents);
+    const { data: events } = useQuery(['event'], IndividualEvent);
 
     return (
         <motion.main {...pt} className={`p-4`}>
@@ -24,4 +24,4 @@ const AllEvents = () => {
         </motion.main>
     );
 };
-export default AllEvents;
+export default IndividualEvent

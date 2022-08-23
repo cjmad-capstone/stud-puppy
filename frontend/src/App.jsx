@@ -8,6 +8,8 @@ import Profile from './pages/Profile';
 
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
+import AllEvents from "./pages/AllEvents.jsx";
+import IndividualEvent from "./pages/IndividualEvent.jsx";
 
 function App() {
     const location = useLocation();
@@ -25,7 +27,8 @@ function App() {
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
-                    <Route path={'/events/:id'} element={<Event />} />
+                    <Route path={'/events'} element={<AllEvents />} />
+                    <Route path={'/events/:id'} element={<IndividualEvent />} />
                 </Routes>
             </AnimatePresence>
         </>
