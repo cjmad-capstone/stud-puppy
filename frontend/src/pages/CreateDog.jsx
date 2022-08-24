@@ -3,13 +3,12 @@ import {
     withFormPage,
 } from '../components/MultiPartForm/MultiPartForm.jsx';
 import * as yup from 'yup';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { withAuth } from '../utils/auth/withAuth.jsx';
-import { Form } from 'react-daisyui';
 
 const DogName = withFormPage(({ register, formData }) => {
     return (
@@ -60,7 +59,7 @@ const DogSexAndWeight = withFormPage(({ register, formData }) => {
                     </label>
                 </div>
                 <div className="form-control">
-                    <label className="label cursor-pointer">Weight</label>
+                    <label className="label cursor-pointer">Weight(lbs)</label>
                     <input
                         className="input input-bordered input-secondary"
                         type="number"
@@ -152,16 +151,16 @@ const CreateDog = () => {
                 weight: validationSchema.weight,
             }}
         />,
-        <DogDescription
-            key="dog-description"
-            schema={{
-                description: validationSchema.description,
-            }}
-        />,
         <DogDOB
             key="dog-dob"
             schema={{
                 dob: validationSchema.dob,
+            }}
+        />,
+        <DogDescription
+            key="dog-description"
+            schema={{
+                description: validationSchema.description,
             }}
         />,
     ];
