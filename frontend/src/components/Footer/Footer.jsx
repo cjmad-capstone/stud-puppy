@@ -1,8 +1,12 @@
 
+import { motion } from 'framer-motion';
+
 
 const Footer = () => {
     return (
-        <footer className="footer relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand">
+        <footer
+            className={'footer relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand'}
+>
             <div className="items-center grid-flow-col">
                 <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
                      clip-rule="evenodd" className="fill-current">
@@ -35,5 +39,7 @@ const Footer = () => {
                 </a>
             </div>
         </footer>
-    )
-}
+    );
+};
+
+export default Footer;

@@ -5,7 +5,7 @@ import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-
+import Footer from './components/Footer/Footer.jsx';
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
 import Logout from './pages/Logout.jsx';
@@ -29,6 +29,7 @@ function App() {
                     <Route path={'logout'} element={<Logout />} />
                 </Routes>
             </AnimatePresence>
+            <Footer/>
         </>
     );
 }
