@@ -1,7 +1,7 @@
 package com.cjmad.capstone.models;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "dogs")
@@ -42,13 +43,12 @@ public class Dog {
     private Date dob;
 
     @Column(nullable = false)
-    private int age;
-
-    @Column(nullable = false)
     private double weight;
 
     @Column(nullable = false)
-    private String img;
+    @OneToMany(mappedBy = "dog", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<DogImage> images;
 
     @Column(nullable = false)
     private Boolean loveable;
@@ -59,26 +59,6 @@ public class Dog {
     private User owner;
 
     public Dog() {
-    }
-
-    public Dog(String name,
-               List<DogBreed> breeds,
-               String description,
-               int age,
-               String sex,
-               Date dob,
-               double weight,
-               String img,
-               Boolean loveable) {
-        this.name = name;
-        this.breeds = breeds;
-        this.description = description;
-        this.age = age;
-        this.sex = sex;
-        this.dob = dob;
-        this.weight = weight;
-        this.img = img;
-        this.loveable = loveable;
     }
 }
 

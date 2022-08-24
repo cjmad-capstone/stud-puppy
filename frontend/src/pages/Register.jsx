@@ -4,7 +4,7 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { registerUser } from '../utils/user/userActions.js';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -151,6 +151,14 @@ const Login = () => {
                                 errors.passwordConfirm ? 'input-error' : ''
                             }`}
                         />
+                    </div>
+                    <div className={`pt-2`}>
+                        <span className={`text-sm text-gray-600`}>
+                            Already have an account?&nbsp;
+                            <Link to="/login" className={`link`}>
+                                Log In Here
+                            </Link>
+                        </span>
                     </div>
                     <Button>Register</Button>
                 </form>

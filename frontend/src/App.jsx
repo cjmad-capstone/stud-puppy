@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
 import Logout from './pages/Logout.jsx';
+import CreateDog from './pages/CreateDog.jsx';
 
 function App() {
     const location = useLocation();
@@ -26,7 +27,8 @@ function App() {
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
-                    <Route path={'logout'} element={<Logout />} />
+                    <Route path={'/logout'} element={<Logout />} />
+                    <Route path={'/create-dog'} element={<CreateDog />} />
                 </Routes>
             </AnimatePresence>
         </>
