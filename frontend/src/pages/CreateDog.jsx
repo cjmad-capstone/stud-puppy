@@ -9,6 +9,8 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { withAuth } from '../utils/auth/withAuth.jsx';
+import Dropzone from 'react-dropzone';
+import FileDropzone from '../components/FileDropzone/FileDropzone.jsx';
 
 const DogName = withFormPage(({ register, formData }) => {
     return (
@@ -64,6 +66,7 @@ const DogSexAndWeight = withFormPage(({ register, formData }) => {
                         className="input input-bordered input-secondary"
                         type="number"
                         {...register('weight')}
+                        defaultValue={formData?.weight}
                     />
                 </div>
             </div>
@@ -95,6 +98,13 @@ const DogDOB = withFormPage(({ register, formData }) => {
         </FormInputContainer>
     );
 });
+const DogPhotos = withFormPage(({ register, formData }) => {
+    return (
+        <FormInputContainer label={`Upload some photos of ${formData?.name}`}>
+            <FileDropzone />
+        </FormInputContainer>
+    );
+});
 
 const validationSchema = {
     name: yup.string().required('Name is required'),
@@ -108,7 +118,11 @@ const validationSchema = {
         .typeError('Weight must be a number')
         .max(200, "Weight can't be more than 200 lbs"),
     breed: yup.string().required('Breed is required'),
-    dob: yup.date().max(new Date()).required('Date of birth is required'),
+    dob: yup
+        .date()
+        .typeError('Date of birth must be in format mm/dd/yyyy')
+        .max(new Date())
+        .required('Date of birth is required'),
 };
 const CreateDog = () => {
     const [step, setStep] = useState(0);
@@ -140,6 +154,7 @@ const CreateDog = () => {
     const pageProps = { step, setStep, formData, setFormData };
 
     const steps = [
+        <DogPhotos key="dog-photos" />,
         <DogName
             key="dog-name"
             schema={{ name: validationSchema.name, sex: validationSchema.sex }}

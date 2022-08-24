@@ -57,7 +57,7 @@ const withFormPage =
         }, [changeStep]);
 
         return (
-            <div className={`relative max-w-[75%]`} ref={container}>
+            <section className={`relative max-w-[75%]`} ref={container}>
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -137,7 +137,7 @@ const withFormPage =
                     transition={{ type: 'linear' }}
                     className={`absolute -inset-2 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-secondary to-accent`}
                 />
-            </div>
+            </section>
         );
     };
 
