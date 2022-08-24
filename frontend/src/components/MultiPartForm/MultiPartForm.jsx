@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../Button/Button.jsx';
@@ -22,11 +22,17 @@ const withFormPage =
         const navigate = useNavigate();
         const { register, handleSubmit, errors } = useValidate({ ...schema });
 
-        const errorMsgs = Object.values(errors).map((error) => error.message);
+        const [customErrors, setCustomErrors] = useState({});
+
+        const errorMsgs = Object.values({ ...errors, ...customErrors }).map(
+            (error) => error.message
+        );
 
         const changeStep = useCallback(
             (direction) => {
                 handleSubmit((data) => {
+                    console.log(data.dob);
+                    if (Object.keys(customErrors).length > 0) return;
                     setFormData((prev) => ({ ...prev, ...data }));
                     const oldParams = Object.fromEntries(
                         new URLSearchParams(location.search)
@@ -41,7 +47,7 @@ const withFormPage =
                     setStep((prev) => prev + direction);
                 })();
             },
-            [handleSubmit, navigate, setFormData, setStep]
+            [customErrors, handleSubmit, navigate, setFormData, setStep]
         );
 
         const container = useRef();
@@ -112,7 +118,10 @@ const withFormPage =
                             )}
                         </AnimatePresence>
                     </div>
-                    <Component register={register} {...rest} />
+                    <Component
+                        register={register}
+                        {...{ setFormData, setCustomErrors, ...rest }}
+                    />
                     <div className={`flex`}>
                         {step !== 0 && (
                             <Button onClick={() => changeStep(-1)}>

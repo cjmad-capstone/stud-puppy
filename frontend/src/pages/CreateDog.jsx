@@ -9,8 +9,8 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { withAuth } from '../utils/auth/withAuth.jsx';
-import Dropzone from 'react-dropzone';
 import FileDropzone from '../components/FileDropzone/FileDropzone.jsx';
+import { parseDateString } from '../utils/date/index.js';
 
 const DogName = withFormPage(({ register, formData }) => {
     return (
@@ -89,19 +89,41 @@ const DogDescription = withFormPage(({ register, formData }) => {
 const DogDOB = withFormPage(({ register, formData }) => {
     return (
         <FormInputContainer label={`What's ${formData?.name}'s date of birth?`}>
+            {formData?.dob}
+            {/*{formData.dob && format(parseISO(formData?.dob), 'MM/dd/yyyy')}*/}
             <input
                 type={'date'}
                 className="textarea textarea-secondary"
-                defaultValue={formData?.dob}
+                // defaultValue={
+                //     formData.dob &&
+                //     format(parseISO(formData?.dob), 'yyyy-mm-dd')
+                // }
                 {...register('dob')}
             />
         </FormInputContainer>
     );
 });
-const DogPhotos = withFormPage(({ register, formData }) => {
+const DogPhotos = withFormPage(({ setFormData, formData, setCustomErrors }) => {
+    // const [files, setFiles] = useState([]);
+
+    useEffect(() => {
+        setCustomErrors({
+            noFiles: { message: 'Please upload at least one photo' },
+        });
+    }, [setCustomErrors]);
+
+    const onDrop = (f) => {
+        if (f.length > 0) setCustomErrors({});
+
+        setFormData({ ...formData, files: f });
+    };
     return (
         <FormInputContainer label={`Upload some photos of ${formData?.name}`}>
-            <FileDropzone />
+            <FileDropzone
+                onDrop={onDrop}
+                setErrors={setCustomErrors}
+                maxFileSize={5000}
+            />
         </FormInputContainer>
     );
 });
@@ -120,6 +142,7 @@ const validationSchema = {
     breed: yup.string().required('Breed is required'),
     dob: yup
         .date()
+        .transform(parseDateString)
         .typeError('Date of birth must be in format mm/dd/yyyy')
         .max(new Date())
         .required('Date of birth is required'),

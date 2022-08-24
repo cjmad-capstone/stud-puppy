@@ -1,7 +1,7 @@
 import { useDropzone } from 'react-dropzone';
 import React, { useEffect, useState } from 'react';
 
-const FileDropzone = () => {
+const FileDropzone = ({ onDrop, setErrors, maxFileSize }) => {
     const [files, setFiles] = useState([]);
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -10,14 +10,30 @@ const FileDropzone = () => {
             'image/png': ['.png'],
             'image/jpeg': ['.jpg', '.jpeg'],
         },
-        onDrop: (acceptedFiles) => {
-            setFiles(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file),
-                    })
-                )
+        maxFiles: 4,
+        maxSize: maxFileSize * 1000,
+        onDrop: (acceptedFiles, fileRejections) => {
+            fileRejections.forEach((file) => {
+                file.errors.forEach((err) => {
+                    console.log(err.code);
+
+                    if (err.code) {
+                        setErrors((prev) => ({
+                            ...prev,
+                            [err.code]: { message: err.message },
+                        }));
+                    }
+                });
+            });
+
+            const filesWithPreview = acceptedFiles.map((file) =>
+                Object.assign(file, {
+                    preview: URL.createObjectURL(file),
+                })
             );
+
+            setFiles(filesWithPreview);
+            onDrop(filesWithPreview);
         },
     });
     useEffect(() => {
