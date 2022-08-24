@@ -1,12 +1,10 @@
-import { fetchUser } from '../utils/user/userActions.js';
-import { withAuth } from '../utils/auth/withAuth.jsx';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { motion } from 'framer-motion';
-import Nav from '../components/Nav/Nav.jsx';
 import Button from '../components/Button/Button.jsx';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import {Navbar} from "react-daisyui";
+import React from 'react';
+import { differenceInYears, parse, parseISO } from 'date-fns';
 
 const DogProfile = () => {
     const { id } = useParams();
@@ -15,7 +13,6 @@ const DogProfile = () => {
     );
 
     if (!dog) return null;
-    console.log(dog);
 
     return (
         <motion.main {...pt} className={`absolute top-0 left-0 md:static`}>
@@ -112,7 +109,11 @@ const DogProfile = () => {
                     <div className="card w-full md:w-1/2">
                         <div className="card-body">
                             <h1 className="card-title text-5xl">
-                                {dog?.name}, {dog?.age}
+                                {dog?.name},{' '}
+                                {differenceInYears(
+                                    new Date(),
+                                    parseISO(dog?.dob)
+                                )}
                             </h1>
                             <h2 className="text-3xl pb-4"></h2>
                             <p>{dog.description}</p>
