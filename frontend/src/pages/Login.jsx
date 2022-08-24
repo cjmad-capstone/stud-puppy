@@ -7,7 +7,7 @@ import {
     fetchUser,
     registerUser,
 } from '../utils/user/userActions.js';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,6 +16,8 @@ import { UserContext } from '../context/UserContext.jsx';
 const Login = () => {
     const [error, setError] = useState();
     const navigate = useNavigate();
+
+    const [params] = useSearchParams();
 
     const schema = yup
         .object({
@@ -77,7 +79,11 @@ const Login = () => {
                             fetchUser().then((user) =>
                                 userContext.setUser(user)
                             );
-                            navigate('/profile');
+                            navigate(
+                                params.get('ref')
+                                    ? '/' + params.get('ref')
+                                    : '/profile'
+                            );
                         } else {
                             setError(res.error);
                         }
@@ -108,6 +114,14 @@ const Login = () => {
                                 errors.password ? 'input-error' : ''
                             }`}
                         />
+                    </div>
+                    <div className={`pt-2`}>
+                        <span className={`text-sm text-gray-600`}>
+                            Don't have an account?&nbsp;
+                            <Link to="/register" className={`link`}>
+                                Register Here
+                            </Link>
+                        </span>
                     </div>
                     <Button>Login</Button>
                 </form>
