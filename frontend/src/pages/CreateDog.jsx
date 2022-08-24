@@ -3,17 +3,20 @@ import {
     withFormPage,
 } from '../components/MultiPartForm/MultiPartForm.jsx';
 import * as yup from 'yup';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { authHeader } from '../utils/auth/authHeader.js';
-import { parseDateString } from '../utils/date/index.js';
-import { flushSync } from 'react-dom';
+import { withAuth } from '../utils/auth/withAuth.jsx';
+import { Form } from 'react-daisyui';
 
 const DogName = withFormPage(({ register, formData }) => {
     return (
         <FormInputContainer label={"What's your dog's name?"}>
+            <label className="label">
+                <span className="label-text">Name:</span>
+            </label>
             <input
                 className="input input-bordered input-secondary"
                 autoFocus
@@ -23,7 +26,51 @@ const DogName = withFormPage(({ register, formData }) => {
         </FormInputContainer>
     );
 });
-
+const DogSexAndWeight = withFormPage(({ register, formData }) => {
+    return (
+        <FormInputContainer label={`Tell us some more about ${formData?.name}`}>
+            <div
+                className={`w-3/4 border-primary mx-auto p-4 flex flex-col gap-2`}
+            >
+                <label className="label">
+                    <span className="label-text">Gender:</span>
+                </label>
+                <div className="form-control border-secondary border-2 rounded-full px-3">
+                    <label className="label cursor-pointer">
+                        <span className="label-text">F</span>
+                        <input
+                            type="radio"
+                            {...register('sex')}
+                            className="radio checked:bg-secondary"
+                            value="F"
+                            defaultChecked={formData?.sex === 'F'}
+                        />
+                    </label>
+                </div>
+                <div className="form-control border-primary border-2 rounded-full px-3">
+                    <label className="label cursor-pointer">
+                        <span className="label-text">M</span>
+                        <input
+                            type="radio"
+                            {...register('sex')}
+                            value="M"
+                            className="radio checked:bg-primary"
+                            defaultChecked={formData?.sex === 'M'}
+                        />
+                    </label>
+                </div>
+                <div className="form-control">
+                    <label className="label cursor-pointer">Weight</label>
+                    <input
+                        className="input input-bordered input-secondary"
+                        type="number"
+                        {...register('weight')}
+                    />
+                </div>
+            </div>
+        </FormInputContainer>
+    );
+});
 const DogDescription = withFormPage(({ register, formData }) => {
     return (
         <FormInputContainer
@@ -56,83 +103,112 @@ const validationSchema = {
         .string()
         .max(200, 'Description must be less than 200 characters')
         .required('Description is required'),
-    age: yup
+    sex: yup.string(),
+    weight: yup
         .number()
-        .min(0, 'Age must be a positive number')
-        .typeError('Age must be a number')
-        .required('Age is required'),
+        .typeError('Weight must be a number')
+        .max(200, "Weight can't be more than 200 lbs"),
     breed: yup.string().required('Breed is required'),
     dob: yup.date().max(new Date()).required('Date of birth is required'),
 };
 const CreateDog = () => {
     const [step, setStep] = useState(0);
-    const navigate = useNavigate();
+    const navigate = useRef(useNavigate());
 
     const [params] = useSearchParams();
 
     const [formData, setFormData] = useState({
         name: params.get('name'),
         description: params.get('description'),
-        sex: params.get('sex') ?? 'F',
+        sex: params.get('sex'),
         dob: params.get('dob'),
-        weight: params.get('weight') ?? 10,
+        weight: params.get('weight'),
         img: params.get('img') ?? 'test',
         loveable: params.get('loveable') ?? false,
     });
 
-    const onSubmit = () => {
-        console.log(formData);
-        // fetch('/api/dogs', {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //         ...authHeader(),
-        //     },
-        //     body: JSON.stringify(formData),
-        // })
-        //     .then((res) => res.json())
-        //     .then((data) => console.log(data));
+    const mainRef = useRef();
 
-        // navigate('/');
-    };
+    useEffect(() => {
+        const scrollTo = setTimeout(
+            () => mainRef.current?.scrollIntoView(),
+            1000
+        );
+
+        return () => clearTimeout(scrollTo);
+    }, [mainRef]);
 
     const pageProps = { step, setStep, formData, setFormData };
+
+    const steps = [
+        <DogName
+            key="dog-name"
+            schema={{ name: validationSchema.name, sex: validationSchema.sex }}
+        />,
+        <DogSexAndWeight
+            key="dog-sex-weight"
+            schema={{
+                sex: validationSchema.sex,
+                weight: validationSchema.weight,
+            }}
+        />,
+        <DogDescription
+            key="dog-description"
+            schema={{
+                description: validationSchema.description,
+            }}
+        />,
+        <DogDOB
+            key="dog-dob"
+            schema={{
+                dob: validationSchema.dob,
+            }}
+        />,
+    ];
+
+    useEffect(() => {
+        const submitForm = () => {
+            console.log(step);
+            fetch('/api/dogs', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    navigate.current('/dog/' + data.id);
+                });
+        };
+        if (step === steps.length) submitForm();
+    }, [formData, navigate, step, steps.length]);
+
     return (
         <>
             <div className="absolute">{JSON.stringify(formData, null, 2)}</div>
 
             <motion.main
                 {...pt}
+                ref={mainRef}
                 className={'w-full flex flex-col justify-center items-center'}
             >
                 <AnimatePresence mode="wait">
-                    {[
-                        <DogName
-                            key="dog-name"
-                            {...pageProps}
-                            schema={{ name: validationSchema.name }}
-                        />,
-                        <DogDescription
-                            key="dog-description"
-                            {...pageProps}
-                            schema={{
-                                description: validationSchema.description,
-                            }}
-                        />,
-                        <DogDOB
-                            key="dog-dob"
-                            {...pageProps}
-                            schema={{
-                                dob: validationSchema.dob,
-                            }}
-                            onSubmit={() => onSubmit()}
-                        />,
-                    ].filter((_, idx) => idx === step)}
+                    {steps.map((comp, idx) => {
+                        return (
+                            idx === step &&
+                            React.cloneElement(comp, {
+                                ...pageProps,
+                                last: idx === steps.length - 1,
+                            })
+                        );
+                    })}
                 </AnimatePresence>
             </motion.main>
         </>
     );
 };
 
-export default CreateDog;
+export default withAuth(CreateDog, '/login?ref=create-dog');
