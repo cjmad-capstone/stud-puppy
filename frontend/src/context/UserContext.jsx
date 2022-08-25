@@ -1,17 +1,21 @@
 import React, { useEffect, useLayoutEffect } from 'react';
-import { getCurrentUser } from '../utils/user/userActions.js';
+import { fetchUser, logoutUser } from '../utils/user/userActions.js';
 
 const UserContext = React.createContext({});
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = React.useState();
 
-    useLayoutEffect(() => {
-        getCurrentUser().then((user) => setUser(user));
-    }, []);
+    const logout = () => {
+        logoutUser();
+        setUser(null);
+    };
 
+    useLayoutEffect(() => {
+        fetchUser().then((user) => setUser(user));
+    }, []);
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, logout }}>
             {children}
         </UserContext.Provider>
     );

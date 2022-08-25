@@ -81,6 +81,11 @@
             <artifactId>jettison</artifactId>
             <version>1.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.12.286</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,7 +109,7 @@
                             <goal>install-node-and-yarn</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v18.7.0</nodeVersion>
+                            <nodeVersion>v16.15.1</nodeVersion>
                             <yarnVersion>v1.22.19</yarnVersion>
                         </configuration>
                     </execution>
