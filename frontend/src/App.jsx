@@ -1,15 +1,14 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-
+import React from 'react';
 import Footer from './components/Footer/Footer.jsx';
 
 import CreateEvent from './pages/CreateEvent';
-
 
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
@@ -34,10 +33,9 @@ function App() {
                     <Route path={'/dog/:id'} element={<DogProfile />} />
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
-
                 </Routes>
             </AnimatePresence>
-            <Footer/>
+            <Footer />
         </>
     );
 }
