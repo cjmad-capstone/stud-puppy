@@ -12,8 +12,13 @@ import CreateEvent from './pages/CreateEvent';
 
 import { useLayoutEffect } from 'react';
 import DogProfile from './pages/DogProfile.jsx';
+
+import AllEvents from "./pages/AllEvents.jsx";
+import IndividualEvent from "./pages/IndividualEvent.jsx";
+
 import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
+
 
 function App() {
     const location = useLocation();
@@ -31,8 +36,13 @@ function App() {
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
+
+                    <Route path={'/events'} element={<AllEvents />} />
+                    <Route path={'/events/:id'} element={<IndividualEvent />} />
+
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
+
                 </Routes>
             </AnimatePresence>
             <Footer />

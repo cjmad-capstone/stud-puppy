@@ -118,11 +118,12 @@ const DogProfile = () => {
                             <h2 className="text-3xl pb-4"></h2>
                             <p>{dog.description}</p>
                             <div className="card-actions justify-center pt-6">
-                                <Button
-                                    className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
-                                >
-                                    Schedule A Meetup
-                                </Button>
+                                    <Button
+                                        className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
+                                    >
+                                        Schedule A Meetup
+                                    </Button>
+
                             </div>
                         </div>
                     </div>
