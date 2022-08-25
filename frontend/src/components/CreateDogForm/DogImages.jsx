@@ -7,10 +7,8 @@ const DogImages = ({ changeStep, formData }) => {
     const [files, setFiles] = React.useState([]);
     const [errors, setErrors] = React.useState({});
 
-    const _changeStep = async (dir) => {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        const images = files.map((file) => ({ url: file.path }));
-        changeStep(dir, { images });
+    const _changeStep = (dir) => {
+        changeStep(dir, { images: files });
     };
     return (
         <FormPage errors={errors}>
