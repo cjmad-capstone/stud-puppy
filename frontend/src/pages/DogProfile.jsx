@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { differenceInYears, parse, parseISO } from 'date-fns';
+import { S3_BUCKET } from '../utils/consts.js';
 
 const DogProfile = () => {
     const { id } = useParams();
@@ -19,89 +20,34 @@ const DogProfile = () => {
             <div>
                 {/*Carousel*/}
                 <div className="carousel w-full h-[600px]">
-                    <div
-                        id="slide1"
-                        className="carousel-item relative w-full h-full "
-                    >
-                        <img
-                            src="https://www.thestatesman.com/wp-content/uploads/2022/07/AmericanBullysobakabarobaka-4ce0d4dc0e144dccadb5159b222e275e-e1657808052501.jpg"
-                            className="w-full h-full object-center object-cover"
-                        />
-                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                            <a
-                                href="#slide4"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❮
-                            </a>
-                            <a
-                                href="#slide2"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❯
-                            </a>
+                    {dog.images.map((image, idx) => (
+                        <div
+                            key={idx}
+                            id={`slide${idx}`}
+                            className="carousel-item relative w-full h-full "
+                        >
+                            <img
+                                src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${image.url}`}
+                                className="w-full h-full object-center object-cover"
+                            />
+                            <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                                <a
+                                    href={`#slide${idx - 1}`}
+                                    className="btn btn-circle opacity-75"
+                                >
+                                    ❮
+                                </a>
+                                {idx !== dog.images.length - 1 && (
+                                    <a
+                                        href={`#slide${idx + 1}`}
+                                        className="btn btn-circle opacity-75"
+                                    >
+                                        ❯
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                    <div id="slide2" className="carousel-item relative w-full">
-                        <img
-                            src="https://placeimg.com/800/200/arch"
-                            className="w-full"
-                        />
-                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                            <a
-                                href="#slide1"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❮
-                            </a>
-                            <a
-                                href="#slide3"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❯
-                            </a>
-                        </div>
-                    </div>
-                    <div id="slide3" className="carousel-item relative w-full">
-                        <img
-                            src="https://placeimg.com/800/200/arch"
-                            className="w-full"
-                        />
-                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                            <a
-                                href="#slide2"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❮
-                            </a>
-                            <a
-                                href="#slide4"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❯
-                            </a>
-                        </div>
-                    </div>
-                    <div id="slide4" className="carousel-item relative w-full">
-                        <img
-                            src="https://placeimg.com/800/200/arch"
-                            className="w-full"
-                        />
-                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                            <a
-                                href="#slide3"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❮
-                            </a>
-                            <a
-                                href="#slide1"
-                                className="btn btn-circle opacity-75"
-                            >
-                                ❯
-                            </a>
-                        </div>
-                    </div>
+                    ))}
                 </div>
 
                 <div className="relative flex justify-between flex-wrap bg-base-100 rounded-3xl z-1 -top-14">

@@ -1,5 +1,5 @@
 import { DogName } from '../components/CreateDogForm/DogName';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { motion } from 'framer-motion';
@@ -9,9 +9,12 @@ import { DogDOB } from '../components/CreateDogForm/DogDOB';
 import { useNavigate } from 'react-router-dom';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { DogImages } from '../components/CreateDogForm/DogImages';
+import { UserContext } from '../context/UserContext.jsx';
 
 const CreateDog = () => {
     const navigate = useRef(useNavigate());
+
+    const { user } = useContext(UserContext);
 
     const [step, setStep] = React.useState(0);
     const [formData, setFormData] = React.useState({
@@ -40,7 +43,37 @@ const CreateDog = () => {
     ];
 
     useEffect(() => {
-        const submitForm = () => {
+        const submitForm = async () => {
+            try {
+                await Promise.all(
+                    formData.images.map((image) => {
+                        const formData = new FormData();
+                        formData.append('file', image);
+                        formData.append(
+                            'fileName',
+                            `${user.username}/dogs/${image.path}`
+                        );
+                        console.log(image);
+
+                        return fetch('/api/s3/upload', {
+                            method: 'POST',
+                            headers: {
+                                ...authHeader(),
+                            },
+                            body: formData,
+                        });
+                    })
+                );
+            } catch (err) {
+                console.log(err);
+            }
+
+            const newImages = formData.images.map((image) => ({
+                url: image.path,
+            }));
+
+            const newFormData = { ...formData, images: newImages };
+
             fetch('/api/dogs', {
                 method: 'POST',
                 headers: {
@@ -48,16 +81,17 @@ const CreateDog = () => {
                     'Content-Type': 'application/json',
                     ...authHeader(),
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(newFormData),
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    navigate.current('/dog/' + data.id);
+                    // navigate.current('/dog/' + data.id);
                 });
         };
 
-        if (step === steps.length) submitForm();
-    }, [formData, step, steps.length]);
+        if (step === steps.length)
+            submitForm().then((data) => console.log(data));
+    }, [formData, step, steps.length, user?.username]);
 
     return (
         <motion.main

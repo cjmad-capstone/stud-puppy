@@ -1,16 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
+import React from 'react';
+import { S3_BUCKET } from '../../utils/consts.js';
 
 function DogCard({ dog }) {
-    const { data, isLoading } = useQuery(['dog', dog.id], () =>
-        fetch('https://dog.ceo/api/breeds/image/random').then((res) =>
-            res.json()
-        )
-    );
-
-    if (isLoading) return null;
-
     return (
         <div className="card w-96 bg-base-100 shadow-xl min-w-[200px]">
             <figure className={`h-[300px] overflow-hidden`}>
@@ -18,7 +12,7 @@ function DogCard({ dog }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
-                    src={data?.message}
+                    src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${dog?.images[0].url}`}
                     alt="Shoes"
                     className={`object-cover object-center w-full h-full`}
                 />
