@@ -18,6 +18,7 @@ import IndividualEvent from "./pages/IndividualEvent.jsx";
 
 import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
+import ErrorPage from "./components/ErrorPage/Error";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
 
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
+                    <Route path={'/error'} element={<ErrorPage />} />
 
                 </Routes>
             </AnimatePresence>

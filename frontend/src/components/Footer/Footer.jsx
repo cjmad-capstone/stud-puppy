@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const Footer = () => {
     return (
         <footer
-            className={'footer relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand'}
+            className={'footer relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand w-auto'}
 >
             <div className="items-center grid-flow-col">
                 <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
@@ -15,7 +15,7 @@ const Footer = () => {
                 </svg>
                 <p>Copyright © 2022 - All right reserved</p>
             </div>
-            <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+            <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end md:mx-auto">
                 <a>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                          className="fill-current">
