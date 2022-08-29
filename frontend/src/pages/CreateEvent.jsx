@@ -28,23 +28,27 @@ const CreateEvent = () => {
     );
 
 
-    function createEvent(eventObj){
-        console.log(eventObj)
-        fetch('/api/events', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                ...authHeader(),
-            },
-            body: JSON.stringify(eventObj),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                // Go to the new dog's profile if data submitted successfully
-                navigate.current('/events/' + data.id);
-            });
-
+    const createEvent = (eventObj) => {
+        try {
+            console.log(eventObj)
+            fetch('/api/events', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+                body: JSON.stringify(eventObj),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    // Go to the new event's profile if data submitted successfully
+                    navigate.current('/events/' + data.id);
+                    console.log(data)
+                });
+        }catch (err) {
+            console.error(err);
+        }
     }
 
 
