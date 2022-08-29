@@ -24,7 +24,7 @@ const DogProfile = () => {
         setLinkUpDialog(true);
     };
 
-    if (!dog) return null;
+    if (!dog) return <main></main>;
 
     return (
         <motion.main {...pt} className={``}>
@@ -38,6 +38,7 @@ const DogProfile = () => {
                             className="carousel-item relative w-full h-full "
                         >
                             <img
+                                alt={`Photo of ${dog?.name}`}
                                 src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${image.url}`}
                                 className="w-full h-full object-center object-cover"
                             />
@@ -63,7 +64,10 @@ const DogProfile = () => {
 
                 <AnimatePresence>
                     {linkUpDialog && (
-                        <LinkDogs dog={dog} setOpen={setLinkUpDialog} />
+                        <LinkDogs
+                            dogToLinkWith={dog}
+                            setOpen={setLinkUpDialog}
+                        />
                     )}
                 </AnimatePresence>
 
@@ -72,7 +76,7 @@ const DogProfile = () => {
                     <div className="card w-full md:w-1/2">
                         <div className="card-body">
                             <h1 className="card-title text-5xl">
-                                {dog?.name},
+                                {dog?.name},&nbsp;
                                 {differenceInYears(
                                     new Date(),
                                     parseISO(dog?.dob)

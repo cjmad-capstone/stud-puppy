@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { UserContext } from '../../context/UserContext.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { S3_BUCKET } from '../../utils/consts.js';
+import ScheduleTime from './ScheduleTime.jsx';
 
-const LinkDogs = ({ dog, setOpen }) => {
+const LinkDogs = ({ dogToLinkWith, setOpen }) => {
     const variants = {
         out: {
             scale: 0,
@@ -20,10 +21,12 @@ const LinkDogs = ({ dog, setOpen }) => {
         ['userDogs'],
         () => fetch(`/api/users/${user.id}/dogs`).then((res) => res.json()),
         {
-            // The query will not execute until the userId exists
+            // The query will not execute until the user exists
             enabled: !!user,
         }
     );
+
+    const [userDog, setUserDog] = useState();
 
     // Prevent scroll when popup is open
     useEffect(() => {
@@ -68,26 +71,38 @@ const LinkDogs = ({ dog, setOpen }) => {
                         />
                     </svg>
                 </button>
-                <h2 className="pb-4">Choose your dog</h2>
-                <ul className={`flex flex-col gap-3 font-brand text-3xl`}>
-                    {userDogs.map((dog) => (
-                        <li
-                            key={dog.id}
-                            className={`flex gap-2 items-center p-2`}
+                {!userDog ? (
+                    <>
+                        <h2 className="pb-4">
+                            Which dog would you like to link with{' '}
+                            {dogToLinkWith?.name}?
+                        </h2>
+                        <ul
+                            className={`flex flex-col gap-3 font-brand text-3xl`}
                         >
-                            <div
-                                className={`w-12 h-12 rounded-full overflow-hidden`}
-                            >
-                                <img
-                                    alt={`Image of ${dog.name}`}
-                                    src={`${S3_BUCKET}/${dog.owner.username}/dogs/${dog.images[0].url}`}
-                                    className={`object-cover object-center`}
-                                />
-                            </div>
-                            {dog.name}
-                        </li>
-                    ))}
-                </ul>
+                            {userDogs.map((dog) => (
+                                <li
+                                    key={dog.id}
+                                    className={`flex gap-2 items-center p-2 cursor-pointer`}
+                                    onClick={() => setUserDog(dog)}
+                                >
+                                    <div
+                                        className={`w-12 h-12 rounded-full overflow-hidden`}
+                                    >
+                                        <img
+                                            alt={`Image of ${dog.name}`}
+                                            src={`${S3_BUCKET}/${dog.owner.username}/dogs/${dog.images[0].url}`}
+                                            className={`object-cover object-center`}
+                                        />
+                                    </div>
+                                    {dog.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                ) : (
+                    <ScheduleTime userDog={userDog} dogToLink={dogToLinkWith} />
+                )}
             </motion.div>
         </motion.div>
     );

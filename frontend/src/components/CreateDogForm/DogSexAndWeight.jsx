@@ -32,6 +32,7 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
                             className="radio checked:bg-secondary"
                             value="F"
                             defaultChecked={formData?.sex === 'F'}
+                            autoFocus
                         />
                     </label>
                 </div>

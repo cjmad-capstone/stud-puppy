@@ -25,6 +25,7 @@ const DogDOB = ({ changeStep, formData }) => {
                     placeholder="Type here"
                     {...register('dob')}
                     className="input input-bordered w-full"
+                    autoFocus
                 />
             </div>
             <div className={`flex`}>
