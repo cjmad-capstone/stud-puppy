@@ -1,56 +1,36 @@
-import React from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSearchAlt } from 'react-icons/bi';
 
-import { useContext, useRef, useState } from 'react';
+import {
+    useContext,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styles from './Nav.module.css';
+import { FiLogIn, FiLogOut } from 'react-icons/fi';
+import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
 
 const Nav = () => {
     const [searchOpen, setSearchOpen] = useState(false);
     const searchIn = useRef();
     const { user } = useContext(UserContext);
-    const { logout } = useContext(UserContext);
 
     return (
         <nav
             className={`relative z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand`}
         >
             <Link to={'/'}>
-                <span className={`${styles.link} hidden md:block`}>
-                    See The Pets
-                </span>
-                <span className={`text-3xl block md:hidden text-slate-50`}>
+
+                <span className={`text-3xl block text-slate-50`}>
                     <AiFillHome />
                 </span>
             </Link>
-            <motion.div
-                className={`relative text-4xl mx-auto cursor-pointer flex gap-1 items-center text-slate-50`}
-            >
-                <motion.input
-                    ref={searchIn}
-                    initial={{ width: 0 }}
-                    animate={{ width: searchOpen ? '200px' : 0 }}
-                    type="text"
-                    placeholder="Type here"
-                    className={`input text-slate-900 ${
-                        !searchOpen ? 'px-0 border-none' : ''
-                    }`}
-                />
-                <BiSearchAlt
-                    onClick={() => {
-                        // set focus or unfocus the input
-                        searchOpen
-                            ? searchIn.current.blur()
-                            : searchIn.current.focus();
-                        setSearchOpen(!searchOpen);
-                    }}
-                />
-            </motion.div>
-
-            <div className={`flex items-center`}>
+            <div className={`flex items-center ml-auto`}>
                 {/*Web Nav*/}
                 <div className={`flex gap-2 items-center hidden md:flex`}>
                     {!user ? (
@@ -63,9 +43,26 @@ const Nav = () => {
                             </Link>
                         </>
                     ) : (
-                        <Link to={'/logout'}>
-                            <span className={styles.link}>Logout</span>
-                        </Link>
+                        <>
+                            <Link to={'/profile'}>
+                                <span className={styles.link}>Profile</span>
+                            </Link>
+                            <Link to={'/create-dog'}>
+                                <span className={`${styles.link}`}>Add Dog</span>
+                            </Link>
+
+                            <Link to={'/create-event'}>
+                                <span className={`${styles.link}`}>Create Event</span>
+                            </Link>
+
+                            <Link to={'/events'}>
+                                <span className={`${styles.link}`}>Events</span>
+                            </Link>
+
+                            <Link to={'/logout'}>
+                                <span className={styles.link}>Logout</span>
+                            </Link>
+                        </>
                     )}
                 </div>
 
@@ -104,7 +101,23 @@ const Nav = () => {
                                 </li>
                             </>
                         ) : (
-                            <li onClick={() => logout()}>Logout</li>
+                            <>
+                                <li>
+                                    <Link to={'/profile'}>Profile</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/create-dog'}>Create Dog</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/create-event'}>Create Event</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/events'}>Events</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/logout'}>Logout</Link>
+                                </li>
+                            </>
                         )}
                     </ul>
                 </div>
