@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { S3_BUCKET } from '../../utils/consts.js';
+import { differenceInYears, parseISO } from 'date-fns';
 
 function DogCard({ dog }) {
     return (
@@ -19,7 +20,8 @@ function DogCard({ dog }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
-                    {dog?.name}, {dog?.age}
+                    {dog?.name},
+                    {differenceInYears(new Date(), parseISO(dog?.dob))}
                     {dog?.loveable && (
                         <div className="badge badge-secondary">
                             Ready to breed

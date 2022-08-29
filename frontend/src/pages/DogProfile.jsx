@@ -1,11 +1,14 @@
 import { pt } from '../utils/anim/pageTransitions.js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../components/Button/Button.jsx';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { differenceInYears, parse, parseISO } from 'date-fns';
 import { S3_BUCKET } from '../utils/consts.js';
+import LinkDogs from '../components/LinkDogs/LinkDogs.jsx';
+import { UserContext } from '../context/UserContext.jsx';
+import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
 
 const DogProfile = () => {
     const { id } = useParams();
@@ -13,10 +16,18 @@ const DogProfile = () => {
         fetch(`/api/dogs/${id}`).then((res) => res.json())
     );
 
-    if (!dog) return null;
+    const [linkUpDialog, setLinkUpDialog] = useState(false);
+
+    const openLinkUpDialog = (e) => {
+        e.preventDefault();
+        console.log(e);
+        setLinkUpDialog(true);
+    };
+
+    if (!dog) return <main></main>;
 
     return (
-        <motion.main {...pt} className={`absolute top-0 left-0 md:static`}>
+        <motion.main {...pt} className={``}>
             <div>
                 {/*Carousel*/}
                 <div className="carousel w-full h-[600px]">
@@ -27,6 +38,7 @@ const DogProfile = () => {
                             className="carousel-item relative w-full h-full "
                         >
                             <img
+                                alt={`Photo of ${dog?.name}`}
                                 src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${image.url}`}
                                 className="w-full h-full object-center object-cover"
                             />
@@ -50,12 +62,21 @@ const DogProfile = () => {
                     ))}
                 </div>
 
+                <AnimatePresence>
+                    {linkUpDialog && (
+                        <LinkDogs
+                            dogToLinkWith={dog}
+                            setOpen={setLinkUpDialog}
+                        />
+                    )}
+                </AnimatePresence>
+
                 <div className="relative flex justify-between flex-wrap bg-base-100 rounded-3xl z-1 -top-14">
                     {/*Left card*/}
                     <div className="card w-full md:w-1/2">
                         <div className="card-body">
                             <h1 className="card-title text-5xl">
-                                {dog?.name},{' '}
+                                {dog?.name},&nbsp;
                                 {differenceInYears(
                                     new Date(),
                                     parseISO(dog?.dob)
@@ -64,12 +85,12 @@ const DogProfile = () => {
                             <h2 className="text-3xl pb-4"></h2>
                             <p>{dog.description}</p>
                             <div className="card-actions justify-center pt-6">
-                                    <Button
-                                        className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
-                                    >
-                                        Schedule A Meetup
-                                    </Button>
-
+                                <Button
+                                    className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
+                                    onClick={openLinkUpDialog}
+                                >
+                                    Schedule A Meetup
+                                </Button>
                             </div>
                         </div>
                     </div>

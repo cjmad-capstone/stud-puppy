@@ -26,6 +26,7 @@ const DogDescription = ({ changeStep, formData }) => {
                     {...register('description')}
                     defaultValue={formData?.description}
                     className="textarea textarea-secondary w-full"
+                    autoFocus
                 ></textarea>
             </div>
             <div className={`flex`}>
