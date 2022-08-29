@@ -48,7 +48,7 @@ public class Dog {
     @Column(nullable = false)
     @OneToMany(mappedBy = "dog", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<DogImage> images;
+    private List<DogImage> images;
 
     @Column(nullable = false)
     private Boolean loveable;

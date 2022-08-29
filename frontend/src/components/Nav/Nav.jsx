@@ -1,24 +1,18 @@
+import React from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { BiSearchAlt } from 'react-icons/bi';
 
-import {
-    useContext,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from 'react';
+import { useContext, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styles from './Nav.module.css';
-import { FiLogIn, FiLogOut } from 'react-icons/fi';
-import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
 
 const Nav = () => {
     const [searchOpen, setSearchOpen] = useState(false);
     const searchIn = useRef();
     const { user } = useContext(UserContext);
+    const { logout } = useContext(UserContext);
 
     return (
         <nav
@@ -110,9 +104,7 @@ const Nav = () => {
                                 </li>
                             </>
                         ) : (
-                            <li>
-                                <Link to={'/logout'}>Logout</Link>
-                            </li>
+                            <li onClick={() => logout()}>Logout</li>
                         )}
                     </ul>
                 </div>
