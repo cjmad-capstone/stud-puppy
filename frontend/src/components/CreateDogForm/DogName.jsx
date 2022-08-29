@@ -24,6 +24,7 @@ const DogName = ({ changeStep, formData }) => {
                     defaultValue={formData?.name}
                     {...register('name')}
                     className="input input-bordered w-full"
+                    autoFocus
                 />
             </div>
             <Button onClick={() => _changeStep(1)}>Next</Button>

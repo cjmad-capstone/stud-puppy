@@ -18,7 +18,13 @@ const DogImages = ({ changeStep, formData }) => {
                         Upload some photos of {formData?.name}
                     </span>
                 </label>
-                <Dropzone onDrop={(acceptedFiles) => setFiles(acceptedFiles)}>
+                <Dropzone
+                    onDrop={(acceptedFiles) => setFiles(acceptedFiles)}
+                    accept={{
+                        'image/jpeg': ['.jpeg', '.jpg'],
+                        'image/png': ['.png'],
+                    }}
+                >
                     {({ getRootProps, getInputProps }) => (
                         <>
                             <section

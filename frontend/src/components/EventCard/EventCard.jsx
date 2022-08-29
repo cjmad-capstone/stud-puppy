@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 function EventCard({ event }) {
@@ -13,9 +14,7 @@ function EventCard({ event }) {
                 <p>{event?.description}</p>
                 <div className="card-actions justify-end">
                     <Link to={`/events/${event.id}`}>
-                        <button className="btn btn-primary">
-                            View Event
-                        </button>
+                        <button className="btn btn-primary">View Event</button>
                     </Link>
                 </div>
             </div>

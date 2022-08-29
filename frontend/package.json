@@ -25,6 +25,7 @@
         "react-dropzone": "^14.2.2",
         "react-hook-form": "^7.34.2",
         "react-icons": "^4.4.0",
+        "react-loading": "^2.0.3",
         "react-router-dom": "6",
         "yup": "^0.32.11"
     },
