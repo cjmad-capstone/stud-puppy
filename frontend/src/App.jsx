@@ -45,6 +45,7 @@ function App() {
                     <Route path={'/create-event'} element={<CreateEvent />} />
 
                     <Route path={'/error'} element={<ErrorPage />} />
+                    <Route path={'/*'} element={<ErrorPage />} />
 
                 </Routes>
             </AnimatePresence>
