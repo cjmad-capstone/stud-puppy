@@ -11,6 +11,7 @@ import { authHeader } from '../utils/auth/authHeader.js';
 import { DogImages } from '../components/CreateDogForm/DogImages';
 import { UserContext } from '../context/UserContext.jsx';
 import Loading from 'react-loading';
+import { withAuth } from '../utils/auth/withAuth.jsx';
 
 const CreateDog = () => {
     const navigate = useRef(useNavigate());
@@ -118,4 +119,4 @@ const CreateDog = () => {
     );
 };
 
-export default CreateDog;
+export default withAuth(CreateDog);
