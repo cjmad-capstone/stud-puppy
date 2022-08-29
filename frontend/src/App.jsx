@@ -42,6 +42,7 @@ function App() {
 
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
+                    <Route path={'/create-event'} element={<CreateEvent />} />
 
                 </Routes>
             </AnimatePresence>
