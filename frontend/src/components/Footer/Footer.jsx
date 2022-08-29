@@ -15,7 +15,7 @@ const Footer = () => {
                 </svg>
                 <p>Copyright © 2022 - All right reserved</p>
             </div>
-            <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end md:mx-auto">
+            <div className="grid-flow-col gap-4 md:ml-[68%]">
                 <a>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                          className="fill-current">
