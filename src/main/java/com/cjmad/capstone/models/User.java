@@ -45,7 +45,8 @@ public class User {
     private List<Dog> dogs;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "creator")
+    @JsonIgnore
     private List<Event> events;
 
     @ManyToOne
