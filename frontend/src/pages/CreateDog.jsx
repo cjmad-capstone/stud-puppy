@@ -119,4 +119,4 @@ const CreateDog = () => {
     );
 };
 
-export default withAuth(CreateDog);
+export default withAuth(CreateDog, '/login?ref=create-dog');
