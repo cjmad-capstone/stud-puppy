@@ -44,6 +44,7 @@ function App() {
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
                     <Route path={'/error'} element={<ErrorPage />} />
+                    <Route path={'/*'} element={<ErrorPage />} />
 
                 </Routes>
             </AnimatePresence>

@@ -27,17 +27,20 @@ const ErrorPage= () =>{
             subtitle = 'Bad Request'
             break;
 
-        default: errorCode
+        default:
+            title = 'Error 404'
+            subtitle = "Not Found"
 
     }
     return (
         <motion.main {...pt} className={`w-full px-4`}>
             <div className="card w-full h-screen bg-gradient-to-br from-pink-400 to-red-500 text-primary-content">
                 <div className="card-body">
-                    <img className="absolute mt-[60%] h-[50%] right-3 md:mt-0 md:h-[125%] md:top-0 md: right-0 md:mx-auto md:right-0" src="img/thug-life-pug-transparent-background-sad-dog-jpg-1226295.png" alt="Shoes"/>
+                    <img className="absolute mt-[60%] h-[50%] right-3 md:mt-0 md:h-[125%] md:top-0 md: right-0 md:mx-auto md:right-5" src="img/thug-life-pug-transparent-background-sad-dog-jpg-1226295.png" alt="Shoes"/>
 
                     <h2 className="card-title text-8xl">{title} </h2>
                     <p className={"text-3xl"}>{subtitle}</p>
+
                 </div>
             </div>
         </motion.main>
