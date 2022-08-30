@@ -1,4 +1,4 @@
-import { DogName } from '../components/CreateDogForm/DogName';
+import { DogNameAndBreed } from '../components/CreateDogForm/DogNameAndBreed.jsx';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
@@ -26,6 +26,7 @@ const CreateDog = () => {
         dob: '',
         description: '',
         loveable: false,
+        breeds: [],
         images: [],
     });
 
@@ -37,7 +38,7 @@ const CreateDog = () => {
     const props = { changeStep, formData, setFormData };
 
     const steps = [
-        <DogName key="dog-name" {...props} />,
+        <DogNameAndBreed key="dog-name" {...props} />,
         <DogSexAndWeight key="dog-sex-weight" {...props} />,
         <DogDOB key="dog-dob" {...props} />,
         <DogDescription key="dog-desc" {...props} />,

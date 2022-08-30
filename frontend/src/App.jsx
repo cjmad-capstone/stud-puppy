@@ -22,10 +22,12 @@ import ErrorPage from './components/ErrorPage/Error';
 
 function App() {
     const location = useLocation();
+    const hasVisited = localStorage.getItem('hasVisited');
     // Set the theme
     useLayoutEffect(() => {
+        if (!hasVisited) localStorage.setItem('hasVisited', 'true');
         document.querySelector('html').dataset.theme = 'cupcake';
-    }, []);
+    }, [hasVisited]);
     return (
         <>
             <Nav />

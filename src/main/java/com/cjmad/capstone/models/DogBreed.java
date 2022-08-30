@@ -31,4 +31,8 @@ public class DogBreed {
     public DogBreed() {
     }
 
+    public DogBreed(String breedName) {
+        this.breedName = breedName;
+    }
+
 }

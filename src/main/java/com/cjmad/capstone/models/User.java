@@ -53,6 +53,14 @@ public class User {
     private Role role;
 
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    @JsonIgnore
+    private List<Event> attendingEvents;
+
+
     public User() {
     }
 
@@ -67,6 +75,7 @@ public class User {
         this.dogs = copy.dogs;
         this.events = copy.events;
         this.role = copy.role;
+        this.attendingEvents = copy.attendingEvents;
     }
 
     public User(String username, String email, String password) {
