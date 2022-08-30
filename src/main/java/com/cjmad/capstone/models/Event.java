@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "events")
@@ -23,10 +24,10 @@ public class Event {
     private String description;
 
     @Column(name = "date")
-    private Integer date;
+    private Date date;
 
     @Column(name = "time")
-    private Integer time;
+    private String time;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")

@@ -42,6 +42,7 @@ function App() {
 
                     <Route path={'/logout'} element={<Logout />} />
                     <Route path={'/create-dog'} element={<CreateDog />} />
+                    <Route path={'/create-event'} element={<CreateEvent />} />
 
                     <Route path={'/error'} element={<ErrorPage />} />
                     <Route path={'/*'} element={<ErrorPage />} />
