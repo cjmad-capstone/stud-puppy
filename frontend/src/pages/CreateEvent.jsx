@@ -46,6 +46,8 @@ const CreateEvent = () => {
     };
 
     return (
+        <motion.main {...pt}>
+
         <div className={'flex flex-col items-center'}>
             <h1 className={`text-6xl font-brand font-bold`}>Create Event</h1>
             <form
@@ -142,6 +144,8 @@ const CreateEvent = () => {
                 </Button>
             </form>
         </div>
+        </motion.main>
+
     );
 };
 
