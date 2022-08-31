@@ -19,6 +19,7 @@ import IndividualEvent from './pages/IndividualEvent.jsx';
 import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
 import ErrorPage from './components/ErrorPage/Error';
+import AboutPage from "./pages/AboutPage.jsx";
 
 function App() {
     const location = useLocation();
@@ -36,7 +37,7 @@ function App() {
                     <Route path={'/register'} element={<Register />} />
                     <Route path={'/profile'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
-
+                    <Route path={'/about-us'} element={<AboutPage />} />
                     <Route path={'/events'} element={<AllEvents />} />
                     <Route path={'/events/:id'} element={<IndividualEvent />} />
 
