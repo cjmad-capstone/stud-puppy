@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineLinkedin } from "react-icons/ai";
+import { AiOutlineGithub } from "react-icons/ai";
 
 function AboutCard(props) {
     return (
@@ -11,7 +12,9 @@ function AboutCard(props) {
             </div>
             <div className="card-actions justify-end">
                 <p>{props.bio}</p>
-                <AiOutlineLinkedin /><p>{props.linkedIn}</p>
+                <br />
+                <a href={props.linkedIn}><AiOutlineLinkedin /></a>
+                <a href={props.githubLink}><AiOutlineGithub /></a>
             </div>
         </div>
 
