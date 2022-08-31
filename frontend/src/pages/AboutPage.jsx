@@ -43,7 +43,7 @@ const AboutPage = () => {
                 <AboutCard
                     img="../public/img/A. Rodriguez.jpg"
                     name="Alex"
-                    bio="Oi !"
+                    bio="Oi, you gotta get on this TRT bro !"
                     linkedIn="www.linkedin.com/in/alexanderjrodriguez"
                     githubLink="https://github.com/ajrod-dev"
 
