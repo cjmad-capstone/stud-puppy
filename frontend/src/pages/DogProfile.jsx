@@ -73,7 +73,7 @@ const DogProfile = () => {
 
                 <div className="relative flex justify-between flex-wrap bg-base-100 rounded-3xl z-1 -top-14">
                     {/*Left card*/}
-                    <div className="card w-full md:w-1/2">
+                    <div className="card w-full md:w-1/2 lg:pl-10">
                         <div className="card-body">
                             <h1 className="card-title text-5xl">
                                 {dog?.name},&nbsp;

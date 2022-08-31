@@ -19,6 +19,7 @@ import IndividualEvent from './pages/IndividualEvent.jsx';
 import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
 import ErrorPage from './components/ErrorPage/Error';
+import AllDogs from "./pages/AllDogs.jsx";
 
 function App() {
     const location = useLocation();
@@ -48,6 +49,8 @@ function App() {
 
                     <Route path={'/error'} element={<ErrorPage />} />
                     <Route path={'/*'} element={<ErrorPage />} />
+                    <Route path={'/alldogs'} element={<AllDogs />} />
+
                 </Routes>
             </AnimatePresence>
             {/*<Footer />*/}
