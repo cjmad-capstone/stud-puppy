@@ -25,7 +25,7 @@ const Home = () => {
             </div>
             {/*</div>*/}
             <div className="">
-                <div className="visible md:invisible">
+                <div className="visible md:invisible flex flex-col gap-3">
                     <h2 className="card-title text-3xl text-blue-900 font-bold">
                         Welcome to Pugs 'n' Kisses
                     </h2>
@@ -44,7 +44,7 @@ const Home = () => {
                 <Button
                     onClick={() => location.reload()}
                     className={
-                        'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 sm:overflow-auto md:mx-auto'
+                        'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mt-4 sm:overflow-auto md:mx-auto'
                     }
                 >
                     Start here!

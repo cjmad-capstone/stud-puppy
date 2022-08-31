@@ -91,7 +91,7 @@ const LinkDogs = ({ dogToLinkWith, setOpen }) => {
                                     >
                                         <img
                                             alt={`Image of ${dog.name}`}
-                                            src={`${FILESTACK_ENDPOINT}/${dog.owner.username}/dogs/${dog.images[0].url}`}
+                                            src={`${FILESTACK_ENDPOINT}/${dog.images[0].url}`}
                                             className={`object-cover object-center`}
                                         />
                                     </div>

@@ -20,7 +20,7 @@ function DogCard({ dog }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
-                    {dog?.name},
+                    {dog?.name},&nbsp;
                     {differenceInYears(new Date(), parseISO(dog?.dob))}
                     {dog?.loveable && (
                         <div className="badge badge-secondary">
