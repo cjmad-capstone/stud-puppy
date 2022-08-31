@@ -46,34 +46,7 @@ const CreateDog = () => {
     ];
 
     const submitForm = useCallback(async () => {
-        try {
-            await Promise.all(
-                formData.images.map((image) => {
-                    const formData = new FormData();
-                    formData.append('file', image);
-                    formData.append(
-                        'fileName',
-                        `${user.username}/dogs/${image.path}`
-                    );
-
-                    return fetch('/api/s3/upload', {
-                        method: 'POST',
-                        headers: {
-                            ...authHeader(),
-                        },
-                        body: formData,
-                    });
-                })
-            );
-        } catch (err) {
-            console.error(err);
-        }
-
-        const newImages = formData.images.map((image) => ({
-            url: image.path,
-        }));
-
-        const newFormData = { ...formData, images: newImages };
+        const newFormData = { ...formData };
         fetch('/api/dogs', {
             method: 'POST',
             headers: {
@@ -85,10 +58,12 @@ const CreateDog = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                // Go to the new dog's profile if data submitted successfully
-                navigate.current('/dog/' + data.id);
+                setTimeout(() => {
+                    // Go to the new dog's profile if data submitted successfully
+                    navigate.current('/dog/' + data.id);
+                }, 2000);
             });
-    }, [formData, user?.username]);
+    }, [formData]);
 
     useEffect(() => {
         if (step === steps.length)

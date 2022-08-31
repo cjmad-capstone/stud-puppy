@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { S3_BUCKET } from '../../utils/consts.js';
+import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 
 function DogCard({ dog }) {
@@ -13,8 +13,8 @@ function DogCard({ dog }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
-                    src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${dog?.images[0].url}`}
-                    alt="Shoes"
+                    src={`${FILESTACK_ENDPOINT}/${dog?.images[0].url}`}
+                    alt={`Photo of ${dog?.name}`}
                     className={`object-cover object-center w-full h-full`}
                 />
             </figure>

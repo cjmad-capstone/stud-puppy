@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { UserContext } from '../../context/UserContext.jsx';
 import { useQuery } from '@tanstack/react-query';
-import { S3_BUCKET } from '../../utils/consts.js';
+import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import ScheduleTime from './ScheduleTime.jsx';
 
 const LinkDogs = ({ dogToLinkWith, setOpen }) => {
@@ -91,7 +91,7 @@ const LinkDogs = ({ dogToLinkWith, setOpen }) => {
                                     >
                                         <img
                                             alt={`Image of ${dog.name}`}
-                                            src={`${S3_BUCKET}/${dog.owner.username}/dogs/${dog.images[0].url}`}
+                                            src={`${FILESTACK_ENDPOINT}/${dog.owner.username}/dogs/${dog.images[0].url}`}
                                             className={`object-cover object-center`}
                                         />
                                     </div>
