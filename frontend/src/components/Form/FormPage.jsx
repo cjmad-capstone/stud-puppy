@@ -20,8 +20,8 @@ const FormPage = ({ children, errors }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { delay: 0.25 } }}
-            className={`p-4 gap-4 relative bg-base-100 rounded-xl 
-            w-3/4 flex flex-col items-center justify-center`}
+            className={`p-4 gap-4 relative bg-[hsl(0_70%_97%)]  rounded-xl 
+            w-3/4 md:w-1/2 flex flex-col items-center justify-center`}
         >
             <AnimatePresence>
                 {!_.isEmpty(errors) && (
@@ -32,10 +32,10 @@ const FormPage = ({ children, errors }) => {
                         animate="in"
                         exit="out"
                     >
-                        <div className="alert alert-error shadow-lg">
-                            {Object.values(errors).map(
-                                (error) => error.message
-                            )}
+                        <div className="alert alert-error shadow-lg flex flex-col items-start">
+                            {Object.values(errors).map((error) => (
+                                <div key={error.message}>{error.message}</div>
+                            ))}
                         </div>
                     </motion.div>
                 )}
@@ -50,7 +50,7 @@ const FormPage = ({ children, errors }) => {
                 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: 'linear' }}
-                className={`absolute -inset-2 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-secondary to-accent`}
+                className={`absolute shadow-2xl -inset-2 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-secondary to-accent`}
             />
         </motion.section>
     );

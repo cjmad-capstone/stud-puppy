@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 function EventCard({ event }) {
     return (
@@ -9,7 +10,8 @@ function EventCard({ event }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
-                    {event?.name}, {event?.date}, {event?.time}
+                    {event?.name}, {format(parseISO(event?.date), '/dd/yyyy')},{' '}
+                    {event?.time}
                 </h2>
                 <p>{event?.description}</p>
                 <div className="card-actions justify-end">

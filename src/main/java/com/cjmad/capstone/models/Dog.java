@@ -25,7 +25,7 @@ public class Dog {
     @Column(name = "dog_name", nullable = false)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="dogs_breeds",
             joinColumns={@JoinColumn(name="dog_id")},

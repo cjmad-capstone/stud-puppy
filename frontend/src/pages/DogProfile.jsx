@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { differenceInYears, parse, parseISO } from 'date-fns';
-import { S3_BUCKET } from '../utils/consts.js';
+import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import LinkDogs from '../components/LinkDogs/LinkDogs.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
@@ -39,7 +39,7 @@ const DogProfile = () => {
                         >
                             <img
                                 alt={`Photo of ${dog?.name}`}
-                                src={`${S3_BUCKET}/${dog?.owner?.username}/dogs/${image.url}`}
+                                src={`${FILESTACK_ENDPOINT}/${image.url}`}
                                 className="w-full h-full object-center object-cover"
                             />
                             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -82,7 +82,14 @@ const DogProfile = () => {
                                     parseISO(dog?.dob)
                                 )}
                             </h1>
-                            <h2 className="text-3xl pb-4"></h2>
+                            {dog?.breeds?.map((breed, idx) => (
+                                <div
+                                    key={idx}
+                                    className="badge badge-secondary py-3 px-2 my-3"
+                                >
+                                    {breed.breedName}
+                                </div>
+                            ))}
                             <p>{dog.description}</p>
                             <div className="card-actions justify-center pt-6">
                                 <Button

@@ -1,13 +1,7 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
-import { useQuery } from '@tanstack/react-query';
-import { authHeader } from '../utils/auth/authHeader.js';
-import DogCard from '../components/DogCard/DogCard.jsx';
-import Nav from '../components/Nav/Nav.jsx';
-import { Navbar } from 'react-daisyui';
 import Button from '../components/Button/Button.jsx';
-import Footer from '../components/Footer/Footer';
+import React from 'react';
 
 const Home = () => {
     return (
@@ -16,10 +10,10 @@ const Home = () => {
             {/*    <div className="card mx-4 w-100 h-full bg-base-100 shadow-xl rounded-tl-full">*/}
             <div className="w-full card bg-gradient-to-br from-pink-400 to-red-500 h-96 rounded-tl-[180px]">
                 <div className={'invisible md:visible'}>
-                    <p className="text-white font-bold text-7xl w-1/2 mx-12 mt-14">
+                    <p className="text-white font-bold text-7xl w-1/2 mx-16 mt-14">
                         Welcome to Pugs 'n' Kisses
                     </p>
-                    <p className="text-3xl text-yellow-300 m-12">
+                    <p className="text-3xl text-yellow-300 m-12 mx-16">
                         Find your best buddy a play date.
                     </p>
                 </div>
@@ -30,8 +24,8 @@ const Home = () => {
                 />
             </div>
             {/*</div>*/}
-            <div className="card-body">
-                <div className="visible md:invisible">
+            <div className="">
+                <div className="visible md:invisible flex flex-col gap-3">
                     <h2 className="card-title text-3xl text-blue-900 font-bold">
                         Welcome to Pugs 'n' Kisses
                     </h2>
@@ -48,11 +42,12 @@ const Home = () => {
                     </p>
                 </div>
                 <Button
+                    onClick={() => location.reload()}
                     className={
-                        'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 sm:overflow-auto md:mx-auto'
+                        'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mt-4 sm:overflow-auto md:mx-auto'
                     }
                 >
-                    Get dog NOW
+                    Start here!
                 </Button>
             </div>
             {/*</div>*/}

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -29,9 +30,15 @@ public class Event {
     @Column(name = "time")
     private String time;
 
+    @Column(name = "isPrivate")
+    private boolean isPrivate;
+
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> attendees;
 
     public Event() {
     }

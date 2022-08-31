@@ -23,7 +23,10 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
                         What's your dog's gender?
                     </span>
                 </label>
-                <div className="form-control border-secondary border-2 rounded-full px-3">
+                <div
+                    className="form-control border-secondary border-2 rounded-full px-3
+                hover:bg-secondary transition-colors hover:bg-opacity-25"
+                >
                     <label className="label cursor-pointer">
                         <span className="label-text">F</span>
                         <input
@@ -36,7 +39,10 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
                         />
                     </label>
                 </div>
-                <div className="form-control border-primary border-2 rounded-full px-3">
+                <div
+                    className="form-control border-primary border-2 rounded-full px-3
+                hover:bg-primary transition-colors hover:bg-opacity-25"
+                >
                     <label className="label cursor-pointer">
                         <span className="label-text">M</span>
                         <input

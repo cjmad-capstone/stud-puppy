@@ -40,4 +40,28 @@ public class EventController {
     public Optional<Event> getEventById(@PathVariable long id) {
         return eventsRepository.findById(id);
     }
+
+    @PostMapping("/{id}/attend")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Event attendEvent(@PathVariable long id) throws Exception {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Event event = eventsRepository.findById(id).orElseThrow();
+        List<User> attendees = event.getAttendees();
+        if(attendees.contains(user))
+            throw new Exception("You are already attending this event");
+        event.getAttendees().add(user);
+        return eventsRepository.save(event);
+    }
+    @PostMapping("/{id}/leave")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Event leaveEvent(@PathVariable long id) throws Exception {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Event event = eventsRepository.findById(id).orElseThrow();
+        List<User> attendees = event.getAttendees();
+        if(!attendees.contains(user))
+            throw new Exception("You are not attending this event");
+
+        event.getAttendees().remove(user);
+        return eventsRepository.save(event);
+    }
 }

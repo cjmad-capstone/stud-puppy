@@ -7,10 +7,12 @@ import { registerUser } from '../utils/user/userActions.js';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
 
 const Login = () => {
     const [error, setError] = useState();
     const navigate = useNavigate();
+    const [files, setFiles] = React.useState([]);
 
     const schema = yup
         .object({
@@ -38,9 +40,6 @@ const Login = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const inputOptions = { required: true };
-    useEffect(() => {
-        console.log(errors);
-    }, [errors]);
 
     return (
         <motion.main className={`flex flex-col items-center`} {...pt}>
@@ -152,6 +151,7 @@ const Login = () => {
                             }`}
                         />
                     </div>
+
                     <div className={`pt-2`}>
                         <span className={`text-sm text-gray-600`}>
                             Already have an account?&nbsp;
@@ -160,6 +160,7 @@ const Login = () => {
                             </Link>
                         </span>
                     </div>
+
                     <Button>Register</Button>
                 </form>
             </motion.div>

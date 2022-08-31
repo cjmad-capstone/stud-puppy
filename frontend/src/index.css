@@ -12,3 +12,13 @@ main {
 	min-height: 100vh;
 }
 
+
+
+/*Filestack style override*/
+
+.fsp-picker-holder{
+	border-radius: 1rem !important;
+	overflow: hidden !important;
+	@apply shadow-2xl;
+}
+
