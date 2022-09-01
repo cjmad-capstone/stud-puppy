@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import Button from '../components/Button/Button.jsx';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -41,14 +42,15 @@ const Home = () => {
                         them?
                     </p>
                 </div>
-                <Button
-                    onClick={() => location.reload()}
-                    className={
-                        'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mt-4 sm:overflow-auto md:mx-auto'
-                    }
-                >
-                    Start here!
-                </Button>
+                <Link to={'/alldogs'}>
+                    <Button
+                        className={
+                            'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mt-4 sm:overflow-auto md:mx-auto'
+                        }
+                    >
+                        Start here!
+                    </Button>
+                </Link>
             </div>
             {/*</div>*/}
         </motion.main>

@@ -1,19 +1,26 @@
-import { fetchUser } from '../utils/user/userActions.js';
+import React from 'react';
 import { withAuth } from '../utils/auth/withAuth.jsx';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { motion } from 'framer-motion';
-import Nav from '../components/Nav/Nav.jsx';
-import Button from '../components/Button/Button.jsx';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import DogCard from '../components/DogCard/DogCard.jsx';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import EventCard from '../components/EventCard/EventCard.jsx';
 
 const Profile = () => {
     const { user } = useContext(UserContext);
+
+    const { data: userEvents } = useQuery(
+        ['userEvents', user?.id],
+        () => fetch(`/api/users/${user.id}/events`).then((res) => res.json()),
+        {
+            enabled: !!user,
+        }
+    );
+
     const { data: userDogs } = useQuery(
-        ['userDogs'],
+        ['userDogs', user?.id],
         () => fetch(`/api/users/${user.id}/dogs`).then((res) => res.json()),
         {
             // The query will not execute until the userId exists
@@ -42,6 +49,14 @@ const Profile = () => {
             <div className={`flex gap-3 flex-wrap justify-center`}>
                 {userDogs?.map((dog, idx) => (
                     <DogCard dog={dog} key={idx} />
+                ))}
+            </div>
+            <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
+                Your Events
+            </h1>
+            <div className={`flex gap-3 flex-wrap justify-center`}>
+                {userEvents?.map((event, idx) => (
+                    <EventCard event={event} key={idx} />
                 ))}
             </div>
         </motion.main>

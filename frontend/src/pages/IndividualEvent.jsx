@@ -68,12 +68,14 @@ const IndividualEvent = () => {
     if (!event) return <main></main>;
 
     return (
-        <motion.main {...pt} className={`p-4`}>
+        <motion.main {...pt}>
             {/*<pre>{JSON.stringify(event, null, 2)}</pre>*/}
             <div
                 className={`flex flex-col gap-3 flex-wrap justify-center w-2/3 mx-auto`}
             >
-                <div className={`flex items-center justify-between`}>
+                <div
+                    className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
+                >
                     <h1 className={`font-brand font-bold text-5xl`}>
                         {event.name}
                     </h1>

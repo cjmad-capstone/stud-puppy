@@ -10,7 +10,7 @@ function EventCard({ event }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
-                    {event?.name}, {format(parseISO(event?.date), '/dd/yyyy')},{' '}
+                    {event?.name}, {format(parseISO(event?.date), 'MM/dd/yyyy')}{' '}
                     {event?.time}
                 </h2>
                 <p>{event?.description}</p>

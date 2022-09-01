@@ -12,6 +12,7 @@ import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
 
 const DogProfile = () => {
     const { id } = useParams();
+    const { user } = useContext(UserContext);
     const { data: dog, error } = useQuery(['dog', id], () =>
         fetch(`/api/dogs/${id}`).then((res) => res.json())
     );
@@ -73,32 +74,41 @@ const DogProfile = () => {
 
                 <div className="relative flex justify-between flex-wrap bg-base-100 rounded-3xl z-1 -top-14">
                     {/*Left card*/}
-                    <div className="card w-full md:w-1/2 lg:pl-10">
+                    <div className="card w-full flex-grow md:w-1/2 lg:pl-10">
                         <div className="card-body">
-                            <h1 className="card-title text-5xl">
-                                {dog?.name},&nbsp;
-                                {differenceInYears(
-                                    new Date(),
-                                    parseISO(dog?.dob)
-                                )}
-                            </h1>
-                            {dog?.breeds?.map((breed, idx) => (
-                                <div
-                                    key={idx}
-                                    className="badge badge-secondary py-3 px-2 my-3"
-                                >
-                                    {breed.breedName}
-                                </div>
-                            ))}
-                            <p>{dog.description}</p>
-                            <div className="card-actions justify-center pt-6">
-                                <Button
-                                    className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
-                                    onClick={openLinkUpDialog}
-                                >
-                                    Schedule A Meetup
-                                </Button>
+                            <div className={`flex justify-between`}>
+                                <h1 className="card-title text-5xl font-brand">
+                                    {dog?.name},&nbsp;
+                                    {differenceInYears(
+                                        new Date(),
+                                        parseISO(dog?.dob)
+                                    )}
+                                </h1>
                             </div>
+                            <div className="flex items-center gap-4">
+                                {dog?.breeds?.map((breed, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="badge badge-secondary py-3 px-2 my-3"
+                                    >
+                                        {breed.breedName}
+                                    </div>
+                                ))}
+                                <div className="badge badge-primary py-3 px-2">
+                                    {dog?.weight}lbs
+                                </div>
+                            </div>
+                            <p>{dog.description}</p>
+                            {user?.id !== dog?.owner?.id && (
+                                <div className="card-actions justify-center pt-6">
+                                    <Button
+                                        className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
+                                        onClick={openLinkUpDialog}
+                                    >
+                                        Schedule A Meetup
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
 

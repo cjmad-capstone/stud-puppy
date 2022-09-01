@@ -25,7 +25,7 @@ public class EventController {
 
     @GetMapping
     public List<Event> getEvent() {
-        return eventsRepository.findAll();
+        return eventsRepository.findAllPublic();
     }
 
     @PostMapping
