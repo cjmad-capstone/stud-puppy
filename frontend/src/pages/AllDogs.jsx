@@ -26,9 +26,17 @@ const AllDogs = () => {
     // console.log(dogs)
     return(
         <motion.main {...pt}>
+            <h1 className={'text-center font-bold text-5xl md:text-6xl font-brand pb-10'}>Pugs 'n' Kisses</h1>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto pb-5'}/>
+
             <div id={"card"} className={'flex flex-wrap justify-center' }>
                 {dogs?.map(dog => <DogCard dog={dog} />)}
             </div>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mt-8'}/>
+            <div className={'flex justify-center'}>
+                <a href={'#'} className="btn btn-ghost my-5 sm:mt-7 lg:mt-14 px-12">^ Scroll to top ^</a>
+            </div>
+
         </motion.main>
     )
 }
