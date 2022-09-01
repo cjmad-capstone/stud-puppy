@@ -40,6 +40,4 @@ const AllDogs = () => {
         </motion.main>
     )
 }
-
-
 export default AllDogs
