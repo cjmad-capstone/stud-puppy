@@ -55,7 +55,7 @@ const Profile = () => {
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
                 Your Events
             </h1>
-            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mt-8 mb-10'}/>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mb-10'}/>
             <div className={`flex gap-3 flex-wrap justify-center`}>
                 {userEvents?.map((event, idx) => (
                     <EventCard event={event} key={idx} />
