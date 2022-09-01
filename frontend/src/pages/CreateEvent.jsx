@@ -51,15 +51,16 @@ const CreateEvent = () => {
         <div className={'flex flex-col items-center'}>
             <h1 className={`text-6xl font-brand font-bold`}>Create Event</h1>
             <form
+                className={`flex flex-col items-center`}
                 onSubmit={handleSubmit((data) => {
                     createEvent(data);
                 })}
                 className={`w-1/2`}
             >
-                <div className={`flex flex-col items-center`}>
+                <div className={`w-full`}>
                     <label
                         htmlFor="name"
-                        className={`text-2xl font-brand font-bold`}
+                        className={`label label-text-alt`}
                     >
                         Name
                     </label>
@@ -68,14 +69,14 @@ const CreateEvent = () => {
                         {...register('name')}
                         name="name"
                         id="name"
-                        className={`w-full p-2 border border-brand rounded-lg`}
+                        className={`w-full input input-bordered input-secondary rounded-full'`}
                     />
                 </div>
                 {errors?.name && <p>{errors.name.message}</p>}
-                <div className={`flex flex-col items-center`}>
+                <div className={`w-full`}>
                     <label
                         htmlFor="description"
-                        className={`text-2xl font-brand font-bold`}
+                        className={`label label-text-alt`}
                     >
                         Description
                     </label>
@@ -84,14 +85,14 @@ const CreateEvent = () => {
                         {...register('description')}
                         name="description"
                         id="description"
-                        className={`w-full p-2 border border-brand rounded-lg`}
+                        className={`w-full input input-bordered input-secondary rounded-full'`}
                     />
                 </div>
                 {errors?.description && <p>{errors.description.message}</p>}
-                <div className={`flex flex-col items-center`}>
+                <div className={`w-full`}>
                     <label
                         htmlFor="date"
-                        className={`text-2xl font-brand font-bold`}
+                        className={`label label-text-alt`}
                     >
                         Date
                     </label>
@@ -100,14 +101,14 @@ const CreateEvent = () => {
                         {...register('date')}
                         name="date"
                         id="date"
-                        className={`w-full p-2 border border-brand rounded-lg`}
+                        className={`w-full input input-bordered input-secondary rounded-full`}
                     />
                 </div>
                 {errors?.date && <p>{errors.date.message}</p>}
-                <div className={`flex flex-col items-center`}>
+                <div className={`w-full`}>
                     <label
                         htmlFor="time"
-                        className={`text-2xl font-brand font-bold`}
+                        className={`label label-text-alt`}
                     >
                         Time
                     </label>
@@ -116,14 +117,14 @@ const CreateEvent = () => {
                         {...register('time')}
                         name="time"
                         id="time"
-                        className={`w-full p-2 border border-brand rounded-lg`}
+                        className={`w-full input input-bordered input-secondary rounded-full`}
                     />
                 </div>
                 {errors?.time && <p>{errors.time.message}</p>}
-                <div className={`flex flex-col items-center`}>
+                <div className={`w-full`}>
                     <label
                         htmlFor="location"
-                        className={`text-2xl font-brand font-bold`}
+                        className={`label label-text-alt`}
                     >
                         Location
                     </label>
@@ -132,7 +133,7 @@ const CreateEvent = () => {
                         {...register('location')}
                         name="location"
                         id="location"
-                        className={`w-full p-2 border border-brand rounded-lg`}
+                        className={`w-full input input-bordered input-secondary rounded-full`}
                     />
                 </div>
                 {errors?.location && <p>{errors.location.message}</p>}
