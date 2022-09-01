@@ -24,7 +24,7 @@ const Nav = () => {
         <nav
             className={`fixed w-[calc(100%_-_2rem)] z-50 m-4 px-4 py-3 flex items-center  rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-brand`}
         >
-            <Link to={'/'}>
+            <Link to={'/alldogs'}>
 
                 <span className={`text-3xl block text-slate-50`}>
                     <AiFillHome />
