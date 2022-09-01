@@ -45,7 +45,10 @@ const Profile = () => {
                     <DogCard dog={dog} key={idx} />
                 ))}
             </div>
-            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mt-8 mb-10'}/>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mt-8'}/>
+            <div className={'flex justify-center'}>
+                <a href={'#'} className="btn btn-ghost my-5 sm:mt-7 lg:mt-14 px-12">^ Scroll to top ^</a>
+            </div>
         </motion.main>
     );
 };
