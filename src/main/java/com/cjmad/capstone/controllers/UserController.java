@@ -3,6 +3,7 @@ package com.cjmad.capstone.controllers;
 import com.cjmad.capstone.models.Dog;
 import com.cjmad.capstone.models.Event;
 import com.cjmad.capstone.models.User;
+import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,17 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     private final UserRepository userRepository;
+
+    private final EventsRepository eventsRepository;
+
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepository, EventsRepository eventsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.eventsRepository = eventsRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -47,7 +51,7 @@ public class UserController {
 
     @GetMapping("/{id}/events")
     public List<Event> getUsersEvents(@PathVariable long id) {
-        return userRepository.getReferenceById(id).getEvents();
+        return eventsRepository.getEventsByAttendeesContains(userRepository.findById(id).orElseThrow());
     }
 
     @GetMapping("/me")

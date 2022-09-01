@@ -26,6 +26,7 @@ const ScheduleTime = ({ userDog, dogToLink }) => {
                 const resp = await fetch('/api/dogs/link', {
                     method: 'POST',
                     headers: {
+                        'Content-Type': 'application/json',
                         ...authHeader(),
                     },
                     body: JSON.stringify({
@@ -97,7 +98,7 @@ const ScheduleTime = ({ userDog, dogToLink }) => {
                     ) : (
                         <>
                             <h1 className="text-4xl font-brand font-bold">
-                                We notified ${dogToLink?.owner?.username}
+                                We notified {dogToLink?.owner?.username}
                             </h1>
                             <p>If they accept, we'll let you know!</p>
                         </>
