@@ -27,7 +27,7 @@ const DogProfile = () => {
     if (!dog) return <main></main>;
 
     return (
-        <motion.main {...pt} className={``}>
+        <motion.main {...pt} style={{}} className={``}>
             <div>
                 {/*Carousel*/}
                 <div className="carousel w-full h-[600px]">
