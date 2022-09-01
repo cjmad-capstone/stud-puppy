@@ -37,6 +37,7 @@ const Profile = () => {
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
                 Your Dogs
             </h1>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto pb-5'}/>
 
             {/*Dog Cards*/}
             <div className={`flex gap-3 flex-wrap justify-center`}>
@@ -44,6 +45,7 @@ const Profile = () => {
                     <DogCard dog={dog} key={idx} />
                 ))}
             </div>
+            <hr className={'block md:hidden border-t-2 border-secondary w-96 mx-auto mt-8 mb-10'}/>
         </motion.main>
     );
 };
