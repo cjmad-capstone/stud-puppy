@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../Button/Button.jsx';
 import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import * as yup from 'yup';
+import { UserContext } from '../../context/UserContext.jsx';
 
 const DogSexAndWeight = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
@@ -11,6 +12,7 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
             .number()
             .min(1, 'Weight has to be above 0')
             .required('Weight is required'),
+        loveable: yup.boolean(),
     });
 
     const _changeStep = (dir) =>
@@ -68,6 +70,16 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
                     {...register('weight')}
                     className="input input-bordered w-full"
                 />
+            </div>
+            <div className="form-control w-full items-start">
+                <label className="label cursor-pointer">
+                    <span className="label-text mr-4">Ready to breed?</span>
+                    <input
+                        type="checkbox"
+                        {...register('loveable')}
+                        className="toggle toggle-secondary text-6xl"
+                    />
+                </label>
             </div>
             <div className={`flex`}>
                 <Button onClick={() => _changeStep(-1)}>Previous</Button>
