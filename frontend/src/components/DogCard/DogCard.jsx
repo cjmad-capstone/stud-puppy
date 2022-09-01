@@ -7,7 +7,7 @@ import { differenceInYears, parseISO } from 'date-fns';
 
 function DogCard({ dog }) {
     return (
-        <div className="card w-96 bg-base-100 shadow-xl min-w-[200px] m-2 sm:hover:scale-105 transition-all">
+        <div className="card w-96 bg-base-100 shadow-xl min-w-[200px] m-2 sm:m-5 lg:mx-8 sm:hover:scale-105 transition-all">
             <figure className={`h-[300px] overflow-hidden`}>
                 <motion.img
                     initial={{ opacity: 0 }}
