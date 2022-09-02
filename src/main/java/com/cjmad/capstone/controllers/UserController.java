@@ -5,6 +5,8 @@ import com.cjmad.capstone.models.Event;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +61,22 @@ public class UserController {
         return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+//    @PutMapping("/edit")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user) {
+//        User authUser = getCurrentUser();
+//        authUser.setName(user.getName());
+//        authUser.setAddress(user.getAddress());
+//        authUser.setEmail(user.getEmail());
+//        return ResponseEntity.ok(getCurrentUser());
+//    }
+
+    @DeleteMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity deleteUser() {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        userRepository.deleteById(user.getId());
+        return ResponseEntity.ok().build();
+    }
 
 }

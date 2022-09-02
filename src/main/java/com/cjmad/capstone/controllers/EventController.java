@@ -4,6 +4,7 @@ import com.cjmad.capstone.models.Event;
 import com.cjmad.capstone.models.User;
 import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -64,4 +65,23 @@ public class EventController {
         event.getAttendees().remove(user);
         return eventsRepository.save(event);
     }
+
+    @PutMapping("/events/edit/{id}")
+    public ResponseEntity updateEvent(@PathVariable long id, @RequestBody Event event) {
+        Event currentEvent =
+                eventsRepository.findByCreator(id);
+        currentEvent.setDate(event.getDate());
+        currentEvent.setDescription(event.getDescription());
+        currentEvent.setTime(event.getTime());
+        currentEvent.setName(event.getName());
+
+        return ResponseEntity.ok(currentEvent);
+    }
+
+    @DeleteMapping("/events/{id}")
+    public ResponseEntity deleteEvent(@PathVariable long id) {
+        eventsRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
