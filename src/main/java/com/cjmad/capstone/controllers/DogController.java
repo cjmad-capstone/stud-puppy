@@ -72,4 +72,38 @@ public class DogController {
         return ResponseEntity.ok(event);
     }
 
+    @PutMapping("/{id}/edit")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity updateDog(@PathVariable long id, @RequestBody Dog dog) {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Dog currentDog = dogsRepository.findById(id).orElseThrow(RuntimeException:: new);
+
+        if (!user.getDogs().contains(currentDog)) return ResponseEntity.badRequest().build();
+
+        currentDog.setName(dog.getName());
+        currentDog.setDescription(dog.getDescription());
+        currentDog.setDob(dog.getDob());
+        currentDog.setSex(dog.getSex());
+        currentDog.setWeight(dog.getWeight());
+        currentDog.setLoveable(dog.getLoveable());
+
+        if(dog.getImages() != null && dog.getImages().size() > 0)
+            currentDog.setImages(dog.getImages());
+
+        dogsRepository.save(currentDog);
+
+        return ResponseEntity.ok(currentDog);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity deleteDog(@PathVariable long id) {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Dog dog = dogsRepository.findById(id).orElseThrow();
+        if (!user.getDogs().contains(dog)) return ResponseEntity.badRequest().build();
+
+        dogsRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
