@@ -35,6 +35,16 @@ function DogCard({ dog }) {
                             View Profile
                         </button>
                     </Link>
+                    <Link to={`/edit-dog/${dog.id}`}>
+                        <button className="btn btn-primary">
+                            Edit
+                        </button>
+                    </Link>
+                    <Link to={`/dog/${dog.id}`}>
+                        <button className="btn btn-primary">
+                            Delete
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
