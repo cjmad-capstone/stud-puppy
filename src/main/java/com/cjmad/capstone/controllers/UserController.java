@@ -61,6 +61,15 @@ public class UserController {
         return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    //Upload user profile pic
+    @PutMapping("/me/profilePic/{handle}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public User setProfilePic(@PathVariable String handle){
+        User user = getCurrentUser();
+        user.setImg(handle);
+        return userRepository.save(user);
+    }
+
 //    @PutMapping("/edit")
 //    @PreAuthorize("hasRole('ROLE_USER')")
 //    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user) {
