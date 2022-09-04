@@ -34,7 +34,7 @@ public class EventController {
     public Event createEvent(@RequestBody Event event) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         event.setCreator(user);
-        event.getAttendees().add(user);
+        event.setAttendees(List.of(user));
         return eventsRepository.save(event);
     }
 

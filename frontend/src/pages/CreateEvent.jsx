@@ -1,25 +1,25 @@
 import Button from '../components/Button/Button.jsx';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { pt } from '../utils/anim/pageTransitions.js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useValidate } from '../utils/hooks/useValidate.js';
+import * as _ from 'lodash';
 
 const CreateEvent = () => {
     const navigate = useRef(useNavigate());
 
     const { register, errors, handleSubmit } = useValidate({
-        name: yup.string().required(),
-        description: yup.string().required(),
-        date: yup.date(),
-        time: yup.string(),
-        location: yup.string().required(),
+        name: yup.string().required('Name is required'),
+        description: yup.string().required('Description is required'),
+        date: yup
+            .date()
+            .typeError('Date format invalid.')
+            .min(new Date(), 'Date must be in the future.')
+            .required('Date is required'),
+        location: yup.string().required('Location is required'),
     });
 
     const createEvent = (eventObj) => {
@@ -57,6 +57,45 @@ const CreateEvent = () => {
                         createEvent(data);
                     })}
                 >
+                    <AnimatePresence>
+                        {!_.isEmpty(errors) && (
+                            <motion.div
+                                className={'w-full'}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                <div className="alert alert-error shadow-lg flex flex-col items-start gap-0">
+                                    <AnimatePresence>
+                                        {Object.values(errors).map(
+                                            (error, i) => (
+                                                <motion.div
+                                                    key={error.message}
+                                                    initial={{
+                                                        opacity: 0,
+                                                        height: 0,
+                                                        y: -10,
+                                                    }}
+                                                    animate={{
+                                                        opacity: 1,
+                                                        height: 'auto',
+                                                        y: 0,
+                                                    }}
+                                                    exit={{
+                                                        opacity: 0,
+                                                        height: 0,
+                                                        y: -10,
+                                                    }}
+                                                >
+                                                    {error.message}
+                                                </motion.div>
+                                            )
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <div className={`w-full`}>
                         <label
                             htmlFor="name"
@@ -72,7 +111,6 @@ const CreateEvent = () => {
                             className={`w-full input input-bordered input-secondary rounded-full'`}
                         />
                     </div>
-                    {errors?.name && <p>{errors.name.message}</p>}
                     <div className={`w-full`}>
                         <label
                             htmlFor="description"
@@ -88,7 +126,6 @@ const CreateEvent = () => {
                             className={`w-full input input-bordered input-secondary rounded-full'`}
                         />
                     </div>
-                    {errors?.description && <p>{errors.description.message}</p>}
                     <div className={`w-full`}>
                         <label
                             htmlFor="date"
@@ -104,7 +141,6 @@ const CreateEvent = () => {
                             className={`w-full input input-bordered input-secondary rounded-full`}
                         />
                     </div>
-                    {errors?.date && <p>{errors.date.message}</p>}
                     <div className={`w-full`}>
                         <label
                             htmlFor="location"
@@ -120,7 +156,6 @@ const CreateEvent = () => {
                             className={`w-full input input-bordered input-secondary rounded-full`}
                         />
                     </div>
-                    {errors?.location && <p>{errors.location.message}</p>}
                     <Button
                         type="submit"
                         className={`w-full p-2 border border-brand rounded-lg`}
