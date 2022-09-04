@@ -47,106 +47,89 @@ const CreateEvent = () => {
 
     return (
         <motion.main {...pt}>
-
-        <div className={'flex flex-col items-center'}>
-            <h1 className={`text-6xl font-brand font-bold`}>Create Event</h1>
-            <form
-                className={`flex flex-col items-center`}
-                onSubmit={handleSubmit((data) => {
-                    createEvent(data);
-                })}
-                className={`w-1/2`}
-            >
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="name"
-                        className={`label label-text-alt`}
-                    >
-                        Name
-                    </label>
-                    <input
-                        type="text"
-                        {...register('name')}
-                        name="name"
-                        id="name"
-                        className={`w-full input input-bordered input-secondary rounded-full'`}
-                    />
-                </div>
-                {errors?.name && <p>{errors.name.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="description"
-                        className={`label label-text-alt`}
-                    >
-                        Description
-                    </label>
-                    <input
-                        type="text"
-                        {...register('description')}
-                        name="description"
-                        id="description"
-                        className={`w-full input input-bordered input-secondary rounded-full'`}
-                    />
-                </div>
-                {errors?.description && <p>{errors.description.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="date"
-                        className={`label label-text-alt`}
-                    >
-                        Date
-                    </label>
-                    <input
-                        type="date"
-                        {...register('date')}
-                        name="date"
-                        id="date"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.date && <p>{errors.date.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="time"
-                        className={`label label-text-alt`}
-                    >
-                        Time
-                    </label>
-                    <input
-                        type="time"
-                        {...register('time')}
-                        name="time"
-                        id="time"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.time && <p>{errors.time.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="location"
-                        className={`label label-text-alt`}
-                    >
-                        Location
-                    </label>
-                    <input
-                        type="text"
-                        {...register('location')}
-                        name="location"
-                        id="location"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.location && <p>{errors.location.message}</p>}
-                <Button
-                    type="submit"
-                    className={`w-full p-2 border border-brand rounded-lg`}
-                >
+            <div className={'flex flex-col items-center'}>
+                <h1 className={`text-6xl font-brand font-bold`}>
                     Create Event
-                </Button>
-            </form>
-        </div>
+                </h1>
+                <form
+                    className={`flex flex-col items-center w-1/2`}
+                    onSubmit={handleSubmit((data) => {
+                        createEvent(data);
+                    })}
+                >
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="name"
+                            className={`label label-text-alt`}
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            {...register('name')}
+                            name="name"
+                            id="name"
+                            className={`w-full input input-bordered input-secondary rounded-full'`}
+                        />
+                    </div>
+                    {errors?.name && <p>{errors.name.message}</p>}
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="description"
+                            className={`label label-text-alt`}
+                        >
+                            Description
+                        </label>
+                        <input
+                            type="text"
+                            {...register('description')}
+                            name="description"
+                            id="description"
+                            className={`w-full input input-bordered input-secondary rounded-full'`}
+                        />
+                    </div>
+                    {errors?.description && <p>{errors.description.message}</p>}
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="date"
+                            className={`label label-text-alt`}
+                        >
+                            Date and Time
+                        </label>
+                        <input
+                            type="datetime-local"
+                            {...register('date')}
+                            name="date"
+                            id="date"
+                            className={`w-full input input-bordered input-secondary rounded-full`}
+                        />
+                    </div>
+                    {errors?.date && <p>{errors.date.message}</p>}
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="location"
+                            className={`label label-text-alt`}
+                        >
+                            Location
+                        </label>
+                        <input
+                            type="text"
+                            {...register('location')}
+                            name="location"
+                            id="location"
+                            className={`w-full input input-bordered input-secondary rounded-full`}
+                        />
+                    </div>
+                    {errors?.location && <p>{errors.location.message}</p>}
+                    <Button
+                        type="submit"
+                        className={`w-full p-2 border border-brand rounded-lg`}
+                    >
+                        Create Event
+                    </Button>
+                </form>
+            </div>
         </motion.main>
-
     );
 };
 

@@ -27,9 +27,6 @@ public class Event {
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "time")
-    private String time;
-
     @Column(name = "isPrivate")
     private boolean isPrivate;
 
