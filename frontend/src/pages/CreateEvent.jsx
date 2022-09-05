@@ -19,7 +19,15 @@ const CreateEvent = () => {
             .typeError('Date format invalid.')
             .min(new Date(), 'Date must be in the future.')
             .required('Date is required'),
-        location: yup.string().required('Location is required'),
+        zipCode: yup
+            .number()
+            .typeError('Zip code must be a number.')
+            .test(
+                'len',
+                'zip must be between 5 and 10 digits',
+                (val) => String(val).length >= 5 && String(val).length <= 10
+            )
+            .required('Location is required'),
     });
 
     const createEvent = (eventObj) => {
@@ -143,23 +151,20 @@ const CreateEvent = () => {
                     </div>
                     <div className={`w-full`}>
                         <label
-                            htmlFor="location"
+                            htmlFor="zipCode"
                             className={`label label-text-alt`}
                         >
-                            Location
+                            Location (Zip Code)
                         </label>
                         <input
-                            type="text"
-                            {...register('location')}
-                            name="location"
-                            id="location"
+                            type="number"
+                            {...register('zipCode')}
+                            name="zipCode"
+                            id="zipCode"
                             className={`w-full input input-bordered input-secondary rounded-full`}
                         />
                     </div>
-                    <Button
-                        type="submit"
-                        className={`w-full p-2 border border-brand rounded-lg`}
-                    >
+                    <Button type="submit" className={`w-full my-4 `}>
                         Create Event
                     </Button>
                 </form>

@@ -24,7 +24,10 @@ public class Event {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "date")
+    @Column(name = "zip_code")
+    private String zipCode;
+
+    @Column(name = "date", nullable = false)
     private Date date;
 
     @Column(name = "isPrivate")
