@@ -1,7 +1,7 @@
 import Button from '../components/Button/Button.jsx';
 import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     authenticateUser,
     fetchUser,
@@ -14,7 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '../context/UserContext.jsx';
 
 const Login = () => {
-    const [error, setError] = useState();
+    const [customErrors, setCustomErrors] = useState({});
     const navigate = useNavigate();
 
     const [params] = useSearchParams();
@@ -38,7 +38,7 @@ const Login = () => {
         <motion.main className={`flex flex-col items-center`} {...pt}>
             <h1 className={`text-6xl font-brand font-bold`}>Login</h1>
             <motion.div className={'w-1/2'} layout>
-                {Object.keys(errors).length > 0 && (
+                {Object.keys({ ...errors, ...customErrors }).length > 0 && (
                     <motion.div
                         className="alert alert-error shadow-lg my-4"
                         initial={{ opacity: 0 }}
@@ -59,7 +59,10 @@ const Login = () => {
                                 />
                             </svg>
                             <span>
-                                {Object.entries(errors).map((el, idx) => (
+                                {Object.entries({
+                                    ...errors,
+                                    ...customErrors,
+                                }).map((el, idx) => (
                                     <span key={idx}>
                                         {el[1].message}
                                         <br />
@@ -72,20 +75,22 @@ const Login = () => {
                 <form
                     className={`flex flex-col items-center`}
                     onSubmit={handleSubmit(async (data) => {
-                        const res = await authenticateUser({
-                            ...data,
-                        });
-                        if (!res.error) {
-                            fetchUser().then((user) =>
-                                userContext.setUser(user)
-                            );
+                        try {
+                            await authenticateUser({
+                                ...data,
+                            });
+                            const localUser = await fetchUser();
+                            userContext.setUser(localUser);
+
                             navigate(
                                 params.get('ref')
                                     ? '/' + params.get('ref')
                                     : '/profile'
                             );
-                        } else {
-                            setError(res.error);
+                        } catch (err) {
+                            setCustomErrors({
+                                error: { message: 'Credentials invalid' },
+                            });
                         }
                     })}
                 >
