@@ -57,7 +57,7 @@ const CreateEvent = () => {
         <motion.main {...pt}>
             <div className={'flex flex-col items-center'}>
                 <h1 className={`text-6xl font-brand font-bold`}>
-                    Create Event
+                    Host an Event!
                 </h1>
                 <form
                     className={`flex flex-col items-center w-1/2`}

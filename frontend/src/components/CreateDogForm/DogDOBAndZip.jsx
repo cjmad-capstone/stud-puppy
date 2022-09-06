@@ -44,7 +44,6 @@ const DogDOBAndZip = ({ changeStep, formData }) => {
                     defaultValue={formData?.zipCode || zip}
                     {...register('zipCode')}
                     className="input input-bordered w-full"
-                    autoFocus
                 />
             </div>
             <div className={`flex`}>

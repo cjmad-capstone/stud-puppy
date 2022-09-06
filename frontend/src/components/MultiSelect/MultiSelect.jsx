@@ -41,46 +41,56 @@ const MultiSelect = ({ options, label, setValues }) => {
             <label className="label">
                 <span className="label-text">{label}</span>
             </label>
-            <input
-                type="text"
-                placeholder="Search Here"
-                onChange={(e) =>
-                    setFilteredOptions(
-                        options.filter(
-                            (option) =>
-                                option
-                                    .toLowerCase()
-                                    .includes(e.target.value.toLowerCase()) &&
-                                !selected.includes(option)
-                        )
-                    )
-                }
+            <div
                 onFocus={() => setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
-                className="input input-bordered input-secondary w-full max-w-xs"
-            />
-            <AnimatePresence mode="popLayout">
-                {openDropdown && (
-                    <motion.ul
-                        className={`absolute bg-base-100 p-4 flex flex-wrap gap-3 rounded-xl overflow-scroll max-h-64 max-w-32 shadow-xl`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        {filteredOptions.map((option, i) => (
-                            <li
-                                className={`cursor-pointer text-sm font-bold bg-secondary bg-opacity-50 p-3 rounded-full `}
-                                key={i}
-                                onClick={() => {
-                                    setSelected((prev) => [...prev, option]);
-                                }}
-                            >
-                                {option}
-                            </li>
-                        ))}
-                    </motion.ul>
-                )}
-            </AnimatePresence>
+            >
+                <input
+                    type="text"
+                    placeholder="Search Here"
+                    onChange={(e) =>
+                        setFilteredOptions(
+                            options.filter(
+                                (option) =>
+                                    option
+                                        .toLowerCase()
+                                        .includes(
+                                            e.target.value.toLowerCase()
+                                        ) && !selected.includes(option)
+                            )
+                        )
+                    }
+                    onFocus={() => setOpenDropdown(true)}
+                    className="input input-bordered input-secondary w-full max-w-xs"
+                />
+                <AnimatePresence mode="popLayout">
+                    {openDropdown && (
+                        <motion.div
+                            className={`absolute mt-3 bg-base-100 p-4 flex flex-wrap gap-3 rounded-xl overflow-scroll max-h-64 max-w-32 shadow-xl`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        >
+                            {filteredOptions.map((option, i) => (
+                                <button
+                                    onFocus={() => setOpenDropdown(true)}
+                                    className={`cursor-pointer text-sm font-bold bg-secondary bg-opacity-50 p-3 rounded-full `}
+                                    key={i}
+                                    onClick={() => {
+                                        setOpenDropdown(false);
+                                        setSelected((prev) => [
+                                            ...prev,
+                                            option,
+                                        ]);
+                                    }}
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
             <div className={`flex flex-wrap gap-3 py-4`}>
                 <AnimatePresence mode="sync">

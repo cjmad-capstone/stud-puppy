@@ -17,7 +17,7 @@ function EventCard({ event }) {
                     >
                         <img
                             alt={`Image of ${event?.creator?.username}`}
-                            className={`w-full h-full`}
+                            className={`w-full h-full object-cover object-center`}
                             src={
                                 event?.creator?.img
                                     ? `${FILESTACK_ENDPOINT}/${event?.creator?.img}`

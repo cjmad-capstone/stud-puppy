@@ -59,7 +59,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
 
     return (
         <FormPage errors={{ ...errors, ...customErrs }}>
-            <div className={`w-full`}>
+            <motion.div className={`w-full`}>
                 <label className="label">
                     <span className="label-text">What is your dog's name?</span>
                 </label>
@@ -77,7 +77,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
                     options={breeds}
                     label={'Select all breeds that apply'}
                 />
-            </div>
+            </motion.div>
             <Button onClick={() => _changeStep(1)}>Next</Button>
         </FormPage>
     );
