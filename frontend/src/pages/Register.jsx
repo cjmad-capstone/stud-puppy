@@ -1,18 +1,21 @@
 import Button from '../components/Button/Button.jsx';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { registerUser } from '../utils/user/userActions.js';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import { useZip } from '../utils/hooks/useZip.js';
 
 const Login = () => {
     const [error, setError] = useState();
+
     const navigate = useNavigate();
     const [files, setFiles] = React.useState([]);
+
+    const [zip, errs] = useZip();
 
     const schema = yup
         .object({
@@ -25,6 +28,7 @@ const Login = () => {
                 .string()
                 .required('Email is required')
                 .email('Email is invalid'),
+            zipCode: yup.number().required('Zip code is required'),
             password: yup.string().required('Password is required'),
             passwordConfirm: yup
                 .string()
@@ -38,8 +42,6 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
-
-    const inputOptions = { required: true };
 
     return (
         <motion.main className={`flex flex-col items-center`} {...pt}>
@@ -82,7 +84,6 @@ const Login = () => {
                     onSubmit={handleSubmit(async (data) => {
                         const res = await registerUser({
                             ...data,
-                            address: '123 placeholder',
                         });
                         if (!res.error) {
                             navigate('/login');
@@ -97,11 +98,7 @@ const Login = () => {
                         </label>
                         <input
                             type="text"
-                            {...register('username', {
-                                ...inputOptions,
-                                minLength: 3,
-                                maxLength: 20,
-                            })}
+                            {...register('username')}
                             placeholder="Username"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.username ? 'input-error' : ''
@@ -114,10 +111,24 @@ const Login = () => {
                         </label>
                         <input
                             type="email"
-                            {...register('email', { ...inputOptions })}
+                            {...register('email')}
                             placeholder="Email"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.email ? 'input-error' : ''
+                            }`}
+                        />
+                    </div>
+                    <div className={`w-full`}>
+                        <label className="label">
+                            <span className="label-text-alt">Zip code:</span>
+                        </label>
+                        <input
+                            type="number"
+                            {...register('zipCode')}
+                            placeholder="Zip Code"
+                            defaultValue={zip}
+                            className={`w-full input input-bordered input-secondary rounded-full ${
+                                errors.zipCode ? 'input-error' : ''
                             }`}
                         />
                     </div>
@@ -127,7 +138,7 @@ const Login = () => {
                         </label>
                         <input
                             type="password"
-                            {...register('password', { ...inputOptions })}
+                            {...register('password')}
                             placeholder="Password"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.password ? 'input-error' : ''
@@ -142,9 +153,7 @@ const Login = () => {
                         </label>
                         <input
                             type="password"
-                            {...register('passwordConfirm', {
-                                ...inputOptions,
-                            })}
+                            {...register('passwordConfirm')}
                             placeholder="Confirm Password"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.passwordConfirm ? 'input-error' : ''

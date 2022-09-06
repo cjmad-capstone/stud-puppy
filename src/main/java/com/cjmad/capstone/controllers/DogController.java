@@ -1,9 +1,6 @@
 package com.cjmad.capstone.controllers;
 
-import com.cjmad.capstone.models.Dog;
-import com.cjmad.capstone.models.Event;
-import com.cjmad.capstone.models.Link;
-import com.cjmad.capstone.models.User;
+import com.cjmad.capstone.models.*;
 import com.cjmad.capstone.repositories.DogRepository;
 import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
@@ -12,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/dogs")
@@ -34,9 +28,16 @@ public class DogController {
     }
 
     @GetMapping
-    public List<Dog> getDogs() {
-        return dogsRepository.findAll();
+    public Collection<Dog> getDogs(@RequestParam(required = false) Long zipCode, @RequestParam(required = false) String breed) {
+        if(zipCode != null && breed != null) {
+            return dogsRepository.findAllByZipCodeAndHasBreed(zipCode, breed);
+        } else if(zipCode != null) {
+            return dogsRepository.findAllByZipCode(zipCode);
+        } else {
+            return dogsRepository.findAll();
+        }
     }
+
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER')")

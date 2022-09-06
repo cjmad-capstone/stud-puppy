@@ -5,7 +5,7 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { motion } from 'framer-motion';
 import { DogSexAndWeight } from '../components/CreateDogForm/DogSexAndWeight.jsx';
 import { DogDescription } from '../components/CreateDogForm/DogDescription';
-import { DogDOB } from '../components/CreateDogForm/DogDOB';
+import { DogDOBAndZip } from '../components/CreateDogForm/DogDOBAndZip.jsx';
 import { useNavigate } from 'react-router-dom';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { DogImages } from '../components/CreateDogForm/DogImages';
@@ -40,7 +40,7 @@ const CreateDog = () => {
     const steps = [
         <DogNameAndBreed key="dog-name" {...props} />,
         <DogSexAndWeight key="dog-sex-weight" {...props} />,
-        <DogDOB key="dog-dob" {...props} />,
+        <DogDOBAndZip key="dog-dob" {...props} />,
         <DogDescription key="dog-desc" {...props} />,
         <DogImages key="dog-images" {...props} />,
     ];

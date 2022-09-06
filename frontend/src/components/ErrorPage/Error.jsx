@@ -36,7 +36,7 @@ const ErrorPage = () => {
                 <div className="card-body">
                     <img
                         className="absolute mt-[60%] h-[50%] right-3 md:mt-0 md:h-[125%] md:top-0 md: right-0 md:mx-auto md:right-5"
-                        src="img/thug-life-pug-transparent-background-sad-dog-jpg-1226295-min.png"
+                        src="/img/thug-life-pug-transparent-background-sad-dog-jpg-1226295-min.png"
                         alt="Shoes"
                     />
 

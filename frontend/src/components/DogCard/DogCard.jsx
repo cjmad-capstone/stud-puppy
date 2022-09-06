@@ -7,8 +7,8 @@ import { differenceInYears, parseISO } from 'date-fns';
 
 function DogCard({ dog }) {
     return (
-        <div className="card w-96 bg-base-100 shadow-xl min-w-[200px] m-2 sm:m-5 lg:mx-8 sm:hover:scale-105 transition-all">
-            <figure className={`h-[300px] overflow-hidden`}>
+        <div className="card w-[350px] bg-base-100 shadow-xl min-w-[200px] m-2 sm:m-5 lg:mx-8 sm:hover:scale-105 transition-all">
+            <figure className={`h-[200px] overflow-hidden`}>
                 <motion.img
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -31,17 +31,17 @@ function DogCard({ dog }) {
                 <p>{dog?.description}</p>
                 <div className="card-actions justify-end">
                     <Link to={`/dog/${dog.id}`}>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-secondary lowercase">
                             View Profile
                         </button>
                     </Link>
                     <Link to={`/edit-dog/${dog.id}`}>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-secondary lowercase">
                             Edit
                         </button>
                     </Link>
                     <Link to={`/dog/${dog.id}`}>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-secondary lowercase">
                             Delete
                         </button>
                     </Link>

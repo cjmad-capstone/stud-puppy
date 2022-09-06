@@ -27,8 +27,8 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "zipCode", nullable = false)
+    private String zipCode;
 
     @Column(name = "img")
     private String img;
@@ -60,15 +60,14 @@ public class User {
     @JsonIgnore
     private List<Event> attendingEvents;
 
-
     public User() {
     }
 
-    public User(User copy) {
+    public User(User copy){
         this.id = copy.id;
         this.username = copy.username;
         this.email = copy.email;
-        this.address = copy.address;
+        this.zipCode = copy.zipCode;
         this.img = copy.img;
         this.name = copy.name;
         this.password = copy.password;
@@ -77,17 +76,5 @@ public class User {
         this.role = copy.role;
         this.attendingEvents = copy.attendingEvents;
     }
-
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
 
 }

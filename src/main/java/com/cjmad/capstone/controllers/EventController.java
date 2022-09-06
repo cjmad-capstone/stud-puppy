@@ -34,6 +34,7 @@ public class EventController {
     public Event createEvent(@RequestBody Event event) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         event.setCreator(user);
+        event.setAttendees(List.of(user));
         return eventsRepository.save(event);
     }
 
@@ -72,7 +73,6 @@ public class EventController {
                 eventsRepository.findByCreator(id);
         currentEvent.setDate(event.getDate());
         currentEvent.setDescription(event.getDescription());
-        currentEvent.setTime(event.getTime());
         currentEvent.setName(event.getName());
 
         return ResponseEntity.ok(currentEvent);

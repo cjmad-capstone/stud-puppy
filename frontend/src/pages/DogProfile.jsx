@@ -1,7 +1,7 @@
 import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../components/Button/Button.jsx';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { differenceInYears, parse, parseISO } from 'date-fns';
@@ -28,7 +28,7 @@ const DogProfile = () => {
     if (!dog) return <main></main>;
 
     return (
-        <motion.main {...pt} style={{}} className={``}>
+        <motion.main {...pt}>
             <div>
                 {/*Carousel*/}
                 <div className="carousel w-full h-[600px]">
@@ -132,7 +132,9 @@ const DogProfile = () => {
                                     />
                                 </figure>
                                 <h1 className="text-2xl pl-4">
-                                    {dog.owner?.name ?? dog.owner?.username}
+                                    <Link to={`/users/${dog?.owner?.id}`}>
+                                        {dog.owner?.name ?? dog.owner?.username}
+                                    </Link>
                                 </h1>
                             </div>
                             <div className={`text-sm`}>
