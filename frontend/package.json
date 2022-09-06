@@ -27,6 +27,7 @@
         "react-icons": "^4.4.0",
         "react-loading": "^2.0.3",
         "react-router-dom": "6",
+        "react-use-geolocation": "^0.1.1",
         "yup": "^0.32.11"
     },
     "devDependencies": {

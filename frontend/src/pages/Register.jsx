@@ -7,8 +7,6 @@ import { registerUser } from '../utils/user/userActions.js';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCurrentPosition } from 'react-use-geolocation';
-import { reverseGeocode } from '../utils/reverseGeocode.js';
 import { useZip } from '../utils/hooks/useZip.js';
 
 const Login = () => {
@@ -44,8 +42,6 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
-
-    const inputOptions = { required: true };
 
     return (
         <motion.main className={`flex flex-col items-center`} {...pt}>
@@ -102,11 +98,7 @@ const Login = () => {
                         </label>
                         <input
                             type="text"
-                            {...register('username', {
-                                ...inputOptions,
-                                minLength: 3,
-                                maxLength: 20,
-                            })}
+                            {...register('username')}
                             placeholder="Username"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.username ? 'input-error' : ''
@@ -119,7 +111,7 @@ const Login = () => {
                         </label>
                         <input
                             type="email"
-                            {...register('email', { ...inputOptions })}
+                            {...register('email')}
                             placeholder="Email"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.email ? 'input-error' : ''
@@ -132,7 +124,7 @@ const Login = () => {
                         </label>
                         <input
                             type="number"
-                            {...register('zipCode', { ...inputOptions })}
+                            {...register('zipCode')}
                             placeholder="Zip Code"
                             defaultValue={zip}
                             className={`w-full input input-bordered input-secondary rounded-full ${
@@ -146,7 +138,7 @@ const Login = () => {
                         </label>
                         <input
                             type="password"
-                            {...register('password', { ...inputOptions })}
+                            {...register('password')}
                             placeholder="Password"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.password ? 'input-error' : ''
@@ -161,9 +153,7 @@ const Login = () => {
                         </label>
                         <input
                             type="password"
-                            {...register('passwordConfirm', {
-                                ...inputOptions,
-                            })}
+                            {...register('passwordConfirm')}
                             placeholder="Confirm Password"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.passwordConfirm ? 'input-error' : ''
