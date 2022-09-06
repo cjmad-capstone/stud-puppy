@@ -46,6 +46,9 @@ const Nav = () => {
                             <Link to={'/profile'}>
                                 <span className={styles.link}>Profile</span>
                             </Link>
+                            <Link to={'/about-us'}>
+                                <span className={styles.link}>About</span>
+                            </Link>
                             <Link to={'/create-dog'}>
                                 <span className={`${styles.link}`}>Add Dog</span>
                             </Link>
