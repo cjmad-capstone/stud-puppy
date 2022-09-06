@@ -13,12 +13,16 @@ import { FILESTACK_ENDPOINT, FILESTACK_KEY } from '../utils/consts.js';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate, useParams } from 'react-router-dom';
 
+//PLACEHOLDER pic       'img/placholder-img.jpeg'     ||      https://placeimg.com/192/192/people
+
 const Profile = ({ userId }) => {
     const params = useParams();
     const navigate = useNavigate();
 
     if (!userId) userId = params?.userId;
     const { user: currentUser } = useContext(UserContext);
+
+    const isUsersProfile = userId === currentUser?.id;
 
     const { data: user } = useQuery(
         ['user', userId],
@@ -108,26 +112,22 @@ const Profile = ({ userId }) => {
                 <div className={`text-center`}>
                     <div className="avatar">
                         <div className="w-24 rounded-full">
-                            {user?.id === currentUser?.id && (
+                            {isUsersProfile && (
                                 <BiCamera
                                     className={`absolute text-4xl bottom-0 right-0 text-black bg-white p-1 rounded-full cursor-pointer`}
                                     onClick={() => setImageModalOpen(true)}
                                 />
                             )}
-                            <img
-                                src={
-                                    user?.img
-                                        ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                        : 'https://placeimg.com/192/192/people'
-                                }
-                            />
+                            <img src={
+                                user?.img ? `${FILESTACK_ENDPOINT}/${user.img}` : 'img/placholder-img.jpeg'
+                            }/>
                         </div>
                     </div>
                     <h1 className={`text-5xl`}>{user.name ?? user.username}</h1>
                 </div>
             </div>
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
-                {user?.id === currentUser?.id ? 'Your' : `${user?.username}'s`}{' '}
+                {isUsersProfile ? 'Your' : `${user?.username}'s`}{' '}
                 Dogs
             </h1>
             <hr
@@ -139,7 +139,7 @@ const Profile = ({ userId }) => {
             {/*Dog Cards*/}
             <div className={`flex gap-3 flex-wrap justify-center`}>
                 {userDogs?.map((dog, idx) => (
-                    <DogCard dog={dog} key={idx} />
+                    <DogCard dog={dog} key={idx} editable={isUsersProfile} />
                 ))}
             </div>
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">

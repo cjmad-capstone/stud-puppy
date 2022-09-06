@@ -126,7 +126,8 @@ const DogProfile = () => {
                                     className={`min-w-16 min-h-16 w-16 h-16`}
                                 >
                                     <img
-                                        src="https://placeimg.com/192/192/people"
+                                    src={dog.owner?.img ? `${FILESTACK_ENDPOINT}/${dog.owner.img}` : 'https://placeimg.com/192/192/people'
+                                        }
                                         alt="User pic"
                                         className={`rounded-full w-full h-full object-cover`}
                                     />
