@@ -19,11 +19,14 @@ import IndividualEvent from './pages/IndividualEvent.jsx';
 import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
 import ErrorPage from './components/ErrorPage/Error';
-import AllDogs from "./pages/AllDogs.jsx";
+import AllDogs from './pages/AllDogs.jsx';
+import { UserContext } from './context/UserContext.jsx';
 
 function App() {
     const location = useLocation();
     const hasVisited = localStorage.getItem('hasVisited');
+    const { user } = useContext(UserContext);
+
     // Set the theme
     useLayoutEffect(() => {
         if (!hasVisited) localStorage.setItem('hasVisited', 'true');
@@ -37,7 +40,11 @@ function App() {
                     <Route path={''} element={<Home />} />
                     <Route path={'/login'} element={<Login />} />
                     <Route path={'/register'} element={<Register />} />
-                    <Route path={'/profile'} element={<Profile />} />
+                    <Route
+                        path={'/profile'}
+                        element={<Profile userId={user?.id} />}
+                    />
+                    <Route path={'/users/:userId'} element={<Profile />} />
                     <Route path={'/dog/:id'} element={<DogProfile />} />
 
                     <Route path={'/events'} element={<AllEvents />} />
@@ -50,7 +57,6 @@ function App() {
                     <Route path={'/error'} element={<ErrorPage />} />
                     <Route path={'/*'} element={<ErrorPage />} />
                     <Route path={'/alldogs'} element={<AllDogs />} />
-
                 </Routes>
             </AnimatePresence>
             {/*<Footer />*/}

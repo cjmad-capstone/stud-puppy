@@ -1,25 +1,33 @@
 import Button from '../components/Button/Button.jsx';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { pt } from '../utils/anim/pageTransitions.js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useValidate } from '../utils/hooks/useValidate.js';
+import * as _ from 'lodash';
 
 const CreateEvent = () => {
     const navigate = useRef(useNavigate());
 
     const { register, errors, handleSubmit } = useValidate({
-        name: yup.string().required(),
-        description: yup.string().required(),
-        date: yup.date(),
-        time: yup.string(),
-        location: yup.string().required(),
+        name: yup.string().required('Name is required'),
+        description: yup.string().required('Description is required'),
+        date: yup
+            .date()
+            .typeError('Date format invalid.')
+            .min(new Date(), 'Date must be in the future.')
+            .required('Date is required'),
+        zipCode: yup
+            .number()
+            .typeError('Zip code must be a number.')
+            .test(
+                'len',
+                'zip must be between 5 and 10 digits',
+                (val) => String(val).length >= 5 && String(val).length <= 10
+            )
+            .required('Location is required'),
     });
 
     const createEvent = (eventObj) => {
@@ -47,106 +55,121 @@ const CreateEvent = () => {
 
     return (
         <motion.main {...pt}>
-
-        <div className={'flex flex-col items-center'}>
-            <h1 className={`text-6xl font-brand font-bold`}>Create Event</h1>
-            <form
-                className={`flex flex-col items-center`}
-                onSubmit={handleSubmit((data) => {
-                    createEvent(data);
-                })}
-                className={`w-1/2`}
-            >
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="name"
-                        className={`label label-text-alt`}
-                    >
-                        Name
-                    </label>
-                    <input
-                        type="text"
-                        {...register('name')}
-                        name="name"
-                        id="name"
-                        className={`w-full input input-bordered input-secondary rounded-full'`}
-                    />
-                </div>
-                {errors?.name && <p>{errors.name.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="description"
-                        className={`label label-text-alt`}
-                    >
-                        Description
-                    </label>
-                    <input
-                        type="text"
-                        {...register('description')}
-                        name="description"
-                        id="description"
-                        className={`w-full input input-bordered input-secondary rounded-full'`}
-                    />
-                </div>
-                {errors?.description && <p>{errors.description.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="date"
-                        className={`label label-text-alt`}
-                    >
-                        Date
-                    </label>
-                    <input
-                        type="date"
-                        {...register('date')}
-                        name="date"
-                        id="date"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.date && <p>{errors.date.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="time"
-                        className={`label label-text-alt`}
-                    >
-                        Time
-                    </label>
-                    <input
-                        type="time"
-                        {...register('time')}
-                        name="time"
-                        id="time"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.time && <p>{errors.time.message}</p>}
-                <div className={`w-full`}>
-                    <label
-                        htmlFor="location"
-                        className={`label label-text-alt`}
-                    >
-                        Location
-                    </label>
-                    <input
-                        type="text"
-                        {...register('location')}
-                        name="location"
-                        id="location"
-                        className={`w-full input input-bordered input-secondary rounded-full`}
-                    />
-                </div>
-                {errors?.location && <p>{errors.location.message}</p>}
-                <Button
-                    type="submit"
-                    className={`w-full p-2 border border-brand rounded-lg`}
+            <div className={'flex flex-col items-center'}>
+                <h1 className={`text-6xl font-brand font-bold`}>
+                    Host an Event!
+                </h1>
+                <form
+                    className={`flex flex-col items-center w-1/2`}
+                    onSubmit={handleSubmit((data) => {
+                        createEvent(data);
+                    })}
                 >
-                    Create Event
-                </Button>
-            </form>
-        </div>
+                    <AnimatePresence>
+                        {!_.isEmpty(errors) && (
+                            <motion.div
+                                className={'w-full'}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                <div className="alert alert-error shadow-lg flex flex-col items-start gap-0">
+                                    <AnimatePresence>
+                                        {Object.values(errors).map(
+                                            (error, i) => (
+                                                <motion.div
+                                                    key={error.message}
+                                                    initial={{
+                                                        opacity: 0,
+                                                        height: 0,
+                                                        y: -10,
+                                                    }}
+                                                    animate={{
+                                                        opacity: 1,
+                                                        height: 'auto',
+                                                        y: 0,
+                                                    }}
+                                                    exit={{
+                                                        opacity: 0,
+                                                        height: 0,
+                                                        y: -10,
+                                                    }}
+                                                >
+                                                    {error.message}
+                                                </motion.div>
+                                            )
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="name"
+                            className={`label label-text-alt`}
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            {...register('name')}
+                            name="name"
+                            id="name"
+                            className={`w-full input input-bordered input-secondary rounded-full'`}
+                        />
+                    </div>
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="description"
+                            className={`label label-text-alt`}
+                        >
+                            Description
+                        </label>
+                        <input
+                            type="text"
+                            {...register('description')}
+                            name="description"
+                            id="description"
+                            className={`w-full input input-bordered input-secondary rounded-full'`}
+                        />
+                    </div>
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="date"
+                            className={`label label-text-alt`}
+                        >
+                            Date and Time
+                        </label>
+                        <input
+                            type="datetime-local"
+                            {...register('date')}
+                            name="date"
+                            id="date"
+                            className={`w-full input input-bordered input-secondary rounded-full`}
+                        />
+                    </div>
+                    <div className={`w-full`}>
+                        <label
+                            htmlFor="zipCode"
+                            className={`label label-text-alt`}
+                        >
+                            Location (Zip Code)
+                        </label>
+                        <input
+                            type="number"
+                            {...register('zipCode')}
+                            name="zipCode"
+                            id="zipCode"
+                            className={`w-full input input-bordered input-secondary rounded-full`}
+                        />
+                    </div>
+                    <Button type="submit" className={`w-full my-4 `}>
+                        Create Event
+                    </Button>
+                </form>
+            </div>
         </motion.main>
-
     );
 };
 

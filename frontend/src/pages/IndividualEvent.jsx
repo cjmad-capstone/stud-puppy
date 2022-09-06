@@ -4,7 +4,7 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
 import EventCard from '../components/EventCard/EventCard.jsx';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../components/Button/Button.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { format, parseISO } from 'date-fns';
@@ -88,11 +88,13 @@ const IndividualEvent = () => {
                 <Button
                     onClick={() => (isAttending ? leaveEvent() : attendEvent())}
                 >
-                    {isAttending ? 'Leave Event' : 'Attend Event'}
+                    {isAttending
+                        ? 'I will not be attending'
+                        : 'I will be attending'}
                 </Button>
                 <h1 className="font-bold font-brand">Attendees</h1>
                 <div className={'flex'}>
-                    <div className="avatar-group -space-x-6">
+                    <div className="avatar-group -space-x-6 flex-wrap overflow-visible">
                         <AnimatePresence>
                             {attendees.map((attendee, idx) => (
                                 <motion.div
@@ -103,7 +105,9 @@ const IndividualEvent = () => {
                                     className="avatar placeholder"
                                 >
                                     <div className="w-24 h-24 bg-neutral-focus text-neutral-content">
-                                        <span>{attendee.username}</span>
+                                        <Link to={`/users/${attendee.id}`}>
+                                            <span>{attendee.username}</span>
+                                        </Link>
                                     </div>
                                 </motion.div>
                             ))}

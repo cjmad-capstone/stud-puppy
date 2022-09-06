@@ -20,7 +20,7 @@ export const authenticateUser = async ({ username, password }) => {
     }
 };
 
-export const registerUser = async ({ username, email, address, password }) => {
+export const registerUser = async ({ username, email, zipCode, password }) => {
     try {
         const response = await fetch('/auth/register', {
             method: 'POST',
@@ -30,7 +30,7 @@ export const registerUser = async ({ username, email, address, password }) => {
             body: JSON.stringify({
                 username,
                 email,
-                address,
+                zipCode,
                 password,
             }),
         });

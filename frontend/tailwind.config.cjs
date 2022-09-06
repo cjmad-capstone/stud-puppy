@@ -10,7 +10,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 'brand': 'Poppins'
-            }
+            },
         },
     },
     plugins: [require('daisyui')],
