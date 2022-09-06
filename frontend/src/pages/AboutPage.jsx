@@ -53,7 +53,7 @@ const AboutPage = () => {
                     img="../img/A. Rodriguez.jpg"
                     name="Alex"
                     bio="Oi, you gotta get on this TRT bro !"
-                    linkedIn="www.linkedin.com/in/alexanderjrodriguez"
+                    linkedIn="https://www.linkedin.com/in/alexanderjrodriguez"
                     githubLink="https://github.com/ajrod-dev"
 
                 />
