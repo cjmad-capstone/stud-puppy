@@ -12,6 +12,7 @@ import { PickerInline } from 'filestack-react';
 import { FILESTACK_ENDPOINT, FILESTACK_KEY } from '../utils/consts.js';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate, useParams } from 'react-router-dom';
+
 //PLACEHOLDER pic       'img/placholder-img.jpeg'     ||      https://placeimg.com/192/192/people
 
 const Profile = ({ userId }) => {
