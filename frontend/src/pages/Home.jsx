@@ -19,14 +19,14 @@ const Home = () => {
                     </p>
                 </div>
                 <img
-                    className="absolute m-auto right-0 h-[150%] md:h-[110%] top-0"
-                    src="img/homepug-min.png"
+                    className="absolute m-auto right-0 h-[110%] md:h-[110%] top-0"
+                    src="/img/homepug-min.png"
                     alt="Shoes"
                 />
             </div>
-            {/*</div>*/}
+            {/*Mobile Header*/}
             <div className="">
-                <div className=" md:hidden flex flex-col gap-3">
+                <div className="md:hidden flex flex-col gap-3">
                     <h2 className="card-title font-brand text-3xl text-blue-900 font-bold">
                         Welcome to Pugs 'n' Kisses
                     </h2>
@@ -52,7 +52,6 @@ const Home = () => {
                     </Button>
                 </Link>
             </div>
-            {/*</div>*/}
         </motion.main>
     );
 };

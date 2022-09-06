@@ -26,7 +26,6 @@ const AllDogs = () => {
     // Wait for dogs to load before rendering
     if (!dogs) return null;
 
-    // console.log(dogs)
     return (
         <motion.main {...pt}>
             <h1
@@ -43,8 +42,8 @@ const AllDogs = () => {
             />
 
             <div id={'card'} className={'flex flex-wrap justify-center'}>
-                {dogs?.map((dog) => (
-                    <DogCard dog={dog} />
+                {dogs?.map((dog, idx) => (
+                    <DogCard dog={dog} key={idx} />
                 ))}
             </div>
             <hr

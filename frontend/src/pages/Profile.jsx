@@ -11,10 +11,12 @@ import { BiCamera } from 'react-icons/all';
 import { PickerInline } from 'filestack-react';
 import { FILESTACK_ENDPOINT, FILESTACK_KEY } from '../utils/consts.js';
 import { authHeader } from '../utils/auth/authHeader.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Profile = ({ userId }) => {
     const params = useParams();
+    const navigate = useNavigate();
+
     if (!userId) userId = params?.userId;
     const { user: currentUser } = useContext(UserContext);
 
@@ -51,13 +53,17 @@ const Profile = ({ userId }) => {
     }, [imageModalOpen]);
 
     const setProfilePic = async (pic) => {
-        const res = await fetch(`/api/users/me/profilePic/${pic}`, {
-            method: 'PUT',
-            headers: {
-                ...authHeader(),
-            },
-        });
-        const json = await res.json();
+        try {
+            const res = await fetch(`/api/users/me/profilePic/${pic}`, {
+                method: 'PUT',
+                headers: {
+                    ...authHeader(),
+                },
+            });
+            const json = await res.json();
+        } catch (err) {
+            navigate('/error');
+        }
     };
 
     if (!userId || !user) return null;

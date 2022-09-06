@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-use-geolocation": "^0.1.1"
+  }
+}

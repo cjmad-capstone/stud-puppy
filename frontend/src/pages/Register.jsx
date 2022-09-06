@@ -1,18 +1,23 @@
 import Button from '../components/Button/Button.jsx';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/pageTransitions.js';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { registerUser } from '../utils/user/userActions.js';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import { useCurrentPosition } from 'react-use-geolocation';
+import { reverseGeocode } from '../utils/reverseGeocode.js';
+import { useZip } from '../utils/hooks/useZip.js';
 
 const Login = () => {
     const [error, setError] = useState();
+
     const navigate = useNavigate();
     const [files, setFiles] = React.useState([]);
+
+    const [zip, errs] = useZip();
 
     const schema = yup
         .object({
@@ -25,6 +30,7 @@ const Login = () => {
                 .string()
                 .required('Email is required')
                 .email('Email is invalid'),
+            zipCode: yup.number().required('Zip code is required'),
             password: yup.string().required('Password is required'),
             passwordConfirm: yup
                 .string()
@@ -82,7 +88,6 @@ const Login = () => {
                     onSubmit={handleSubmit(async (data) => {
                         const res = await registerUser({
                             ...data,
-                            address: '123 placeholder',
                         });
                         if (!res.error) {
                             navigate('/login');
@@ -118,6 +123,20 @@ const Login = () => {
                             placeholder="Email"
                             className={`w-full input input-bordered input-secondary rounded-full ${
                                 errors.email ? 'input-error' : ''
+                            }`}
+                        />
+                    </div>
+                    <div className={`w-full`}>
+                        <label className="label">
+                            <span className="label-text-alt">Zip code:</span>
+                        </label>
+                        <input
+                            type="number"
+                            {...register('zipCode', { ...inputOptions })}
+                            placeholder="Zip Code"
+                            defaultValue={zip}
+                            className={`w-full input input-bordered input-secondary rounded-full ${
+                                errors.zipCode ? 'input-error' : ''
                             }`}
                         />
                     </div>

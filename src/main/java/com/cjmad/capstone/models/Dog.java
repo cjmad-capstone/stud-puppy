@@ -37,6 +37,9 @@ public class Dog {
     private String description;
 
     @Column(nullable = false)
+    private Long zipCode;
+
+    @Column(nullable = false)
     private String sex;
 
     @Column(nullable = false)
