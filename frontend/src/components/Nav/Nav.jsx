@@ -36,14 +36,21 @@ const Nav = () => {
                 <div className={`flex gap-2 items-center hidden md:flex`}>
                     {!user ? (
                         <>
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className={styles.link}>Menu</label>
-                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                    <li><a href={'/events'}>Events</a></li>
-                                    <li><a href={'/alldogs'}>View Dogs</a></li>
-                                    <li><a href={'/about'}>About Us</a></li>
-                                </ul>
-                            </div>
+                            <Link to={'/events'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    Events
+                                </span>
+                            </Link>
+                            <Link to={'/alldogs'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    All Dogs
+                                </span>
+                            </Link>
+                            <Link to={'/about'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    About Us
+                                </span>
+                            </Link>
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className='text-3xl block text-slate-50'><HiUserCircle /></label>
                                 <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
@@ -54,14 +61,21 @@ const Nav = () => {
                         </>
                     ) : (
                         <>
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className={styles.link}>Menu</label>
-                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                    <li><a href={'/events'}>Events</a></li>
-                                    <li><a href={'/alldogs'}>View Dogs</a></li>
-                                    <li><a href={'/about'}>About Us</a></li>
-                                </ul>
-                            </div>
+                            <Link to={'/events'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    Events
+                                </span>
+                            </Link>
+                            <Link to={'/alldogs'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    All Dogs
+                                </span>
+                            </Link>
+                            <Link to={'/about'}>
+                                <span className={`text-xl block text-slate-50`}>
+                                    About Us
+                                </span>
+                            </Link>
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0}>
                                     <img className={`rounded-full w-10 h-10`}
