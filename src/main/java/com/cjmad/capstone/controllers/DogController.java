@@ -104,7 +104,7 @@ public class DogController {
         if (!user.getDogs().contains(dog)) return ResponseEntity.badRequest().build();
 
         dogsRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dog);
     }
 
 }
