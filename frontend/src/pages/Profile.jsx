@@ -12,6 +12,7 @@ import { PickerInline } from 'filestack-react';
 import { FILESTACK_ENDPOINT, FILESTACK_KEY } from '../utils/consts.js';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate, useParams } from 'react-router-dom';
+//PLACEHOLDER pic       'img/placholder-img.jpeg'     ||      https://placeimg.com/192/192/people
 
 const Profile = ({ userId }) => {
     const params = useParams();
@@ -114,13 +115,9 @@ const Profile = ({ userId }) => {
                                     onClick={() => setImageModalOpen(true)}
                                 />
                             )}
-                            <img
-                                src={
-                                    user?.img
-                                        ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                        : 'https://placeimg.com/192/192/people'
-                                }
-                            />
+                            <img src={
+                                user?.img ? `${FILESTACK_ENDPOINT}/${user.img}` : 'img/placholder-img.jpeg'
+                            }/>
                         </div>
                     </div>
                     <h1 className={`text-5xl`}>{user.name ?? user.username}</h1>
