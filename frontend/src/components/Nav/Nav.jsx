@@ -1,7 +1,8 @@
 import { AiFillHome } from 'react-icons/ai';
 import { BiSearchAlt } from 'react-icons/bi';
+import { HiUserCircle } from "react-icons/hi";
 
-import {
+import React, {
     useContext,
     useEffect,
     useLayoutEffect,
@@ -14,6 +15,7 @@ import styles from './Nav.module.css';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
+import {FILESTACK_ENDPOINT} from "../../utils/consts.js";
 
 const Nav = () => {
     const [searchOpen, setSearchOpen] = useState(false);
@@ -34,36 +36,49 @@ const Nav = () => {
                 <div className={`flex gap-2 items-center hidden md:flex`}>
                     {!user ? (
                         <>
-                            <Link to={'/login'}>
-                                <span className={`${styles.link}`}>Login</span>
-                            </Link>
-                            <Link to={'/register'}>
-                                <span className={styles.link}>Register</span>
-                            </Link>
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex={0} className={styles.link}>Menu</label>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li><a href={'/events'}>Events</a></li>
+                                    <li><a href={'/alldogs'}>View Dogs</a></li>
+                                    <li><a href={'/about'}>About Us</a></li>
+                                </ul>
+                            </div>
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex={0} className='text-3xl block text-slate-50'><HiUserCircle /></label>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li><a href={'/login'}>Login</a></li>
+                                    <li><a href={'/register'}>Register</a></li>
+                                </ul>
+                            </div>
                         </>
                     ) : (
                         <>
-                            <Link to={'/profile'}>
-                                <span className={styles.link}>Profile</span>
-                            </Link>
-                            <Link to={'/about-us'}>
-                                <span className={styles.link}>About</span>
-                            </Link>
-                            <Link to={'/create-dog'}>
-                                <span className={`${styles.link}`}>Add Dog</span>
-                            </Link>
-
-                            <Link to={'/create-event'}>
-                                <span className={`${styles.link}`}>Create Event</span>
-                            </Link>
-
-                            <Link to={'/events'}>
-                                <span className={`${styles.link}`}>Events</span>
-                            </Link>
-
-                            <Link to={'/logout'}>
-                                <span className={styles.link}>Logout</span>
-                            </Link>
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex={0} className={styles.link}>Menu</label>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li><a href={'/events'}>Events</a></li>
+                                    <li><a href={'/alldogs'}>View Dogs</a></li>
+                                    <li><a href={'/about'}>About Us</a></li>
+                                </ul>
+                            </div>
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex={0}>
+                                    <img className={`rounded-full w-10 h-10`}
+                                        src={
+                                            user?.img
+                                                ? `${FILESTACK_ENDPOINT}/${user.img}`
+                                                : 'https://placeimg.com/192/192/people'
+                                        }
+                                    />
+                                </label>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li><a href={'/profile'}>View Profile</a></li>
+                                    <li><a href={'/create-event'}>Create Event</a></li>
+                                    <li><a href={'/create-dog'}>Add Dog</a></li>
+                                    <li><a href={'/logout'}>Logout</a></li>
+                                </ul>
+                            </div>
                         </>
                     )}
                 </div>
@@ -108,13 +123,19 @@ const Nav = () => {
                                     <Link to={'/profile'}>Profile</Link>
                                 </li>
                                 <li>
-                                    <Link to={'/create-dog'}>Create Dog</Link>
+                                    <Link to={'/events'}>Events</Link>
                                 </li>
                                 <li>
                                     <Link to={'/create-event'}>Create Event</Link>
                                 </li>
                                 <li>
-                                    <Link to={'/events'}>Events</Link>
+                                    <Link to={'/alldogs'}>View Dogs</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/create-dog'}>Add Dog</Link>
+                                </li>
+                                <li>
+                                    <Link to={'/about'}>About Us</Link>
                                 </li>
                                 <li>
                                     <Link to={'/logout'}>Logout</Link>
