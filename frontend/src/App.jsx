@@ -20,12 +20,10 @@ import Logout from './pages/Logout.jsx';
 import CreateDog from './pages/CreateDog.jsx';
 import ErrorPage from './components/ErrorPage/Error';
 
-import AllDogs from "./pages/AllDogs.jsx";
-import AboutPage from "./pages/AboutPage.jsx";
-
 import AllDogs from './pages/AllDogs.jsx';
-import { UserContext } from './context/UserContext.jsx';
+import AboutPage from './pages/AboutPage.jsx';
 
+import { UserContext } from './context/UserContext.jsx';
 
 function App() {
     const location = useLocation();
@@ -62,6 +60,7 @@ function App() {
                     <Route path={'/error'} element={<ErrorPage />} />
                     <Route path={'/*'} element={<ErrorPage />} />
                     <Route path={'/alldogs'} element={<AllDogs />} />
+                    <Route path={'/about'} element={<AboutPage />} />
                 </Routes>
             </AnimatePresence>
             {/*<Footer />*/}
