@@ -13,6 +13,8 @@ import EventEditableField from '../components/Edit/EditEvent/EventEditableField'
 import EditName from '../components/Edit/EditEvent/EditName.jsx';
 import EditDescription from '../components/Edit/EditEvent/EditDescription.jsx';
 import EditDate from '../components/Edit/EditEvent/EditDate.jsx';
+import { FILESTACK_ENDPOINT } from '../utils/consts.js';
+import UserAvatarGroup from '../components/UserAvatarGroup/UserAvatarGroup.jsx';
 
 const IndividualEvent = () => {
     const { id } = useParams();
@@ -124,23 +126,7 @@ const IndividualEvent = () => {
                 <h1 className="font-bold font-brand">Attendees</h1>
                 <div className={'flex'}>
                     <div className="avatar-group -space-x-6 flex-wrap overflow-visible">
-                        <AnimatePresence>
-                            {attendees.map((attendee, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0 }}
-                                    className="avatar placeholder"
-                                >
-                                    <div className="w-24 h-24 bg-neutral-focus text-neutral-content">
-                                        <Link to={`/users/${attendee.id}`}>
-                                            <span>{attendee.username}</span>
-                                        </Link>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
+                        <UserAvatarGroup users={attendees} />
                     </div>
                 </div>
             </div>

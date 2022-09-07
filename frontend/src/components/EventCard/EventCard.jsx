@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { AnimatePresence, motion } from 'framer-motion';
+import UserAvatarGroup from '../UserAvatarGroup/UserAvatarGroup.jsx';
 
 function EventCard({ event }) {
     const date = format(parseISO(event?.date), 'LLL. d, yyyy');
@@ -38,23 +39,10 @@ function EventCard({ event }) {
                     <p className={`opacity-50`}>Attendees:</p>
 
                     <div className="avatar-group -space-x-6">
-                        <AnimatePresence>
-                            {event?.attendees.map((attendee, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0 }}
-                                    className="avatar placeholder"
-                                >
-                                    <div className="w-14 h-14 bg-neutral-focus text-neutral-content text-xs font-bold">
-                                        <Link to={`/users/${attendee.id}`}>
-                                            <span>{attendee.username}</span>
-                                        </Link>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
+                        <UserAvatarGroup
+                            avatarSize={'4rem'}
+                            users={event?.attendees}
+                        />
                     </div>
                 </div>
                 <div className="w-full font-brand ">
