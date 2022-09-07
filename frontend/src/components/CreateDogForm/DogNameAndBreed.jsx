@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import MultiSelect from '../MultiSelect/MultiSelect.jsx';
+import { createDogSchema } from './createDogSchema.js';
 
 const DogNameAndBreed = ({ changeStep, formData }) => {
     const [breeds, setBreeds] = useState([]);
@@ -40,7 +41,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
     );
 
     const { register, errors, handleSubmit } = useValidate({
-        name: yup.string().required('Name is required'),
+        name: createDogSchema.name,
     });
 
     const [customErrs, setCustomErrs] = useState({});

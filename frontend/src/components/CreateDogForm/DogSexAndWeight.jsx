@@ -4,15 +4,13 @@ import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import * as yup from 'yup';
 import { UserContext } from '../../context/UserContext.jsx';
+import { createDogSchema } from './createDogSchema.js';
 
 const DogSexAndWeight = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        sex: yup.string().required('Sex is required'),
-        weight: yup
-            .number()
-            .min(1, 'Weight has to be above 0')
-            .required('Weight is required'),
-        loveable: yup.boolean(),
+        sex: createDogSchema.sex,
+        weight: createDogSchema.weight,
+        loveable: createDogSchema.loveable,
     });
 
     const _changeStep = (dir) =>

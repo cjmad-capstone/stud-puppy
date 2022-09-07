@@ -3,13 +3,11 @@ import * as yup from 'yup';
 import FormPage from '../Form/FormPage.jsx';
 import React from 'react';
 import Button from '../Button/Button.jsx';
+import { createDogSchema } from './createDogSchema.js';
 
 const DogDescription = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        description: yup
-            .string()
-            .max(200, 'Description cannot be more than 200 chars')
-            .required('Description is required'),
+        description: createDogSchema.description,
     });
 
     const _changeStep = (dir) =>
