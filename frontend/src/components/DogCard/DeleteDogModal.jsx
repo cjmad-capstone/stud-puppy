@@ -23,7 +23,7 @@ const DeleteDogModal = ({ dog, setModalOpen }) => {
     };
 
     return (
-        <Modal>
+        <Modal setOpen={setModalOpen} customButtons>
             <div
                 className={
                     'bg-base-100 p-4 rounded-xl flex flex-col gap-4 items-center'
