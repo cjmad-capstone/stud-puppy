@@ -7,11 +7,12 @@ const Modal = ({
     setOpen,
     onPositive,
     onNegative,
+    customButtons = false,
     positiveText = 'Yes',
     negativeText = 'No',
 }) => {
     useEffect(() => {
-        document.body.style.overflow = open ? 'hidden' : 'unset';
+        document.body.style.overflow = 'hidden';
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -30,25 +31,27 @@ const Modal = ({
         >
             <div className={`w-1/2 bg-base-100 p-4 rounded-xl`}>
                 {children}
-                <div className={`flex justify-center gap-3 pt-4`}>
-                    <button
-                        className={'btn btn-success'}
-                        onClick={(e) => {
-                            onPositive && onPositive(e);
-                        }}
-                    >
-                        {positiveText}
-                    </button>
-                    <button
-                        className={'btn btn-error'}
-                        onClick={(e) => {
-                            setOpen(false);
-                            onNegative && onNegative(e);
-                        }}
-                    >
-                        {negativeText}
-                    </button>
-                </div>
+                {!customButtons && (
+                    <div className={`flex justify-center gap-3 pt-4`}>
+                        <button
+                            className={'btn btn-success'}
+                            onClick={(e) => {
+                                onPositive && onPositive(e);
+                            }}
+                        >
+                            {positiveText}
+                        </button>
+                        <button
+                            className={'btn btn-error'}
+                            onClick={(e) => {
+                                setOpen(false);
+                                onNegative && onNegative(e);
+                            }}
+                        >
+                            {negativeText}
+                        </button>
+                    </div>
+                )}
             </div>
         </motion.div>
     );
