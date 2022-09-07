@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const createDogSchema = {
+export const dogSchema = {
     name: yup.string().required('Name is required'),
     dob: yup.date().max(new Date()).required('DOB is required'),
     zipCode: yup.number().required('Zip code is required'),

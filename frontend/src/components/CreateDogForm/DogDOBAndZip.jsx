@@ -3,12 +3,12 @@ import Button from '../Button/Button.jsx';
 import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import { useZip } from '../../utils/hooks/useZip.js';
-import { createDogSchema } from './createDogSchema.js';
+import { dogSchema } from './dogSchema.js';
 
 const DogDOBAndZip = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        dob: createDogSchema.dob,
-        zipCode: createDogSchema.zipCode,
+        dob: dogSchema.dob,
+        zipCode: dogSchema.zipCode,
     });
 
     const [zip, errs] = useZip();

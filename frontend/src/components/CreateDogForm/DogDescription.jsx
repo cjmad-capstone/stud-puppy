@@ -3,11 +3,11 @@ import * as yup from 'yup';
 import FormPage from '../Form/FormPage.jsx';
 import React from 'react';
 import Button from '../Button/Button.jsx';
-import { createDogSchema } from './createDogSchema.js';
+import { dogSchema } from './dogSchema.js';
 
 const DogDescription = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        description: createDogSchema.description,
+        description: dogSchema.description,
     });
 
     const _changeStep = (dir) =>

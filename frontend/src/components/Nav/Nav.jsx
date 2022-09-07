@@ -1,6 +1,6 @@
 import { AiFillHome } from 'react-icons/ai';
 import { BiSearchAlt } from 'react-icons/bi';
-import { HiUserCircle } from "react-icons/hi";
+import { HiUserCircle } from 'react-icons/hi';
 
 import React, {
     useContext,
@@ -15,7 +15,7 @@ import styles from './Nav.module.css';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
-import {FILESTACK_ENDPOINT} from "../../utils/consts.js";
+import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 
 const Nav = () => {
     const [searchOpen, setSearchOpen] = useState(false);
@@ -52,10 +52,22 @@ const Nav = () => {
                                 </span>
                             </Link>
                             <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className='text-3xl block text-slate-50'><HiUserCircle /></label>
-                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                    <li><a href={'/login'}>Login</a></li>
-                                    <li><a href={'/register'}>Register</a></li>
+                                <label
+                                    tabIndex={0}
+                                    className="text-3xl block text-slate-50"
+                                >
+                                    <HiUserCircle />
+                                </label>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+                                >
+                                    <li>
+                                        <a href={'/login'}>Login</a>
+                                    </li>
+                                    <li>
+                                        <a href={'/register'}>Register</a>
+                                    </li>
                                 </ul>
                             </div>
                         </>
@@ -78,19 +90,35 @@ const Nav = () => {
                             </Link>
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0}>
-                                    <img className={`rounded-full w-10 h-10`}
-                                         src={
-                                             user?.img
-                                                 ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                                 : 'https://placeimg.com/192/192/people'
-                                         }
+                                    <img
+                                        className={`rounded-full w-10 h-10`}
+                                        src={
+                                            user?.img
+                                                ? `${FILESTACK_ENDPOINT}/${user.img}`
+                                                : 'https://placeimg.com/192/192/people'
+                                        }
                                     />
                                 </label>
-                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                    <li><a href={'/profile'}>View Profile</a></li>
-                                    <li><a href={'/create-event'}>Create Event</a></li>
-                                    <li><a href={'/create-dog'}>Add Dog</a></li>
-                                    <li><a href={'/logout'}>Logout</a></li>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+                                >
+                                    <li>
+                                        <Link to={'/profile'}>
+                                            View Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/create-event'}>
+                                            Create Event
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/create-dog'}>Add Dog</Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/logout'}>Logout</Link>
+                                    </li>
                                 </ul>
                             </div>
                         </>
@@ -140,7 +168,9 @@ const Nav = () => {
                                     <Link to={'/events'}>Events</Link>
                                 </li>
                                 <li>
-                                    <Link to={'/create-event'}>Create Event</Link>
+                                    <Link to={'/create-event'}>
+                                        Create Event
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link to={'/alldogs'}>View Dogs</Link>

@@ -4,6 +4,7 @@ import com.cjmad.capstone.models.*;
 import com.cjmad.capstone.repositories.DogRepository;
 import com.cjmad.capstone.repositories.EventsRepository;
 import com.cjmad.capstone.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,23 +76,14 @@ public class DogController {
 
     @PutMapping("/{id}/edit")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity updateDog(@PathVariable long id, @RequestBody Dog dog) {
+    public ResponseEntity<?> updateDog(@PathVariable Long id, @RequestBody Dog dog) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        Dog currentDog = dogsRepository.findById(id).orElseThrow(RuntimeException:: new);
+        Dog currentDog = dogsRepository.findById(id).orElseThrow();
 
-        if (!user.getDogs().contains(currentDog)) return ResponseEntity.badRequest().build();
+        if (!user.getDogs().contains(currentDog)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        currentDog.setName(dog.getName());
-        currentDog.setDescription(dog.getDescription());
-        currentDog.setDob(dog.getDob());
-        currentDog.setSex(dog.getSex());
-        currentDog.setWeight(dog.getWeight());
-        currentDog.setLoveable(dog.getLoveable());
 
-        if(dog.getImages() != null && dog.getImages().size() > 0)
-            currentDog.setImages(dog.getImages());
-
-        dogsRepository.save(currentDog);
+        dogsRepository.save(dog);
 
         return ResponseEntity.ok(currentDog);
     }
@@ -101,7 +93,7 @@ public class DogController {
     public ResponseEntity deleteDog(@PathVariable long id) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         Dog dog = dogsRepository.findById(id).orElseThrow();
-        if (!user.getDogs().contains(dog)) return ResponseEntity.badRequest().build();
+        if (!user.getDogs().contains(dog)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         dogsRepository.deleteById(id);
         return ResponseEntity.ok(dog);

@@ -9,6 +9,10 @@ import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import LinkDogs from '../components/LinkDogs/LinkDogs.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
+import EditableField from '../components/EditDog/EditableField.jsx';
+import EditName from '../components/EditDog/EditName.jsx';
+import EditDescription from '../components/EditDog/EditDescription.jsx';
+import EditWeight from '../components/EditDog/EditWeight.jsx';
 
 const DogProfile = () => {
     const { id } = useParams();
@@ -44,12 +48,14 @@ const DogProfile = () => {
                                 className="w-full h-full object-center object-cover"
                             />
                             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                                <a
-                                    href={`#slide${idx - 1}`}
-                                    className="btn btn-circle opacity-75"
-                                >
-                                    ❮
-                                </a>
+                                {idx !== 0 && (
+                                    <a
+                                        href={`#slide${idx - 1}`}
+                                        className="btn btn-circle opacity-75"
+                                    >
+                                        ❮
+                                    </a>
+                                )}
                                 {idx !== dog.images.length - 1 && (
                                     <a
                                         href={`#slide${idx + 1}`}
@@ -78,7 +84,14 @@ const DogProfile = () => {
                         <div className="card-body">
                             <div className={`flex justify-between`}>
                                 <h1 className="card-title text-5xl font-brand">
-                                    {dog?.name},&nbsp;
+                                    <EditableField
+                                        dog={dog}
+                                        EditComponent={EditName}
+                                        defaultValue={dog?.name}
+                                    >
+                                        {dog?.name}
+                                    </EditableField>
+                                    ,&nbsp;
                                     {differenceInYears(
                                         new Date(),
                                         parseISO(dog?.dob)
@@ -95,10 +108,24 @@ const DogProfile = () => {
                                     </div>
                                 ))}
                                 <div className="badge badge-primary py-3 px-2">
-                                    {dog?.weight}lbs
+                                    <EditableField
+                                        defaultValue={dog?.weight}
+                                        dog={dog}
+                                        EditComponent={EditWeight}
+                                    >
+                                        {dog?.weight}lbs
+                                    </EditableField>
                                 </div>
                             </div>
-                            <p>{dog.description}</p>
+                            <div>
+                                <EditableField
+                                    dog={dog}
+                                    defaultValue={dog.description}
+                                    EditComponent={EditDescription}
+                                >
+                                    {dog.description}
+                                </EditableField>
+                            </div>
                             {user?.id !== dog?.owner?.id && (
                                 <div className="card-actions justify-center pt-6">
                                     <Button
@@ -126,7 +153,10 @@ const DogProfile = () => {
                                     className={`min-w-16 min-h-16 w-16 h-16`}
                                 >
                                     <img
-                                    src={dog.owner?.img ? `${FILESTACK_ENDPOINT}/${dog.owner.img}` : 'https://placeimg.com/192/192/people'
+                                        src={
+                                            dog.owner?.img
+                                                ? `${FILESTACK_ENDPOINT}/${dog.owner.img}`
+                                                : 'https://placeimg.com/192/192/people'
                                         }
                                         alt="User pic"
                                         className={`rounded-full w-full h-full object-cover`}
