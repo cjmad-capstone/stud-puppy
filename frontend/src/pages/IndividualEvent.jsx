@@ -25,10 +25,11 @@ const IndividualEvent = () => {
         ['event', id],
         () => fetch(`/api/events/${id}`).then((res) => res.json()),
         {
-            enabled: !!user,
             onSuccess: (data) => {
                 setIsAttending(
-                    data?.attendees?.some((attendee) => attendee.id === user.id)
+                    data?.attendees?.some(
+                        (attendee) => attendee?.id === user?.id
+                    )
                 );
                 setAttendees(data?.attendees);
             },
