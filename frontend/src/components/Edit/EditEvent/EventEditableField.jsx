@@ -46,7 +46,7 @@ const DogEditableField = ({ children, event, defaultValue, EditComponent }) => {
                             exit={{ opacity: 0 }}
                         >
                             <FaEdit
-                                className={`absolute cursor-pointer text-xl top-0 right-0 -translate-y-full translate-x-full`}
+                                className={`absolute cursor-pointer text-2xl top-0 right-0 -translate-y-full translate-x-full`}
                                 onClick={() => setEditMode(true)}
                             />
                         </motion.span>

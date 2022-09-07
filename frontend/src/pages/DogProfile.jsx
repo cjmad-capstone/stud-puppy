@@ -33,38 +33,24 @@ const DogProfile = () => {
 
     return (
         <motion.main {...pt}>
-            <div>
-                {/*Carousel*/}
-                <div className="carousel w-full h-[600px]">
+            <div className={`flex flex-wrap md:flex-nowrap p-4`}>
+                <div className={`flex gap-3`}>
                     {dog.images.map((image, idx) => (
                         <div
+                            className="min-w-1/3 rounded-2xl overflow-hidden"
                             key={idx}
-                            id={`slide${idx}`}
-                            className="carousel-item relative w-full h-full "
                         >
-                            <img
-                                alt={`Photo of ${dog?.name}`}
-                                src={`${FILESTACK_ENDPOINT}/${image.url}`}
-                                className="w-full h-full object-center object-cover"
-                            />
-                            <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                                {idx !== 0 && (
-                                    <a
-                                        href={`#slide${idx - 1}`}
-                                        className="btn btn-circle opacity-75"
-                                    >
-                                        ❮
-                                    </a>
-                                )}
-                                {idx !== dog.images.length - 1 && (
-                                    <a
-                                        href={`#slide${idx + 1}`}
-                                        className="btn btn-circle opacity-75"
-                                    >
-                                        ❯
-                                    </a>
-                                )}
-                            </div>
+                            <a
+                                href={`${FILESTACK_ENDPOINT}/${image.url}`}
+                                target={'_blank'}
+                                rel="noreferrer"
+                            >
+                                <img
+                                    alt={`Photo of ${dog?.name}`}
+                                    src={`${FILESTACK_ENDPOINT}/${image.url}`}
+                                    className={`w-full h-full object-cover object-center`}
+                                />
+                            </a>
                         </div>
                     ))}
                 </div>
@@ -78,75 +64,76 @@ const DogProfile = () => {
                     )}
                 </AnimatePresence>
 
-                <div className="relative flex justify-between flex-wrap bg-base-100 rounded-3xl z-1 -top-14">
+                <div
+                    className="relative m-4
+                bg-base-100 rounded-3xl z-1 px-4"
+                >
                     {/*Left card*/}
-                    <div className="card w-full flex-grow md:w-1/2 lg:pl-10">
-                        <div className="card-body">
-                            <div className={`flex justify-between`}>
-                                <h1 className="card-title text-5xl font-brand">
-                                    <DogEditableField
-                                        dog={dog}
-                                        EditComponent={EditName}
-                                        defaultValue={dog?.name}
-                                    >
-                                        {dog?.name}
-                                    </DogEditableField>
-                                    ,&nbsp;
-                                    {differenceInYears(
-                                        new Date(),
-                                        parseISO(dog?.dob)
-                                    )}
-                                </h1>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                {dog?.breeds?.map((breed, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="badge badge-secondary py-3 px-2 my-3"
-                                    >
-                                        {breed.breedName}
-                                    </div>
-                                ))}
-                                <div className="badge badge-primary py-3 px-2">
-                                    <DogEditableField
-                                        defaultValue={dog?.weight}
-                                        dog={dog}
-                                        EditComponent={EditWeight}
-                                    >
-                                        {dog?.weight}lbs
-                                    </DogEditableField>
-                                </div>
-                            </div>
-                            <div>
+                    <div className="w-full mb-6 ">
+                        <div className={`flex justify-center`}>
+                            <h1 className="card-title text-7xl font-bold py-4 font-brand">
                                 <DogEditableField
                                     dog={dog}
-                                    defaultValue={dog.description}
-                                    EditComponent={EditDescription}
+                                    EditComponent={EditName}
+                                    defaultValue={dog?.name}
                                 >
-                                    {dog.description}
+                                    {dog?.name}
+                                </DogEditableField>
+                                ,&nbsp;
+                                {differenceInYears(
+                                    new Date(),
+                                    parseISO(dog?.dob)
+                                )}
+                            </h1>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            {dog?.breeds?.map((breed, idx) => (
+                                <div
+                                    key={idx}
+                                    className="badge badge-secondary py-3 px-2 my-3"
+                                >
+                                    {breed.breedName}
+                                </div>
+                            ))}
+                            <div className="badge badge-primary py-3 px-2">
+                                <DogEditableField
+                                    defaultValue={dog?.weight}
+                                    dog={dog}
+                                    EditComponent={EditWeight}
+                                >
+                                    {dog?.weight}lbs
                                 </DogEditableField>
                             </div>
-                            {user?.id !== dog?.owner?.id && (
-                                <div className="card-actions justify-center pt-6">
-                                    <Button
-                                        className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
-                                        onClick={openLinkUpDialog}
-                                    >
-                                        Schedule A Meetup
-                                    </Button>
-                                </div>
-                            )}
                         </div>
+                        <div>
+                            <DogEditableField
+                                dog={dog}
+                                defaultValue={dog.description}
+                                EditComponent={EditDescription}
+                            >
+                                {dog.description}
+                            </DogEditableField>
+                        </div>
+                        {user?.id !== dog?.owner?.id && (
+                            <div className="card-actions justify-center pt-6">
+                                <Button
+                                    className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
+                                    onClick={openLinkUpDialog}
+                                >
+                                    Schedule A Meetup
+                                </Button>
+                            </div>
+                        )}
                     </div>
 
                     <hr
                         className={
-                            'block md:hidden border-t-2 border-secondary w-3/4 mx-auto'
+                            'block md:hidden border-t-2 border-secondary  mx-auto'
                         }
                     />
                     {/*Right card*/}
-                    <div className="card w-full  md:w-1/4 ">
-                        <div className="card-body md:px-0">
+                    <div className=" w-full pt-8 ">
+                        <div className="md:px-0">
                             <h2 className="text-xl">Meet the Owner</h2>
                             <div className={`flex items-center`}>
                                 <figure
