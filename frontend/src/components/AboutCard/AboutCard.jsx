@@ -14,24 +14,10 @@ function AboutCard(props) {
                 <div className="card-actions">
                     <a href={props.linkedIn}><AiOutlineLinkedin className={`text-2xl`}/></a>
                     <a href={props.githubLink}><AiOutlineGithub className={`text-2xl`} /></a>
+                    <a href={props.alumniPortalLink}><img className={'text-2Xl mt-0.5 h-5 w-5 contrast-[80%]'} src="/img/codeup_black_icon.webp"/></a>
                 </div>
             </div>
         </div>
-
-        // <div className="card w-96 bg-base-100 shadow-xl">
-        //     <div className="card-body card w-60 bg-base-80 shadow-xl">
-        //         <h2 className="card-title">{props.name}</h2>
-        //         <div className="w-1/3">
-        //             <figure><img src={props.img} /></figure>
-        //         </div>
-        //         <div className="card-actions justify-end">
-        //             <p>{props.bio}</p>
-        //             <br />
-        //             <a href={props.linkedIn}><AiOutlineLinkedin /></a>
-        //             <a href={props.githubLink}><AiOutlineGithub /></a>
-        //         </div>
-        //     </div>
-        // </div>
 
     )
 }

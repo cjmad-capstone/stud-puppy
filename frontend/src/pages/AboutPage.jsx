@@ -6,26 +6,16 @@ const AboutPage = () => {
 
     return (
         <motion.main {...pt} className={`p-12`}>
-            {/*<div className="hero min-h-screen" style="background-image: url(https://placeimg.com/1000/800/arch);">*/}
-
-
             <h1 className="m-10 text-8xl font-bold">About Us.</h1>
-            <p className="decoration-8 w-fit mb-5 mt-5 text-center">A full-stack web application that allows you to find your best buddy, a play date. It's complete with a modern design made using React.js, styled with TailwindCSS, animated with Framer Motion. The user can sign up for an account then get to creating their dog's profile. It allows dog-owners to collaborate in an effort to help their furry friend live their best life. My team and I were able to design and implement a RESTful API using Spring Boot with full CRUD functionality that communicates with the frontend to authenticate with JWTs.</p>
 
-
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <h2 className="h-20">About Us.</h2>*/}
-            {/*    <p className="w-50">A full-stack web application that allows you to find your best buddy, a play date. It's complete with a modern design made using React.js, styled with TailwindCSS, animated with Framer Motion. The user can sign up for an account then get to creating their dog's profile. It allows dog-owners to collaborate in an effort to help their furry friend live their best life. My team and I were able to design and implement a RESTful API using Spring Boot with full CRUD functionality that communicates with the frontend to authenticate with JWTs.</p>*/}
-
-            {/*</div>*/}
-            <div className={`flex gap-1 flex-wrap justify-center`}>
+            <div className={`flex flex-wrap gap-2 justify-center justify-center lg:flex-nowrap`}>
                 <AboutCard
                     img="../img/D. Miller.jpg"
                     name="Dalton"
                     bio='"Everything that irritates us about others can lead to an understanding of ourselves." - Carl Jung'
                     linkedIn="https://www.linkedin.com/in/daltonkyemiller/"
                     githubLink="https://github.com/daltonkyemiller"
+                    alumniPortalLink="https://alumni.codeup.com/students/1528"
                 />
 
                 <AboutCard
@@ -34,30 +24,40 @@ const AboutPage = () => {
                     bio='“Intellectual growth should commence at birth and cease only at death. ― Albert Einstein”'
                     linkedIn="https://www.linkedin.com/in/cynthialgallegos/"
                     githubLink="https://github.com/CGALLE39"
+                    alumniPortalLink="https://alumni.codeup.com/students/1543"
                 />
+
                 <AboutCard
                     img="../img/M. Jio.jpg"
                     name="Matt"
                     bio='“If you cannot do great things, do small things in a great way.” – Napoleon Hill'
                     linkedIn="https://www.linkedin.com/in/matt-jio/"
                     githubLink="https://github.com/mattjio"
+                    alumniPortalLink="https://alumni.codeup.com/students/1539"
                 />
+
                 <AboutCard
                     img="../img/J. Welsh.jpg"
                     name="Justin"
                     bio='"A comfort zone is a beautiful place, but nothing ever grows there"'
                     linkedIn="https://www.linkedin.com/in/justin-welsh/"
                     githubLink="https://github.com/JustinWelsh"
+                    alumniPortalLink="https://alumni.codeup.com/students/1545"
                 />
+
                 <AboutCard
                     img="../img/A. Rodriguez.jpg"
                     name="Alex"
                     bio={`"The most damaging phrase in the language is: 'It's always been done that way.' - Grace Hopper"`}
                     linkedIn="https://www.linkedin.com/in/alexanderjrodriguez"
                     githubLink="https://github.com/ajrod-dev"
+                    alumniPortalLink="https://alumni.codeup.com/students/1529"
 
                 />
+
+
             </div>
+            <p className="decoration-8 w-fit mb-5 mt-5 text-center">A full-stack web application that allows you to find your best buddy, a play date. It's complete with a modern design made using React.js, styled with TailwindCSS, animated with Framer Motion. The user can sign up for an account then get to creating their dog's profile. It allows dog-owners to collaborate in an effort to help their furry friend live their best life. My team and I were able to design and implement a RESTful API using Spring Boot with full CRUD functionality that communicates with the frontend to authenticate with JWTs.</p>
         </motion.main>
     );
 }
