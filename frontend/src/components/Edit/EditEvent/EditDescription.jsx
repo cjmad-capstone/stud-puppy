@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { useValidate } from '../../utils/hooks/useValidate.js';
-import { dogSchema } from '../CreateDogForm/dogSchema';
-import Modal from '../Modal/Modal.jsx';
+import { useValidate } from '../../../utils/hooks/useValidate.js';
+import { dogSchema } from '../../CreateDogForm/dogSchema.js';
+import Modal from '../../Modal/Modal.jsx';
+import { eventSchema } from '../../../utils/eventSchema.js';
 
 const EditName = ({ defaultValue, setOpen, onEdit }) => {
     const { register, handleSubmit, errors } = useValidate({
-        description: dogSchema.description,
+        description: eventSchema.description,
     });
 
     return (

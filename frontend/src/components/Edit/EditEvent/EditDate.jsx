@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { useValidate } from '../../utils/hooks/useValidate.js';
-import { dogSchema } from '../CreateDogForm/dogSchema';
-import Modal from '../Modal/Modal.jsx';
+import { useValidate } from '../../../utils/hooks/useValidate.js';
+import { dogSchema } from '../../CreateDogForm/dogSchema.js';
+import Modal from '../../Modal/Modal.jsx';
+import { eventSchema } from '../../../utils/eventSchema.js';
 
 const EditName = ({ defaultValue, setOpen, onEdit }) => {
     const { register, handleSubmit, errors } = useValidate({
-        weight: dogSchema.weight,
+        date: eventSchema.date,
     });
 
     return (
@@ -17,15 +18,15 @@ const EditName = ({ defaultValue, setOpen, onEdit }) => {
             negativeText="Cancel"
         >
             <label className="label">
-                <span className="label-text-alt">Weight:</span>
+                <span className="label-text-alt">Date</span>
             </label>
             <input
-                type="number"
+                type="date"
                 defaultValue={defaultValue}
-                {...register('weight')}
-                placeholder="Weight"
-                className={`w-full input input-bordered input-secondary  ${
-                    errors.weight ? 'input-error' : ''
+                {...register('date')}
+                placeholder="Date"
+                className={`w-full textarea textarea-bordered textarea-secondary  ${
+                    errors.date ? 'input-error' : ''
                 }`}
             />
         </Modal>

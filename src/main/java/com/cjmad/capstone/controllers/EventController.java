@@ -67,15 +67,17 @@ public class EventController {
         return eventsRepository.save(event);
     }
 
-    @PutMapping("/events/edit/{id}")
+    @PutMapping("/{id}/edit")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity updateEvent(@PathVariable long id, @RequestBody Event event) {
         Event currentEvent =
-                eventsRepository.findByCreator(id);
-        currentEvent.setDate(event.getDate());
-        currentEvent.setDescription(event.getDescription());
-        currentEvent.setName(event.getName());
+                eventsRepository.findById(id).orElseThrow();
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        return ResponseEntity.ok(currentEvent);
+        if(currentEvent.getCreator().getId() != user.getId())
+            return ResponseEntity.status(403).build();
+
+        return ResponseEntity.ok(eventsRepository.save(event));
     }
 
     @DeleteMapping("/events/{id}")

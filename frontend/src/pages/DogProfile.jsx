@@ -9,10 +9,10 @@ import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import LinkDogs from '../components/LinkDogs/LinkDogs.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
-import EditableField from '../components/EditDog/EditableField.jsx';
-import EditName from '../components/EditDog/EditName.jsx';
-import EditDescription from '../components/EditDog/EditDescription.jsx';
-import EditWeight from '../components/EditDog/EditWeight.jsx';
+import DogEditableField from '../components/Edit/EditDog/DogEditableField.jsx';
+import EditName from '../components/Edit/EditDog/EditName.jsx';
+import EditDescription from '../components/Edit/EditDog/EditDescription.jsx';
+import EditWeight from '../components/Edit/EditDog/EditWeight.jsx';
 
 const DogProfile = () => {
     const { id } = useParams();
@@ -84,13 +84,13 @@ const DogProfile = () => {
                         <div className="card-body">
                             <div className={`flex justify-between`}>
                                 <h1 className="card-title text-5xl font-brand">
-                                    <EditableField
+                                    <DogEditableField
                                         dog={dog}
                                         EditComponent={EditName}
                                         defaultValue={dog?.name}
                                     >
                                         {dog?.name}
-                                    </EditableField>
+                                    </DogEditableField>
                                     ,&nbsp;
                                     {differenceInYears(
                                         new Date(),
@@ -108,23 +108,23 @@ const DogProfile = () => {
                                     </div>
                                 ))}
                                 <div className="badge badge-primary py-3 px-2">
-                                    <EditableField
+                                    <DogEditableField
                                         defaultValue={dog?.weight}
                                         dog={dog}
                                         EditComponent={EditWeight}
                                     >
                                         {dog?.weight}lbs
-                                    </EditableField>
+                                    </DogEditableField>
                                 </div>
                             </div>
                             <div>
-                                <EditableField
+                                <DogEditableField
                                     dog={dog}
                                     defaultValue={dog.description}
                                     EditComponent={EditDescription}
                                 >
                                     {dog.description}
-                                </EditableField>
+                                </DogEditableField>
                             </div>
                             {user?.id !== dog?.owner?.id && (
                                 <div className="card-actions justify-center pt-6">

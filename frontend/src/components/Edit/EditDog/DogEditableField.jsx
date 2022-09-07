@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { FaEdit } from 'react-icons/all';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { authHeader } from '../../utils/auth/authHeader.js';
+import { authHeader } from '../../../utils/auth/authHeader.js';
 import { useQuery } from '@tanstack/react-query';
-import { UserContext } from '../../context/UserContext.jsx';
+import { UserContext } from '../../../context/UserContext.jsx';
 
-const EditableField = ({ children, dog, defaultValue, EditComponent }) => {
+const DogEditableField = ({ children, dog, defaultValue, EditComponent }) => {
     const [editIcon, setEditIcon] = React.useState(false);
     const [editMode, setEditMode] = React.useState(false);
 
@@ -67,4 +67,4 @@ const EditableField = ({ children, dog, defaultValue, EditComponent }) => {
     );
 };
 
-export default EditableField;
+export default DogEditableField;
