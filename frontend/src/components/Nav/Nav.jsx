@@ -43,7 +43,7 @@ const Nav = () => {
                             </Link>
                             <Link to={'/alldogs'}>
                                 <span className={`text-xl block text-slate-50`}>
-                                    All Dogs
+                                    View Dogs
                                 </span>
                             </Link>
                             <Link to={'/about'}>
@@ -56,7 +56,7 @@ const Nav = () => {
                                     tabIndex={0}
                                     className="text-3xl block text-slate-50"
                                 >
-                                    <HiUserCircle />
+                                    <img className={`rounded-full w-10 h-10`} src={`img/placholder-img.jpeg`} />
                                 </label>
                                 <ul
                                     tabIndex={0}
@@ -80,7 +80,7 @@ const Nav = () => {
                             </Link>
                             <Link to={'/alldogs'}>
                                 <span className={`text-xl block text-slate-50`}>
-                                    All Dogs
+                                    View Dogs
                                 </span>
                             </Link>
                             <Link to={'/about'}>
@@ -95,7 +95,7 @@ const Nav = () => {
                                         src={
                                             user?.img
                                                 ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                                : 'https://placeimg.com/192/192/people'
+                                                : 'img/placholder-img.jpeg'
                                         }
                                     />
                                 </label>
@@ -150,44 +150,62 @@ const Nav = () => {
                         tabIndex="0"
                         className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                     >
-                        {!user ? (
-                            <>
-                                <li>
-                                    <Link to={'/login'}>Log in</Link>
-                                </li>
-                                <li>
-                                    <Link to={'/register'}>Register</Link>
-                                </li>
-                            </>
-                        ) : (
-                            <>
-                                <li>
-                                    <Link to={'/profile'}>Profile</Link>
-                                </li>
                                 <li>
                                     <Link to={'/events'}>Events</Link>
-                                </li>
-                                <li>
-                                    <Link to={'/create-event'}>
-                                        Create Event
-                                    </Link>
                                 </li>
                                 <li>
                                     <Link to={'/alldogs'}>View Dogs</Link>
                                 </li>
                                 <li>
-                                    <Link to={'/create-dog'}>Add Dog</Link>
-                                </li>
-                                <li>
                                     <Link to={'/about'}>About Us</Link>
                                 </li>
-                                <li>
-                                    <Link to={'/logout'}>Logout</Link>
-                                </li>
-                            </>
-                        )}
                     </ul>
                 </div>
+            </div>
+            <div className="dropdown dropdown-end md:hidden">
+                <label
+                    tabIndex={0}
+                    className="text-3xl block text-slate-50"
+                >
+                    <img className={`rounded-full w-10 h-10`}
+                         src={
+                             user?.img
+                                 ? `${FILESTACK_ENDPOINT}/${user.img}`
+                                 : 'img/placholder-img.jpeg'
+                         } />
+                </label>
+                <ul
+                    tabIndex={0}
+                    className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                    {!user ? (
+                        <>
+                            <li>
+                                <a href={'/login'}>Login</a>
+                            </li>
+                            <li>
+                                <a href={'/register'}>Register</a>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <Link to={'/profile'}>View Profile</Link>
+                            </li>
+                            <li>
+                                <Link to={'/create-event'}>
+                                    Create Event
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={'/create-dog'}>Add Dog</Link>
+                            </li>
+                            <li>
+                                <Link to={'/logout'}>Logout</Link>
+                            </li>
+                        </>
+                    )}
+                </ul>
             </div>
         </nav>
     );
