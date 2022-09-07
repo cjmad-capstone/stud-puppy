@@ -12,8 +12,8 @@ function AboutCard(props) {
                 <h2 className="card-title">{props.name}</h2>
                 <p>{props.bio}</p>
                 <div className="card-actions">
-                    <a href={props.linkedIn}><AiOutlineLinkedin /></a>
-                    <a href={props.githubLink}><AiOutlineGithub /></a>
+                    <a href={props.linkedIn}><AiOutlineLinkedin className={`text-2xl`}/></a>
+                    <a href={props.githubLink}><AiOutlineGithub className={`text-2xl`} /></a>
                 </div>
             </div>
         </div>

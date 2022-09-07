@@ -23,7 +23,7 @@ const AboutPage = () => {
                 <AboutCard
                     img="../img/D. Miller.jpg"
                     name="Dalton"
-                    bio="Would you like me to park your car?"
+                    bio='"Everything that irritates us about others can lead to an understanding of ourselves." - Carl Jung'
                     linkedIn="https://www.linkedin.com/in/daltonkyemiller/"
                     githubLink="https://github.com/daltonkyemiller"
                 />
@@ -31,28 +31,28 @@ const AboutPage = () => {
                 <AboutCard
                     img="../img/C. Gallagos.jpg"
                     name="Cynthia"
-                    bio="Bring me borgar"
+                    bio='“Intellectual growth should commence at birth and cease only at death. ― Albert Einstein”'
                     linkedIn="https://www.linkedin.com/in/cynthialgallegos/"
                     githubLink="https://github.com/CGALLE39"
                 />
                 <AboutCard
                     img="../img/M. Jio.jpg"
                     name="Matt"
-                    bio="Here in my car.."
+                    bio='“If you cannot do great things, do small things in a great way.” – Napoleon Hill'
                     linkedIn="https://www.linkedin.com/in/matt-jio/"
                     githubLink="https://github.com/mattjio"
                 />
                 <AboutCard
                     img="../img/J. Welsh.jpg"
                     name="Justin"
-                    bio="Very nice!"
+                    bio='"A comfort zone is a beautiful place, but nothing ever grows there"'
                     linkedIn="https://www.linkedin.com/in/justin-welsh/"
                     githubLink="https://github.com/JustinWelsh"
                 />
                 <AboutCard
                     img="../img/A. Rodriguez.jpg"
                     name="Alex"
-                    bio="Oi, you gotta get on this TRT bro !"
+                    bio={`"The most damaging phrase in the language is: 'It's always been done that way.' - Grace Hopper"`}
                     linkedIn="https://www.linkedin.com/in/alexanderjrodriguez"
                     githubLink="https://github.com/ajrod-dev"
 
