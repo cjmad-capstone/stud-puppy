@@ -2,13 +2,13 @@ import React from 'react';
 import Button from '../Button/Button.jsx';
 import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
-import * as yup from 'yup';
 import { useZip } from '../../utils/hooks/useZip.js';
+import { dogSchema } from './dogSchema.js';
 
 const DogDOBAndZip = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        dob: yup.date().max(new Date()).required('DOB is required'),
-        zipCode: yup.number().required('Zip code is required'),
+        dob: dogSchema.dob,
+        zipCode: dogSchema.zipCode,
     });
 
     const [zip, errs] = useZip();

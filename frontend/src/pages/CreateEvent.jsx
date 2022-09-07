@@ -7,28 +7,12 @@ import { pt } from '../utils/anim/pageTransitions.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useValidate } from '../utils/hooks/useValidate.js';
 import * as _ from 'lodash';
+import { eventSchema } from '../utils/eventSchema.js';
 
 const CreateEvent = () => {
     const navigate = useRef(useNavigate());
 
-    const { register, errors, handleSubmit } = useValidate({
-        name: yup.string().required('Name is required'),
-        description: yup.string().required('Description is required'),
-        date: yup
-            .date()
-            .typeError('Date format invalid.')
-            .min(new Date(), 'Date must be in the future.')
-            .required('Date is required'),
-        zipCode: yup
-            .number()
-            .typeError('Zip code must be a number.')
-            .test(
-                'len',
-                'zip must be between 5 and 10 digits',
-                (val) => String(val).length >= 5 && String(val).length <= 10
-            )
-            .required('Location is required'),
-    });
+    const { register, errors, handleSubmit } = useValidate(eventSchema);
 
     const createEvent = (eventObj) => {
         try {

@@ -22,8 +22,6 @@ const Profile = ({ userId }) => {
     if (!userId) userId = params?.userId;
     const { user: currentUser } = useContext(UserContext);
 
-    const isUsersProfile = userId === currentUser?.id;
-
     const { data: user } = useQuery(
         ['user', userId],
         () => fetch(`/api/users/${userId}`).then((res) => res.json()),
@@ -31,6 +29,9 @@ const Profile = ({ userId }) => {
             enabled: !!userId,
         }
     );
+
+    const isUsersProfile =
+        userId === currentUser?.id || user?.id === currentUser?.id;
 
     const { data: userEvents } = useQuery(
         ['userEvents', userId],
@@ -118,17 +119,20 @@ const Profile = ({ userId }) => {
                                     onClick={() => setImageModalOpen(true)}
                                 />
                             )}
-                            <img src={
-                                user?.img ? `${FILESTACK_ENDPOINT}/${user.img}` : 'img/placholder-img.jpeg'
-                            }/>
+                            <img
+                                src={
+                                    user?.img
+                                        ? `${FILESTACK_ENDPOINT}/${user.img}`
+                                        : 'img/placholder-img.jpeg'
+                                }
+                            />
                         </div>
                     </div>
                     <h1 className={`text-5xl`}>{user.name ?? user.username}</h1>
                 </div>
             </div>
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
-                {isUsersProfile ? 'Your' : `${user?.username}'s`}{' '}
-                Dogs
+                {isUsersProfile ? 'Your' : `${user?.username}'s`} Dogs
             </h1>
             <hr
                 className={
@@ -143,8 +147,7 @@ const Profile = ({ userId }) => {
                 ))}
             </div>
             <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
-                {user?.id === currentUser?.id ? 'Your' : `${user?.username}'s`}{' '}
-                Events
+                {isUsersProfile ? 'Your' : `${user?.username}'s`} Events
             </h1>
             <hr
                 className={

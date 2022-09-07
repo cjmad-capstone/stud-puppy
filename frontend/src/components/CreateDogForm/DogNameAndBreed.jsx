@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../Button/Button.jsx';
 import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
-import * as yup from 'yup';
 import { useQuery } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import MultiSelect from '../MultiSelect/MultiSelect.jsx';
+import { dogSchema } from './dogSchema.js';
 
 const DogNameAndBreed = ({ changeStep, formData }) => {
     const [breeds, setBreeds] = useState([]);
@@ -40,7 +40,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
     );
 
     const { register, errors, handleSubmit } = useValidate({
-        name: yup.string().required('Name is required'),
+        name: dogSchema.name,
     });
 
     const [customErrs, setCustomErrs] = useState({});

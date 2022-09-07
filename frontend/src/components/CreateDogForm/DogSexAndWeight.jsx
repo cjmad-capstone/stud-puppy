@@ -2,17 +2,13 @@ import React, { useContext } from 'react';
 import Button from '../Button/Button.jsx';
 import FormPage from '../Form/FormPage.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
-import * as yup from 'yup';
-import { UserContext } from '../../context/UserContext.jsx';
+import { dogSchema } from './dogSchema.js';
 
 const DogSexAndWeight = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
-        sex: yup.string().required('Sex is required'),
-        weight: yup
-            .number()
-            .min(1, 'Weight has to be above 0')
-            .required('Weight is required'),
-        loveable: yup.boolean(),
+        sex: dogSchema.sex,
+        weight: dogSchema.weight,
+        loveable: dogSchema.loveable,
     });
 
     const _changeStep = (dir) =>

@@ -8,6 +8,11 @@ import { Link, useParams } from 'react-router-dom';
 import Button from '../components/Button/Button.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { format, parseISO } from 'date-fns';
+import DogEditableField from '../components/Edit/EditDog/DogEditableField.jsx';
+import EventEditableField from '../components/Edit/EditEvent/EventEditableField';
+import EditName from '../components/Edit/EditEvent/EditName.jsx';
+import EditDescription from '../components/Edit/EditEvent/EditDescription.jsx';
+import EditDate from '../components/Edit/EditEvent/EditDate.jsx';
 
 const IndividualEvent = () => {
     const { id } = useParams();
@@ -77,13 +82,36 @@ const IndividualEvent = () => {
                     className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
                 >
                     <h1 className={`font-brand font-bold text-5xl`}>
-                        {event.name}
+                        <EventEditableField
+                            event={event}
+                            EditComponent={EditName}
+                            defaultValue={event.name}
+                        >
+                            {event.name}
+                        </EventEditableField>
                     </h1>
-                    <p className={'text-xl'}>
-                        {format(parseISO(event.date), 'MM/dd/yyyy')}
-                    </p>
+                    <div className={'text-xl'}>
+                        <EventEditableField
+                            event={event}
+                            EditComponent={EditDate}
+                            defaultValue={format(
+                                parseISO(event.date),
+                                'yyyy-MM-dd'
+                            )}
+                        >
+                            {format(parseISO(event.date), 'MM/dd/yyyy')}
+                        </EventEditableField>
+                    </div>
                 </div>
-                <p>{event.description}</p>
+                <div>
+                    <EventEditableField
+                        event={event}
+                        EditComponent={EditDescription}
+                        defaultValue={event.description}
+                    >
+                        {event.description}
+                    </EventEditableField>
+                </div>
                 {/*<EventCard event={event.name} />*/}
                 <Button
                     onClick={() => (isAttending ? leaveEvent() : attendEvent())}
