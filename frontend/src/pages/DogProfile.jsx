@@ -114,7 +114,7 @@ const DogProfile = () => {
                                 {dog.description}
                             </DogEditableField>
                         </div>
-                        {user?.id !== dog?.owner?.id && (
+                        {user?.id !== dog?.owner?.id && user && (
                             <div className="card-actions justify-center pt-6">
                                 <Button
                                     className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
