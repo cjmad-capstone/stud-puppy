@@ -39,7 +39,7 @@ const DogDOBAndZip = ({ changeStep, formData }) => {
                     </span>
                 </label>
                 <input
-                    type="number"
+                    type="text"
                     placeholder="Zip Code"
                     defaultValue={formData?.zipCode || zip}
                     {...register('zipCode')}
