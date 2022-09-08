@@ -33,7 +33,7 @@ const DogEditableField = ({ children, event, defaultValue, EditComponent }) => {
     return (
         <>
             <span
-                className={`relative`}
+                className={`relative w-full`}
                 onMouseOver={() => setEditIcon(true)}
                 onMouseLeave={() => setEditIcon(false)}
             >

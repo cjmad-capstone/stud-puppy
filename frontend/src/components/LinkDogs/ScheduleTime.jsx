@@ -6,12 +6,15 @@ import * as yup from 'yup';
 import Loading from 'react-loading';
 import { authHeader } from '../../utils/auth/authHeader.js';
 import * as _ from 'lodash';
+import { useNavigate } from 'react-router-dom';
 
 const ScheduleTime = ({ userDog, dogToLink }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successfullySubmitted, setSuccessfullySubmitted] = useState(false);
     const [error, setError] = useState(false);
     const [date, setDate] = useState();
+
+    const navigate = useNavigate();
 
     const { register, errors, handleSubmit } = useValidate({
         date: yup
@@ -35,9 +38,11 @@ const ScheduleTime = ({ userDog, dogToLink }) => {
                         date: data.date,
                     }),
                 });
-                await resp.json();
+                const json = await resp.json();
                 _.delay(() => setSuccessfullySubmitted(true), 1000);
+                _.delay(() => navigate(`/events/${json.id}`), 500);
             } catch (err) {
+                console.error(err);
                 _.delay(() => setError(true), 1000);
             }
         },
@@ -90,7 +95,7 @@ const ScheduleTime = ({ userDog, dogToLink }) => {
                                 }`}
                             >
                                 {!error
-                                    ? `Notifying ${dogToLink?.owner?.username}`
+                                    ? `Scheduling Event...`
                                     : 'Something went wrong :('}
                             </h1>
                             {!error && <Loading type="bubbles" color="black" />}
@@ -98,9 +103,8 @@ const ScheduleTime = ({ userDog, dogToLink }) => {
                     ) : (
                         <>
                             <h1 className="text-4xl font-brand font-bold">
-                                We notified {dogToLink?.owner?.username}
+                                Done!
                             </h1>
-                            <p>If they accept, we'll let you know!</p>
                         </>
                     )}
                 </>
