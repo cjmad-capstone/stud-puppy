@@ -123,7 +123,7 @@ const Login = () => {
                             <span className="label-text-alt">Zip code:</span>
                         </label>
                         <input
-                            type="number"
+                            type="text"
                             {...register('zipCode')}
                             placeholder="Zip Code"
                             defaultValue={zip}

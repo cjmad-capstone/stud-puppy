@@ -21,7 +21,7 @@ const Home = () => {
                 <img
                     className="absolute m-auto right-0 h-[110%] md:h-[110%] top-0"
                     src="/img/homepug-min.png"
-                    alt="Shoes"
+                    alt="Pug photo"
                 />
             </div>
             {/*Mobile Header*/}

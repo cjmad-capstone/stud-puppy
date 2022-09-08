@@ -141,7 +141,7 @@ const CreateEvent = () => {
                             Location (Zip Code)
                         </label>
                         <input
-                            type="number"
+                            type="text"
                             {...register('zipCode')}
                             name="zipCode"
                             id="zipCode"
