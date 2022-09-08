@@ -33,7 +33,7 @@ const Nav = () => {
             </Link>
             <div className={`flex items-center ml-auto`}>
                 {/*Web Nav*/}
-                <div className={`flex gap-2 items-center hidden md:flex`}>
+                <div className={`flex gap-5 items-center hidden md:flex`}>
                     {!user ? (
                         <>
                             <Link to={'/events'}>
