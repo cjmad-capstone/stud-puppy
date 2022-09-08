@@ -132,8 +132,8 @@ const DogProfile = () => {
                         }
                     />
                     {/*Right card*/}
-                    <div className=" w-full pt-8 ">
-                        <div className="md:px-0">
+                    <div className=" w-full pt-8">
+                        <div className="flex flex-col gap-3">
                             <h2 className="text-xl">Meet the Owner</h2>
                             <div className={`flex items-center`}>
                                 <figure
