@@ -5,6 +5,10 @@ import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 import DeleteDogModal from './DeleteDogModal.jsx';
+import { BsGenderMale} from 'react-icons/fa';
+import { BsGenderFemale} from 'react-icons/fa';
+
+
 
 function DogCard({ dog, editable }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -31,6 +35,21 @@ function DogCard({ dog, editable }) {
                             <div className="badge badge-secondary">
                                 Ready to breed
                             </div>
+                        )}
+                        {dog?.sex === 'F' ? (
+                            // <div className={"BsGenderFemale secondary"}></div>
+                            class Question extends React.Component {
+                                render() {
+                                    return <div className={"secondary"}><BsGenderFemale/>? </div>
+                                }
+                            }
+                        ) : (
+                            // <div className={"BsGenderMale primary"}></div>
+                            class Question extends React.Component {
+                                render() {
+                                    return <div className={"primary"}><BsGenderMale />? </div>
+                                }
+                            }
                         )}
                     </h2>
                     <p>{dog?.description}</p>
