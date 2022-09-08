@@ -14,26 +14,28 @@ const UserAvatarGroup = ({ users, avatarSize = '6rem' }) => {
                     exit={{ opacity: 0, scale: 0 }}
                     className="avatar placeholder"
                 >
-                    <div
-                        className="font-bold bg-neutral-focus text-base-100 bg-cover"
-                        style={{
-                            backgroundImage: user?.img
-                                ? `url(${FILESTACK_ENDPOINT}/${user?.img})`
-                                : 'unset',
-                            width: avatarSize,
-                            height: avatarSize,
-                        }}
-                    >
-                        <Link to={`/users/${user.id}`}>
-                            <span
-                                style={{
-                                    textShadow: '0 0 0.5rem black',
-                                }}
-                            >
-                                {user.username}
-                            </span>
-                        </Link>
-                    </div>
+                    <Link to={`/users/${user.id}`}>
+                        <div
+                            className="flex items-center justify-center font-bold bg-neutral-focus text-base-100 bg-cover"
+                            style={{
+                                backgroundImage: user?.img
+                                    ? `url(${FILESTACK_ENDPOINT}/${user?.img})`
+                                    : 'unset',
+                                width: avatarSize,
+                                height: avatarSize,
+                            }}
+                        >
+                            {!user?.img && (
+                                <span
+                                    style={{
+                                        textShadow: '0 0 0.5rem black',
+                                    }}
+                                >
+                                    {user.username}
+                                </span>
+                            )}
+                        </div>
+                    </Link>
                 </motion.div>
             ))}
         </AnimatePresence>

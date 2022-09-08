@@ -111,7 +111,7 @@ const DogProfile = () => {
                                 defaultValue={dog.description}
                                 EditComponent={EditDescription}
                             >
-                                {dog.description}
+                                <p>{dog.description}</p>
                             </DogEditableField>
                         </div>
                         {user?.id !== dog?.owner?.id && user && (
