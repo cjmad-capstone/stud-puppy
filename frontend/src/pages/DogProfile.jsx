@@ -141,9 +141,9 @@ const DogProfile = () => {
                                 >
                                     <img
                                         src={
-                                            dog.owner?.img
+                                            dog?.owner?.img
                                                 ? `${FILESTACK_ENDPOINT}/${dog.owner.img}`
-                                                : 'https://placeimg.com/192/192/people'
+                                                : '/img/placholder-img.jpeg'
                                         }
                                         alt="User pic"
                                         className={`rounded-full w-full h-full object-cover`}
