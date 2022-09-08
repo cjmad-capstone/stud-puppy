@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 import DeleteDogModal from './DeleteDogModal.jsx';
-import { BsGenderMale} from 'react-icons/fa';
-import { BsGenderFemale} from 'react-icons/fa';
+import { BsGenderMale} from 'react-icons/bs';
+import { BsGenderFemale} from 'react-icons/bs';
 
 
 
@@ -37,25 +37,15 @@ function DogCard({ dog, editable }) {
                             </div>
                         )}
                         {dog?.sex === 'F' ? (
-                            // <div className={"BsGenderFemale secondary"}></div>
-                            class Question extends React.Component {
-                                render() {
-                                    return <div className={"secondary"}><BsGenderFemale/>? </div>
-                                }
-                            }
+                            <BsGenderFemale className={"ml-auto text-pink-800"}/>
                         ) : (
-                            // <div className={"BsGenderMale primary"}></div>
-                            class Question extends React.Component {
-                                render() {
-                                    return <div className={"primary"}><BsGenderMale />? </div>
-                                }
-                            }
+                            <BsGenderMale className={"ml-auto text-blue-800"}/>
                         )}
                     </h2>
                     <p>{dog?.description}</p>
                     <div className="card-actions justify-end">
                         <Link to={`/dog/${dog.id}`}>
-                            <button className="btn btn-secondary lowercase">
+                            <button className={`btn ${dog?.sex !== 'F' ? 'btn-primary' : 'btn-secondary'} lowercase`}>
                                 View Profile
                             </button>
                         </Link>
