@@ -5,6 +5,10 @@ import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 import DeleteDogModal from './DeleteDogModal.jsx';
+import { BsGenderMale} from 'react-icons/bs';
+import { BsGenderFemale} from 'react-icons/bs';
+
+
 
 function DogCard({ dog, editable }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -32,11 +36,16 @@ function DogCard({ dog, editable }) {
                                 Ready to breed
                             </div>
                         )}
+                        {dog?.sex === 'F' ? (
+                            <BsGenderFemale className={"ml-auto text-pink-800"}/>
+                        ) : (
+                            <BsGenderMale className={"ml-auto text-blue-800"}/>
+                        )}
                     </h2>
                     <p>{dog?.description}</p>
                     <div className="card-actions justify-end">
                         <Link to={`/dog/${dog.id}`}>
-                            <button className="btn btn-secondary lowercase">
+                            <button className={`btn ${dog?.sex !== 'F' ? 'btn-primary' : 'btn-secondary'} lowercase`}>
                                 View Profile
                             </button>
                         </Link>
