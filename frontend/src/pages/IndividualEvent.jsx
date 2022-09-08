@@ -112,7 +112,7 @@ const IndividualEvent = () => {
                         EditComponent={EditDescription}
                         defaultValue={event.description}
                     >
-                        {event.description}
+                        <p>{event.description}</p>
                     </EventEditableField>
                 </div>
                 {/*<EventCard event={event.name} />*/}
