@@ -56,7 +56,10 @@ const Nav = () => {
                                     tabIndex={0}
                                     className="text-3xl block text-slate-50"
                                 >
-                                    <img className={`rounded-full w-10 h-10`} src={`img/placholder-img.jpeg`} />
+                                    <img
+                                        className={`rounded-full w-10 h-10`}
+                                        src={`img/placholder-img.jpeg`}
+                                    />
                                 </label>
                                 <ul
                                     tabIndex={0}
@@ -95,7 +98,7 @@ const Nav = () => {
                                         src={
                                             user?.img
                                                 ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                                : 'img/placholder-img.jpeg'
+                                                : '/img/placholder-img.jpeg'
                                         }
                                     />
                                 </label>
@@ -150,29 +153,28 @@ const Nav = () => {
                         tabIndex="0"
                         className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                     >
-                                <li>
-                                    <Link to={'/events'}>Events</Link>
-                                </li>
-                                <li>
-                                    <Link to={'/alldogs'}>View Dogs</Link>
-                                </li>
-                                <li>
-                                    <Link to={'/about'}>About Us</Link>
-                                </li>
+                        <li>
+                            <Link to={'/events'}>Events</Link>
+                        </li>
+                        <li>
+                            <Link to={'/alldogs'}>View Dogs</Link>
+                        </li>
+                        <li>
+                            <Link to={'/about'}>About Us</Link>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div className="dropdown dropdown-end md:hidden">
-                <label
-                    tabIndex={0}
-                    className="text-3xl block text-slate-50"
-                >
-                    <img className={`rounded-full w-10 h-10`}
-                         src={
-                             user?.img
-                                 ? `${FILESTACK_ENDPOINT}/${user.img}`
-                                 : 'img/placholder-img.jpeg'
-                         } />
+                <label tabIndex={0} className="text-3xl block text-slate-50">
+                    <img
+                        className={`rounded-full w-10 h-10`}
+                        src={
+                            user?.img
+                                ? `${FILESTACK_ENDPOINT}/${user.img}`
+                                : 'img/placholder-img.jpeg'
+                        }
+                    />
                 </label>
                 <ul
                     tabIndex={0}
@@ -193,9 +195,7 @@ const Nav = () => {
                                 <Link to={'/profile'}>View Profile</Link>
                             </li>
                             <li>
-                                <Link to={'/create-event'}>
-                                    Create Event
-                                </Link>
+                                <Link to={'/create-event'}>Create Event</Link>
                             </li>
                             <li>
                                 <Link to={'/create-dog'}>Add Dog</Link>
