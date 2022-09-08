@@ -84,15 +84,15 @@ const IndividualEvent = () => {
                 <div
                     className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
                 >
-                    <h1 className={`font-brand font-bold text-5xl`}>
-                        <EventEditableField
-                            event={event}
-                            EditComponent={EditName}
-                            defaultValue={event.name}
-                        >
+                    <EventEditableField
+                        event={event}
+                        EditComponent={EditName}
+                        defaultValue={event.name}
+                    >
+                        <h1 className={`font-brand font-bold text-5xl`}>
                             {event.name}
-                        </EventEditableField>
-                    </h1>
+                        </h1>
+                    </EventEditableField>
                     <div className={'text-xl'}>
                         <EventEditableField
                             event={event}

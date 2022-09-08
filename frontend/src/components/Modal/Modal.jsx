@@ -29,7 +29,7 @@ const Modal = ({
                 'fixed flex items-center justify-center z-[9999] inset-0 bg-black bg-opacity-50'
             }
         >
-            <div className={`w-1/2 bg-base-100 p-4 rounded-xl`}>
+            <div className={`flex flex-col w-1/2 bg-base-100 p-4 rounded-xl`}>
                 {children}
                 {!customButtons && (
                     <div className={`flex justify-center gap-3 pt-4`}>

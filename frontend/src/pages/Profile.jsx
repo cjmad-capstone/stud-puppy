@@ -11,7 +11,7 @@ import { BiCamera } from 'react-icons/all';
 import { PickerInline } from 'filestack-react';
 import { FILESTACK_ENDPOINT, FILESTACK_KEY } from '../utils/consts.js';
 import { authHeader } from '../utils/auth/authHeader.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 //PLACEHOLDER pic       'img/placholder-img.jpeg'     ||      https://placeimg.com/192/192/people
 
@@ -131,32 +131,59 @@ const Profile = ({ userId }) => {
                     <h1 className={`text-5xl`}>{user.name ?? user.username}</h1>
                 </div>
             </div>
-            <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
-                {isUsersProfile ? 'Your' : `${user?.username}'s`} Dogs
-            </h1>
-            <hr
-                className={
-                    'block md:hidden border-t-2 border-secondary w-96 mx-auto pb-5'
-                }
-            />
-
+            {userDogs?.length > 0 && (
+                <>
+                    <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
+                        {isUsersProfile ? 'Your' : `${user?.username}'s`} Dogs
+                    </h1>
+                    <hr
+                        className={
+                            'block md:hidden border-t-2 border-secondary w-96 mx-auto pb-5'
+                        }
+                    />
+                </>
+            )}
             {/*Dog Cards*/}
             <div className={`flex gap-3 flex-wrap justify-center`}>
                 {userDogs?.map((dog, idx) => (
                     <DogCard dog={dog} key={idx} editable={isUsersProfile} />
                 ))}
             </div>
-            <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
-                {isUsersProfile ? 'Your' : `${user?.username}'s`} Events
-            </h1>
-            <hr
-                className={
-                    'block md:hidden border-t-2 border-secondary w-96 mx-auto mb-10'
-                }
-            />
+            {userEvents?.length > 0 && (
+                <>
+                    <h1 className="text-6xl font-brand font-bold pb-4 pt-8 text-center">
+                        {isUsersProfile ? 'Your' : `${user?.username}'s`} Events
+                    </h1>
+                    <hr
+                        className={
+                            'block md:hidden border-t-2 border-secondary w-96 mx-auto mb-10'
+                        }
+                    />
+                </>
+            )}
+            {userDogs?.length === 0 && userEvents?.length === 0 && (
+                <h1 className={`py-6 text-5xl font-bold font-brand`}>
+                    <span className={`font-medium`}>Nothing to see here.</span>{' '}
+                    <br /> Maybe try&nbsp;
+                    <Link to={'/create-dog'} className={`link link-secondary`}>
+                        adding a dog
+                    </Link>
+                    &nbsp;or&nbsp;
+                    <Link
+                        to={'/create-event'}
+                        className={`link link-secondary`}
+                    >
+                        hosting an event
+                    </Link>
+                </h1>
+            )}
             <div className={`flex gap-3 flex-wrap justify-center`}>
                 {userEvents?.map((event, idx) => (
-                    <EventCard event={event} key={idx} />
+                    <EventCard
+                        event={event}
+                        key={idx}
+                        editable={isUsersProfile}
+                    />
                 ))}
             </div>
         </motion.main>

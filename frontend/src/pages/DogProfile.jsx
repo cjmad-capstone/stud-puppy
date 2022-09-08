@@ -114,7 +114,7 @@ const DogProfile = () => {
                                 {dog.description}
                             </DogEditableField>
                         </div>
-                        {user?.id !== dog?.owner?.id && (
+                        {user?.id !== dog?.owner?.id && user && (
                             <div className="card-actions justify-center pt-6">
                                 <Button
                                     className={`text-sm w-full hover:from-pink-300 hover:to-red-400`}
@@ -132,8 +132,8 @@ const DogProfile = () => {
                         }
                     />
                     {/*Right card*/}
-                    <div className=" w-full pt-8 ">
-                        <div className="md:px-0">
+                    <div className=" w-full pt-8">
+                        <div className="flex flex-col gap-3">
                             <h2 className="text-xl">Meet the Owner</h2>
                             <div className={`flex items-center`}>
                                 <figure
