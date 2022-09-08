@@ -80,10 +80,16 @@ public class EventController {
         return ResponseEntity.ok(eventsRepository.save(event));
     }
 
-    @DeleteMapping("/events/{id}")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity deleteEvent(@PathVariable long id) {
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Event event = eventsRepository.findById(id).orElseThrow();
+        if(event.getCreator().getId() != user.getId())
+            return ResponseEntity.status(403).build();
+
         eventsRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(event);
     }
 
 }

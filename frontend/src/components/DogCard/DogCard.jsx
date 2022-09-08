@@ -54,7 +54,7 @@ function DogCard({ dog, editable }) {
             <AnimatePresence>
                 {deleteModalOpen && (
                     <DeleteDogModal
-                        dog={dog}
+                        event={dog}
                         setModalOpen={setDeleteModalOpen}
                     />
                 )}

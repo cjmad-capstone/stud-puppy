@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 const DeleteDogModal = ({ event, setModalOpen }) => {
     const navigate = useNavigate();
 
-    const deleteDog = async () => {
+    const deleteEvent = async () => {
         try {
-            const res = await fetch(`/api/dogs/${event?.id}`, {
+            const res = await fetch(`/api/events/${event?.id}`, {
                 method: 'DELETE',
                 headers: {
                     ...authHeader(),
@@ -35,7 +35,7 @@ const DeleteDogModal = ({ event, setModalOpen }) => {
                 <div className={'flex gap-3'}>
                     <button
                         className={'btn btn-error'}
-                        onClick={async () => await deleteDog()}
+                        onClick={async () => await deleteEvent()}
                     >
                         Yes
                     </button>
