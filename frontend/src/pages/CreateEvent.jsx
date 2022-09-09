@@ -39,12 +39,12 @@ const CreateEvent = () => {
 
     return (
         <motion.main {...pt}>
-            <div className={'flex flex-col items-center'}>
-                <h1 className={`text-6xl font-brand font-bold`}>
+            <div className={'flex flex-col items-center px-4'}>
+                <h1 className={`text-5xl md:text-6xl font-brand font-bold`}>
                     Host an Event!
                 </h1>
                 <form
-                    className={`flex flex-col items-center w-1/2`}
+                    className={`flex flex-col items-center w-full md:w-1/2`}
                     onSubmit={handleSubmit((data) => {
                         createEvent(data);
                     })}

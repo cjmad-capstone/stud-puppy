@@ -5,17 +5,15 @@ import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 import DeleteDogModal from './DeleteDogModal.jsx';
-import { BsGenderMale} from 'react-icons/bs';
-import { BsGenderFemale} from 'react-icons/bs';
-
-
+import { BsGenderMale } from 'react-icons/bs';
+import { BsGenderFemale } from 'react-icons/bs';
 
 function DogCard({ dog, editable }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     return (
         <>
-            <div className="card w-[350px] bg-base-100 shadow-xl min-w-[200px] m-2 sm:m-5 lg:mx-8 sm:hover:scale-105 transition-all">
+            <div className="card w-[350px] bg-base-100 shadow-xl sm:hover:scale-105 transition-all">
                 <figure className={`h-[200px] overflow-hidden`}>
                     <motion.img
                         initial={{ opacity: 0 }}
@@ -37,15 +35,23 @@ function DogCard({ dog, editable }) {
                             </div>
                         )}
                         {dog?.sex === 'F' ? (
-                            <BsGenderFemale className={"ml-auto text-pink-800"}/>
+                            <BsGenderFemale
+                                className={'ml-auto text-pink-800'}
+                            />
                         ) : (
-                            <BsGenderMale className={"ml-auto text-blue-800"}/>
+                            <BsGenderMale className={'ml-auto text-blue-800'} />
                         )}
                     </h2>
                     <p>{dog?.description}</p>
                     <div className="card-actions justify-end">
                         <Link to={`/dog/${dog.id}`}>
-                            <button className={`btn ${dog?.sex !== 'F' ? 'btn-primary' : 'btn-secondary'} lowercase`}>
+                            <button
+                                className={`btn ${
+                                    dog?.sex !== 'F'
+                                        ? 'btn-primary'
+                                        : 'btn-secondary'
+                                } lowercase`}
+                            >
                                 View Profile
                             </button>
                         </Link>

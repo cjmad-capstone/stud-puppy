@@ -26,8 +26,8 @@ const Home = () => {
             </div>
             {/*Mobile Header*/}
             <div className="">
-                <div className="md:hidden flex flex-col gap-3">
-                    <h2 className="card-title font-brand text-3xl text-blue-900 font-bold">
+                <div className="md:hidden flex flex-col gap-3 pt-6">
+                    <h2 className="card-title font-brand text-4xl text-blue-900 font-bold">
                         Welcome to Pugs 'n' Kisses
                     </h2>
                     <p className="text-blue-600">
@@ -42,13 +42,13 @@ const Home = () => {
                         them?
                     </p>
                 </div>
-                <Link to={'/alldogs'}>
+                <Link to={'/register'}>
                     <Button
                         className={
                             'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mx-auto'
                         }
                     >
-                        Start here!
+                        Get Started
                     </Button>
                 </Link>
             </div>

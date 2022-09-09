@@ -16,7 +16,7 @@ const AllEvents = () => {
 
     return (
         <motion.main {...pt}>
-            <div className={`flex gap-3 flex-wrap justify-center`}>
+            <div className={`flex p-6 gap-3 flex-wrap justify-center`}>
                 {events?.map((event, idx) => (
                     <EventCard event={event} key={idx} />
                 ))}
