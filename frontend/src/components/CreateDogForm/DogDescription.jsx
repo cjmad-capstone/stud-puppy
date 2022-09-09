@@ -27,7 +27,7 @@ const DogDescription = ({ changeStep, formData }) => {
                     autoFocus
                 ></textarea>
             </div>
-            <div className={`flex`}>
+            <div className={`flex flex-wrap justify-center`}>
                 <Button onClick={() => _changeStep(-1)}>Previous</Button>
                 <Button onClick={() => _changeStep(1)}>Next</Button>
             </div>

@@ -35,9 +35,9 @@ const Login = () => {
     const userContext = useContext(UserContext);
 
     return (
-        <motion.main className={`flex flex-col items-center`} {...pt}>
+        <motion.main className={`flex flex-col items-center px-6`} {...pt}>
             <h1 className={`text-6xl font-brand font-bold`}>Login</h1>
-            <motion.div className={'w-1/2'} layout>
+            <motion.div className={'w-full md:w-1/2'} layout>
                 {Object.keys({ ...errors, ...customErrors }).length > 0 && (
                     <motion.div
                         className="alert alert-error shadow-lg my-4"

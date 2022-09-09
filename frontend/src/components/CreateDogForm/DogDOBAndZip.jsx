@@ -46,7 +46,7 @@ const DogDOBAndZip = ({ changeStep, formData }) => {
                     className="input input-bordered w-full"
                 />
             </div>
-            <div className={`flex`}>
+            <div className={`flex flex-wrap justify-center`}>
                 <Button onClick={() => _changeStep(-1)}>Previous</Button>
                 <Button onClick={() => _changeStep(1)}>Next</Button>
             </div>
