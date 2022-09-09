@@ -35,11 +35,11 @@ const DogProfile = () => {
         <motion.main {...pt}>
             <div className={`flex flex-wrap md:flex-nowrap p-4`}>
                 <div
-                    className={`flex flex-wrap md:flex-nowrap md:justify-[unset] justify-center gap-3`}
+                    className={`flex flex-wrap flex-grow md:flex-nowrap md:justify-[unset] justify-center gap-3`}
                 >
                     {dog.images.map((image, idx) => (
                         <div
-                            className="min-w-1/3 basis-1/3  rounded-2xl overflow-hidden"
+                            className={`min-w-1/3 basis-1/3 flex-grow rounded-2xl overflow-hidden `}
                             key={idx}
                         >
                             <a
