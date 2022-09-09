@@ -10,6 +10,6 @@ export const pt = {
     },
 
     style: {
-        paddingTop: '7rem'
-    }
+        paddingTop: '7rem',
+    },
 };

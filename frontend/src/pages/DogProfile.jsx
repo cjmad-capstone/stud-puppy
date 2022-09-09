@@ -34,10 +34,12 @@ const DogProfile = () => {
     return (
         <motion.main {...pt}>
             <div className={`flex flex-wrap md:flex-nowrap p-4`}>
-                <div className={`flex gap-3`}>
+                <div
+                    className={`flex flex-wrap md:flex-nowrap md:justify-[unset] justify-center gap-3`}
+                >
                     {dog.images.map((image, idx) => (
                         <div
-                            className="min-w-1/3 rounded-2xl overflow-hidden"
+                            className="min-w-1/3 basis-1/3  rounded-2xl overflow-hidden"
                             key={idx}
                         >
                             <a
@@ -71,7 +73,7 @@ const DogProfile = () => {
                     {/*Left card*/}
                     <div className="w-full mb-6 ">
                         <div className={`flex justify-center`}>
-                            <h1 className="card-title text-7xl font-bold py-4 font-brand">
+                            <h1 className="card-title text-5xl md:text-7xl font-bold py-4 font-brand">
                                 <DogEditableField
                                     dog={dog}
                                     EditComponent={EditName}
@@ -86,7 +88,7 @@ const DogProfile = () => {
                                 )}
                             </h1>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-wrap items-center gap-4">
                             {dog?.breeds?.map((breed, idx) => (
                                 <div
                                     key={idx}
@@ -111,7 +113,9 @@ const DogProfile = () => {
                                 defaultValue={dog.description}
                                 EditComponent={EditDescription}
                             >
-                                <p>{dog.description}</p>
+                                <p className={`text-2xl font-light`}>
+                                    {dog.description}
+                                </p>
                             </DogEditableField>
                         </div>
                         {user?.id !== dog?.owner?.id && user && (

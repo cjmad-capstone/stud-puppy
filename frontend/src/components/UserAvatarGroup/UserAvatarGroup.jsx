@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 
-const UserAvatarGroup = ({ users, avatarSize = '6rem' }) => {
+const UserAvatarGroup = ({ users, avatarSize = '6rem', avatarClassName }) => {
     return (
         <AnimatePresence>
             {users.map((user, idx) => (
@@ -16,7 +16,7 @@ const UserAvatarGroup = ({ users, avatarSize = '6rem' }) => {
                 >
                     <Link to={`/users/${user.id}`}>
                         <div
-                            className="flex items-center justify-center font-bold bg-neutral-focus text-base-100 bg-cover"
+                            className={`flex items-center justify-center font-bold bg-neutral-focus text-base-100 bg-cover ${avatarClassName}`}
                             style={{
                                 backgroundImage: user?.img
                                     ? `url(${FILESTACK_ENDPOINT}/${user?.img})`

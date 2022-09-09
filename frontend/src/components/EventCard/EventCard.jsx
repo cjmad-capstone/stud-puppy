@@ -14,7 +14,7 @@ function EventCard({ event, editable }) {
 
     return (
         <>
-            <div className="card w-96 bg-base-100 shadow-xl ">
+            <div className="card w-[350px] bg-base-100 shadow-xl ">
                 <div className="card-body">
                     <div className={`flex items-center gap-3 py-3`}>
                         <figure

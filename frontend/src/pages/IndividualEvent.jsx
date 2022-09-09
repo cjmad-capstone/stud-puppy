@@ -15,9 +15,11 @@ import EditDescription from '../components/Edit/EditEvent/EditDescription.jsx';
 import EditDate from '../components/Edit/EditEvent/EditDate.jsx';
 import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import UserAvatarGroup from '../components/UserAvatarGroup/UserAvatarGroup.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const IndividualEvent = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [isAttending, setIsAttending] = useState(false);
     const [attendees, setAttendees] = useState([]);
@@ -79,7 +81,7 @@ const IndividualEvent = () => {
         <motion.main {...pt}>
             {/*<pre>{JSON.stringify(event, null, 2)}</pre>*/}
             <div
-                className={`flex flex-col gap-3 flex-wrap justify-center w-2/3 mx-auto`}
+                className={`flex flex-col gap-3 flex-wrap justify-center w-3/4 md:w-2/3 mx-auto`}
             >
                 <div
                     className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
@@ -117,16 +119,24 @@ const IndividualEvent = () => {
                 </div>
                 {/*<EventCard event={event.name} />*/}
                 <Button
-                    onClick={() => (isAttending ? leaveEvent() : attendEvent())}
+                    onClick={() => {
+                        if (!user) return navigate('/login');
+                        isAttending ? leaveEvent() : attendEvent();
+                    }}
                 >
-                    {isAttending
-                        ? 'I will not be attending'
-                        : 'I will be attending'}
+                    {user
+                        ? isAttending
+                            ? 'I will not be attending'
+                            : 'I will be attending'
+                        : 'Login to attend'}
                 </Button>
                 <h1 className="font-bold font-brand">Attendees</h1>
                 <div className={'flex'}>
                     <div className="avatar-group -space-x-6 flex-wrap overflow-visible">
-                        <UserAvatarGroup users={attendees} />
+                        <UserAvatarGroup
+                            users={attendees}
+                            avatarClassName={'w-16 h-16 md:w-24 md:h-24'}
+                        />
                     </div>
                 </div>
             </div>
