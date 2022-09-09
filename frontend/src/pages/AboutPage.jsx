@@ -67,10 +67,10 @@ const AboutPage = () => {
                     Framer Motion. The user can sign up for an account then get
                     to creating their dog's profile. It allows dog-owners to
                     collaborate in an effort to help their furry friend live
-                    their best life. My team and I were able to design and
-                    implement a RESTful API using Spring Boot with full CRUD
-                    functionality that communicates with the frontend to
-                    authenticate with JWTs.
+                    their best life. Our team was able to design and implement a
+                    RESTful API using Spring Boot with full CRUD functionality
+                    that communicates with the frontend authenticated with JSON
+                    Web Tokens.
                 </p>
             </div>
         </motion.main>
