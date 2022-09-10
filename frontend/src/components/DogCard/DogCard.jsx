@@ -8,12 +8,18 @@ import DeleteDogModal from './DeleteDogModal.jsx';
 import { BsGenderMale } from 'react-icons/bs';
 import { BsGenderFemale } from 'react-icons/bs';
 
-function DogCard({ dog, editable }) {
+function DogCard({ dog, editable, onDelete }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     return (
         <>
-            <div className="card w-[350px] bg-base-100 shadow-xl sm:hover:scale-105 transition-all">
+            <motion.div
+                className="card w-[350px] bg-base-100 shadow-xl sm:hover:scale-105"
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
                 <figure className={`h-[200px] overflow-hidden`}>
                     <motion.img
                         initial={{ opacity: 0 }}
@@ -65,12 +71,13 @@ function DogCard({ dog, editable }) {
                         )}
                     </div>
                 </div>
-            </div>
+            </motion.div>
             <AnimatePresence>
                 {deleteModalOpen && (
                     <DeleteDogModal
                         event={dog}
                         setModalOpen={setDeleteModalOpen}
+                        onDelete={onDelete}
                     />
                 )}
             </AnimatePresence>

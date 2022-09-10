@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import DogCard from '../components/DogCard/DogCard.jsx';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import EventCard from '../components/EventCard/EventCard.jsx';
 import { BiCamera } from 'react-icons/all';
 import { PickerInline } from 'filestack-react';
@@ -41,7 +41,7 @@ const Profile = ({ userId }) => {
         }
     );
 
-    const { data: userDogs } = useQuery(
+    const { data: userDogs, refetch: refetchDogs } = useQuery(
         ['userDogs', userId],
         () => fetch(`/api/users/${userId}/dogs`).then((res) => res.json()),
         {
@@ -148,13 +148,16 @@ const Profile = ({ userId }) => {
                 )}
                 {/*Dog Cards*/}
                 <div className={`flex gap-3 flex-wrap justify-center`}>
-                    {userDogs?.map((dog, idx) => (
-                        <DogCard
-                            dog={dog}
-                            key={idx}
-                            editable={isUsersProfile}
-                        />
-                    ))}
+                    <AnimatePresence mode="popLayout">
+                        {userDogs?.map((dog, idx) => (
+                            <DogCard
+                                onDelete={refetchDogs}
+                                dog={dog}
+                                key={dog?.id}
+                                editable={isUsersProfile}
+                            />
+                        ))}
+                    </AnimatePresence>
                 </div>
                 {userEvents?.length > 0 && (
                     <>
