@@ -70,9 +70,16 @@ const CreateDog = () => {
             submitForm().then((data) => console.log(data));
     }, [step, steps.length, submitForm]);
 
+    const mainRef = useRef();
+
+    useEffect(() => {
+        mainRef?.current?.scrollIntoView();
+    }, [mainRef]);
+
     return (
         <motion.main
             {...pt}
+            ref={mainRef}
             className={'relative flex justify-center items-center'}
         >
             <AnimatePresence mode="wait">

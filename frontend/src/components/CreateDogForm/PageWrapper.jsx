@@ -20,7 +20,7 @@ const PageWrapper = ({ children, errors }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { delay: 0.25 } }}
-            className={`p-4 border-1 gap-4 bg-base-100  relative  rounded-xl w-3/4 md:w-1/2 flex flex-col items-center justify-center`}
+            className={`p-4 border-1 gap-4 bg-base-100 relative rounded-xl w-3/4 md:w-1/2 flex flex-col items-center justify-center`}
         >
             <AnimatePresence>
                 {!_.isEmpty(errors) && (
@@ -49,7 +49,7 @@ const PageWrapper = ({ children, errors }) => {
                 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: 'linear' }}
-                className={`absolute  shadow-xl -inset-3 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-primary/50 to-secondary/50`}
+                className={`absolute shadow-xl -inset-3 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-primary/75 to-secondary/75`}
             />
         </motion.section>
     );

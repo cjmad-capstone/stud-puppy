@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/global.js';
 import Button from '../components/Button/Button.jsx';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/UserContext.jsx';
 
 const Home = () => {
+    const { user } = useContext(UserContext);
+
     return (
         <motion.main {...pt} className={`w-full px-4`}>
             {/*<div className="card w-100 h-screen bg-base-100 shadow-xl">*/}
@@ -42,7 +45,7 @@ const Home = () => {
                         them?
                     </p>
                 </div>
-                <Link to={'/register'}>
+                <Link to={user ? '/alldogs' : '/register'}>
                     <Button
                         className={
                             'text-3xl md:text-xl w-50 hover:from-pink-300 hover:to-red-400 mx-auto'
