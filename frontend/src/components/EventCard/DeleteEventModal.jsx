@@ -2,25 +2,30 @@ import Modal from '../Modal/Modal.jsx';
 import React from 'react';
 import { authHeader } from '../../utils/auth/authHeader.js';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
-const DeleteDogModal = ({ event, setModalOpen }) => {
+const DeleteEventModal = ({ event, setModalOpen, onDelete }) => {
     const navigate = useNavigate();
 
-    const deleteEvent = async () => {
-        try {
-            const res = await fetch(`/api/events/${event?.id}`, {
+    const { mutate: deleteEvent } = useMutation(
+        () =>
+            fetch(`/api/events/${event?.id}`, {
                 method: 'DELETE',
                 headers: {
                     ...authHeader(),
                 },
-            });
-            await res.json();
-            location.reload();
-        } catch (e) {
-            console.error(e);
-            navigate('/error');
+            }).then((res) => res.json()),
+        {
+            onSuccess: () => {
+                setModalOpen(false);
+                onDelete();
+            },
+            onError: (e) => {
+                console.error(e);
+                navigate('/error?status=403');
+            },
         }
-    };
+    );
 
     return (
         <Modal setOpen={setModalOpen} customButtons>
@@ -35,7 +40,7 @@ const DeleteDogModal = ({ event, setModalOpen }) => {
                 <div className={'flex gap-3'}>
                     <button
                         className={'btn btn-error'}
-                        onClick={async () => await deleteEvent()}
+                        onClick={() => deleteEvent()}
                     >
                         Yes
                     </button>
@@ -51,4 +56,4 @@ const DeleteDogModal = ({ event, setModalOpen }) => {
     );
 };
 
-export default DeleteDogModal;
+export default DeleteEventModal;

@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import UserAvatarGroup from '../UserAvatarGroup/UserAvatarGroup.jsx';
-import DeleteDogModal from '../DogCard/DeleteDogModal.jsx';
 import DeleteEventModal from './DeleteEventModal';
+import AnimatedCard from '../AnimatedCard/AnimatedCard.jsx';
+import { Card } from 'react-daisyui';
 
-function EventCard({ event, editable }) {
+function EventCard({ event, editable, onDelete }) {
     const date = format(parseISO(event?.date), 'LLL. d, yyyy');
     const time = format(parseISO(event?.date), 'h:mm a');
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     return (
         <>
-            <div className="card w-[350px] bg-base-100 shadow-xl ">
-                <div className="card-body">
+            <AnimatedCard>
+                <Card.Body>
+                    {/*Creator Avatar*/}
                     <div className={`flex items-center gap-3 py-3`}>
                         <figure
                             className={`w-16 h-16 rounded-full overflow-hidden`}
@@ -34,21 +36,24 @@ function EventCard({ event, editable }) {
                             {event?.creator?.username}
                         </h2>
                     </div>
+
+                    {/*Event Date and Location*/}
                     <div className={`opacity-50 font-brand font-medium`}>
-                        {date} - {event?.zipCode}
+                        {date} - {event?.zipCode} - {time}
                     </div>
-                    <h2 className="card-title font-brand">{event?.name}</h2>
-                    {/*<p>{event?.description}</p>*/}
+                    <Card.Title className={`font-brand`}>
+                        {event?.name}
+                    </Card.Title>
+
                     <div className={`py-4`}>
                         <p className={`opacity-50`}>Attendees:</p>
-
-                        <div className="avatar-group -space-x-6">
-                            <UserAvatarGroup
-                                avatarSize={'4rem'}
-                                users={event?.attendees}
-                            />
-                        </div>
+                        <UserAvatarGroup
+                            avatarSize={'4rem'}
+                            users={event?.attendees}
+                        />
                     </div>
+
+                    {/*Card Actions*/}
                     <div className="w-full font-brand flex gap-4 mt-auto">
                         <Link
                             to={`/events/${event.id}`}
@@ -67,13 +72,16 @@ function EventCard({ event, editable }) {
                             </button>
                         )}
                     </div>
-                </div>
-            </div>
+                </Card.Body>
+            </AnimatedCard>
+
+            {/*Delete Event Modal*/}
             <AnimatePresence>
                 {deleteModalOpen && (
                     <DeleteEventModal
                         event={event}
                         setModalOpen={setDeleteModalOpen}
+                        onDelete={onDelete}
                     />
                 )}
             </AnimatePresence>

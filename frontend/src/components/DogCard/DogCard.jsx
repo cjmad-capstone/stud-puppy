@@ -20,7 +20,7 @@ function DogCard({ dog, editable, onDelete }) {
                     alt={`Photo of ${dog?.name}`}
                 />
                 <Card.Body>
-                    <Card.Title>
+                    <Card.Title className={`font-brand`}>
                         {dog?.name},&nbsp;
                         {differenceInYears(new Date(), parseISO(dog?.dob))}
                         {dog?.loveable && (
@@ -65,7 +65,7 @@ function DogCard({ dog, editable, onDelete }) {
             <AnimatePresence>
                 {deleteModalOpen && (
                     <DeleteDogModal
-                        event={dog}
+                        dog={dog}
                         setModalOpen={setDeleteModalOpen}
                         onDelete={onDelete}
                     />

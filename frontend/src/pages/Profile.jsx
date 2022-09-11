@@ -33,7 +33,7 @@ const Profile = ({ userId }) => {
     const isUsersProfile =
         userId === currentUser?.id || user?.id === currentUser?.id;
 
-    const { data: userEvents } = useQuery(
+    const { data: userEvents, refetch: refetchEvents } = useQuery(
         ['userEvents', userId],
         () => fetch(`/api/users/${userId}/events`).then((res) => res.json()),
         {
@@ -196,9 +196,10 @@ const Profile = ({ userId }) => {
                 <div className={`flex gap-3 flex-wrap justify-center`}>
                     {userEvents?.map((event, idx) => (
                         <EventCard
+                            onDelete={refetchEvents}
                             event={event}
                             key={idx}
-                            editable={isUsersProfile}
+                            editable={event?.creator?.id === userId}
                         />
                     ))}
                 </div>
