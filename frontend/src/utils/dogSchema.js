@@ -9,7 +9,10 @@ export const dogSchema = {
         .string()
         .max(200, 'Description cannot be more than 200 chars')
         .required('Description is required'),
-    sex: yup.string().required('Sex is required'),
+    sex: yup
+        .string()
+        .typeError('Sex must be string')
+        .required('Sex is required'),
     weight: yup
         .number()
         .min(1, 'Weight has to be above 0')

@@ -13,6 +13,7 @@ const AboutPage = () => {
                     className={`flex pb-6 flex-wrap gap-3 justify-center justify-center md:flex-nowrap`}
                 >
                     <AboutCard
+                        idx={0}
                         img="../img/D. Miller.jpg"
                         name="Dalton"
                         bio='"Everything that irritates us about others can lead to an understanding of ourselves." - Carl Jung'
@@ -22,6 +23,7 @@ const AboutPage = () => {
                     />
 
                     <AboutCard
+                        idx={1}
                         img="../img/C. Gallagos.jpg"
                         name="Cynthia"
                         bio="“Intellectual growth should commence at birth and cease only at death.” ― Albert Einstein"
@@ -31,6 +33,7 @@ const AboutPage = () => {
                     />
 
                     <AboutCard
+                        idx={2}
                         img="../img/M. Jio.jpg"
                         name="Matt"
                         bio="“If you cannot do great things, do small things in a great way.” – Napoleon Hill"
@@ -40,6 +43,7 @@ const AboutPage = () => {
                     />
 
                     <AboutCard
+                        idx={3}
                         img="../img/J. Welsh.jpg"
                         name="Justin"
                         bio='"A comfort zone is a beautiful place, but nothing ever grows there"'
@@ -49,6 +53,7 @@ const AboutPage = () => {
                     />
 
                     <AboutCard
+                        idx={4}
                         img="../img/A. Rodriguez.jpg"
                         name="Alex"
                         bio={`"The most damaging phrase in the language is: 'It's always been done that way.'" - Grace Hopper`}

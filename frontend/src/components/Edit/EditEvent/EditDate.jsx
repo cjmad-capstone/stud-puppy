@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useValidate } from '../../../utils/hooks/useValidate.js';
-import { dogSchema } from '../../CreateDogForm/dogSchema.js';
 import Modal from '../../Modal/Modal.jsx';
 import { eventSchema } from '../../../utils/eventSchema.js';
 

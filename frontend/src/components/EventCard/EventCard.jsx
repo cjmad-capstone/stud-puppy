@@ -18,7 +18,10 @@ function EventCard({ event, editable, onDelete }) {
             <AnimatedCard>
                 <Card.Body>
                     {/*Creator Avatar*/}
-                    <div className={`flex items-center gap-3 py-3`}>
+                    <Link
+                        to={`/users/${event?.creator?.id}`}
+                        className={`flex items-center gap-3`}
+                    >
                         <figure
                             className={`w-16 h-16 rounded-full overflow-hidden`}
                         >
@@ -35,7 +38,7 @@ function EventCard({ event, editable, onDelete }) {
                         <h2 className={`text-xl font-bold`}>
                             {event?.creator?.username}
                         </h2>
-                    </div>
+                    </Link>
 
                     {/*Event Date and Location*/}
                     <div className={`opacity-50 font-brand font-medium`}>

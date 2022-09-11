@@ -63,7 +63,7 @@ const MultiSelect = ({ options, label, setValues }) => {
                     onFocus={() => setOpenDropdown(true)}
                     className="input input-bordered input-secondary w-full max-w-xs"
                 />
-                <AnimatePresence mode="popLayout">
+                <AnimatePresence>
                     {openDropdown && (
                         <motion.div
                             className={`absolute mt-3 bg-base-100 p-4 flex flex-wrap gap-3 rounded-xl overflow-scroll max-h-64 max-w-32 shadow-xl`}
@@ -74,7 +74,11 @@ const MultiSelect = ({ options, label, setValues }) => {
                             {filteredOptions.map((option, i) => (
                                 <button
                                     onFocus={() => setOpenDropdown(true)}
-                                    className={`cursor-pointer text-sm font-bold bg-secondary bg-opacity-50 p-3 rounded-full `}
+                                    className={`cursor-pointer text-sm font-bold ${
+                                        i % 2 === 0
+                                            ? 'bg-secondary'
+                                            : 'bg-primary'
+                                    } bg-opacity-50 p-3 rounded-full `}
                                     key={i}
                                     onClick={() => {
                                         setOpenDropdown(false);

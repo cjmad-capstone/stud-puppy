@@ -73,7 +73,7 @@ const CreateDog = () => {
     return (
         <motion.main
             {...pt}
-            className={'relative flex flex-col justify-center items-center'}
+            className={'relative flex justify-center items-center'}
         >
             <AnimatePresence mode="wait">
                 {steps.map((el, idx) => step === idx && el)}

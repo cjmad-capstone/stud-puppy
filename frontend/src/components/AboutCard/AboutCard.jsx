@@ -1,10 +1,16 @@
 import React from 'react';
 import { AiOutlineLinkedin } from 'react-icons/ai';
 import { AiOutlineGithub } from 'react-icons/ai';
+import { motion } from 'framer-motion';
 
 function AboutCard(props) {
     return (
-        <div className="card w-96 bg-base-100 shadow-xl">
+        <motion.div
+            className="card w-96 bg-base-100 shadow-xl"
+            initial={{ opacity: 0, scale: 0.75, rotateZ: 10 }}
+            animate={{ opacity: 1, scale: 1, rotateZ: 0 }}
+            transition={{ delay: 0.1 * props.idx }}
+        >
             <figure className="px-10 pt-10">
                 <img src={props.img} className="rounded-xl" />
             </figure>
@@ -27,7 +33,7 @@ function AboutCard(props) {
                     </a>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

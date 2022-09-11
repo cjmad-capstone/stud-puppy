@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useValidate } from '../../../utils/hooks/useValidate.js';
-import { dogSchema } from '../../CreateDogForm/dogSchema.js';
+import { dogSchema } from '../../../utils/dogSchema.js';
 import Modal from '../../Modal/Modal.jsx';
 
 const EditName = ({ defaultValue, setOpen, onEdit }) => {
