@@ -1,7 +1,7 @@
 import { DogNameAndBreed } from '../components/CreateDogForm/DogNameAndBreed.jsx';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { motion } from 'framer-motion';
 import { DogSexAndWeight } from '../components/CreateDogForm/DogSexAndWeight.jsx';
 import { DogDescription } from '../components/CreateDogForm/DogDescription';
@@ -70,10 +70,17 @@ const CreateDog = () => {
             submitForm().then((data) => console.log(data));
     }, [step, steps.length, submitForm]);
 
+    const mainRef = useRef();
+
+    useEffect(() => {
+        mainRef?.current?.scrollIntoView();
+    }, [mainRef]);
+
     return (
         <motion.main
             {...pt}
-            className={'relative flex flex-col justify-center items-center'}
+            ref={mainRef}
+            className={'relative flex justify-center items-center'}
         >
             <AnimatePresence mode="wait">
                 {steps.map((el, idx) => step === idx && el)}

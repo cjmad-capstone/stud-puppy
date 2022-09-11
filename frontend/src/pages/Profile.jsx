@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withAuth } from '../utils/auth/withAuth.jsx';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
@@ -33,7 +33,7 @@ const Profile = ({ userId }) => {
     const isUsersProfile =
         userId === currentUser?.id || user?.id === currentUser?.id;
 
-    const { data: userEvents } = useQuery(
+    const { data: userEvents, refetch: refetchEvents } = useQuery(
         ['userEvents', userId],
         () => fetch(`/api/users/${userId}/events`).then((res) => res.json()),
         {
@@ -41,7 +41,7 @@ const Profile = ({ userId }) => {
         }
     );
 
-    const { data: userDogs } = useQuery(
+    const { data: userDogs, refetch: refetchDogs } = useQuery(
         ['userDogs', userId],
         () => fetch(`/api/users/${userId}/dogs`).then((res) => res.json()),
         {
@@ -148,13 +148,16 @@ const Profile = ({ userId }) => {
                 )}
                 {/*Dog Cards*/}
                 <div className={`flex gap-3 flex-wrap justify-center`}>
-                    {userDogs?.map((dog, idx) => (
-                        <DogCard
-                            dog={dog}
-                            key={idx}
-                            editable={isUsersProfile}
-                        />
-                    ))}
+                    <AnimatePresence mode="popLayout">
+                        {userDogs?.map((dog, idx) => (
+                            <DogCard
+                                onDelete={refetchDogs}
+                                dog={dog}
+                                key={dog?.id}
+                                editable={isUsersProfile}
+                            />
+                        ))}
+                    </AnimatePresence>
                 </div>
                 {userEvents?.length > 0 && (
                     <>
@@ -193,9 +196,10 @@ const Profile = ({ userId }) => {
                 <div className={`flex gap-3 flex-wrap justify-center`}>
                     {userEvents?.map((event, idx) => (
                         <EventCard
+                            onDelete={refetchEvents}
                             event={event}
                             key={idx}
-                            editable={isUsersProfile}
+                            editable={event?.creator?.id === userId}
                         />
                     ))}
                 </div>

@@ -1,32 +1,27 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 import { differenceInYears, parseISO } from 'date-fns';
 import DeleteDogModal from './DeleteDogModal.jsx';
 import { BsGenderMale } from 'react-icons/bs';
 import { BsGenderFemale } from 'react-icons/bs';
+import AnimatedCard from '../AnimatedCard/AnimatedCard.jsx';
+import { Card } from 'react-daisyui';
 
-function DogCard({ dog, editable }) {
+function DogCard({ dog, editable, onDelete }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     return (
         <>
-            <div className="card w-[350px] bg-base-100 shadow-xl sm:hover:scale-105 transition-all">
-                <figure className={`h-[200px] overflow-hidden`}>
-                    <motion.img
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                        src={`${FILESTACK_ENDPOINT}/${dog?.images[0].url}`}
-                        alt={`Photo of ${dog?.name}`}
-                        className={`object-cover object-center w-full h-full`}
-                        loading="lazy"
-                    />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title">
+            <AnimatedCard>
+                <Card.Image
+                    className={`w-full h-[250px] object-cover`}
+                    src={`${FILESTACK_ENDPOINT}/${dog?.images[0].url}`}
+                    alt={`Photo of ${dog?.name}`}
+                />
+                <Card.Body>
+                    <Card.Title className={`font-brand`}>
                         {dog?.name},&nbsp;
                         {differenceInYears(new Date(), parseISO(dog?.dob))}
                         {dog?.loveable && (
@@ -41,9 +36,9 @@ function DogCard({ dog, editable }) {
                         ) : (
                             <BsGenderMale className={'ml-auto text-blue-800'} />
                         )}
-                    </h2>
+                    </Card.Title>
                     <p>{dog?.description}</p>
-                    <div className="card-actions justify-end">
+                    <Card.Actions>
                         <Link to={`/dog/${dog.id}`}>
                             <button
                                 className={`btn ${
@@ -63,14 +58,17 @@ function DogCard({ dog, editable }) {
                                 Delete
                             </button>
                         )}
-                    </div>
-                </div>
-            </div>
+                    </Card.Actions>
+                </Card.Body>
+            </AnimatedCard>
+
+            {/*Delete Dog Modal*/}
             <AnimatePresence>
                 {deleteModalOpen && (
                     <DeleteDogModal
-                        event={dog}
+                        dog={dog}
                         setModalOpen={setDeleteModalOpen}
+                        onDelete={onDelete}
                     />
                 )}
             </AnimatePresence>

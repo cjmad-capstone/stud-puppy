@@ -1,12 +1,11 @@
-import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import Login from './pages/Login.jsx';
 import { AnimatePresence } from 'framer-motion';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import React, { useContext } from 'react';
-import Footer from './components/Footer/Footer.jsx';
+import React, { useContext, useEffect } from 'react';
 
 import CreateEvent from './pages/CreateEvent';
 
@@ -24,6 +23,7 @@ import AllDogs from './pages/AllDogs.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 
 import { UserContext } from './context/UserContext.jsx';
+import Testing from './pages/Testing.jsx';
 
 function App() {
     const location = useLocation();
@@ -35,6 +35,11 @@ function App() {
         if (!hasVisited) localStorage.setItem('hasVisited', 'true');
         document.querySelector('html').dataset.theme = 'cupcake';
     }, [hasVisited]);
+
+    // Scroll to the top on route change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
     return (
         <>
             <Nav />
@@ -61,6 +66,7 @@ function App() {
                     <Route path={'/*'} element={<ErrorPage />} />
                     <Route path={'/alldogs'} element={<AllDogs />} />
                     <Route path={'/about'} element={<AboutPage />} />
+                    <Route path={'/testing'} element={<Testing />} />
                 </Routes>
             </AnimatePresence>
             {/*<Footer />*/}

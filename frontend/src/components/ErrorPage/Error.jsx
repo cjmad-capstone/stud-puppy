@@ -1,5 +1,5 @@
 import React from 'react';
-import { pt } from '../../utils/anim/pageTransitions.js';
+import { pt } from '../../utils/anim/global.js';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 

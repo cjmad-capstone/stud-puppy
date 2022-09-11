@@ -2,25 +2,30 @@ import Modal from '../Modal/Modal.jsx';
 import React from 'react';
 import { authHeader } from '../../utils/auth/authHeader.js';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
-const DeleteDogModal = ({ event, setModalOpen }) => {
+const DeleteDogModal = ({ dog, setModalOpen, onDelete }) => {
     const navigate = useNavigate();
 
-    const deleteDog = async () => {
-        try {
-            const res = await fetch(`/api/dogs/${event?.id}`, {
+    const { mutate: deleteDog } = useMutation(
+        () =>
+            fetch(`/api/dogs/${dog?.id}`, {
                 method: 'DELETE',
                 headers: {
                     ...authHeader(),
                 },
-            });
-            await res.json();
-            location.reload();
-        } catch (e) {
-            console.error(e);
-            navigate('/error');
+            }).then((res) => res.json()),
+        {
+            onSuccess: () => {
+                setModalOpen(false);
+                onDelete();
+            },
+            onError: (e) => {
+                console.error(e);
+                navigate('/error');
+            },
         }
-    };
+    );
 
     return (
         <Modal setOpen={setModalOpen} customButtons>
@@ -30,7 +35,7 @@ const DeleteDogModal = ({ event, setModalOpen }) => {
                 }
             >
                 <h1 className={`text-4xl font-bold `}>
-                    Are you sure you want to delete {event?.name}?
+                    Are you sure you want to delete {dog?.name}?
                 </h1>
                 <div className={'flex gap-3'}>
                     <button

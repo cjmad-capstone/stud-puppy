@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Button from '../Button/Button.jsx';
-import FormPage from '../Form/FormPage.jsx';
+import PageWrapper from './PageWrapper.jsx';
 import { useValidate } from '../../utils/hooks/useValidate.js';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import MultiSelect from '../MultiSelect/MultiSelect.jsx';
-import { dogSchema } from './dogSchema.js';
+import { dogSchema } from '../../utils/dogSchema.js';
 
 const DogNameAndBreed = ({ changeStep, formData }) => {
     const [breeds, setBreeds] = useState([]);
@@ -58,7 +58,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
         })();
 
     return (
-        <FormPage errors={{ ...errors, ...customErrs }}>
+        <PageWrapper errors={{ ...errors, ...customErrs }}>
             <motion.div className={`w-full`}>
                 <label className="label">
                     <span className="label-text">What is your dog's name?</span>
@@ -68,7 +68,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
                     placeholder="Type here"
                     defaultValue={formData?.name}
                     {...register('name')}
-                    className="input input-bordered w-full"
+                    className="input input-secondary input-bordered w-full"
                     autoFocus
                 />
 
@@ -79,7 +79,7 @@ const DogNameAndBreed = ({ changeStep, formData }) => {
                 />
             </motion.div>
             <Button onClick={() => _changeStep(1)}>Next</Button>
-        </FormPage>
+        </PageWrapper>
     );
 };
 

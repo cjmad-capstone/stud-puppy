@@ -1,6 +1,6 @@
 import Button from '../components/Button/Button.jsx';
 import { motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     authenticateUser,

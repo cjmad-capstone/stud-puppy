@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import DogCard from '../components/DogCard/DogCard.jsx';
 import Nav from '../components/Nav/Nav.jsx';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { motion } from 'framer-motion';
 import React from 'react';
 

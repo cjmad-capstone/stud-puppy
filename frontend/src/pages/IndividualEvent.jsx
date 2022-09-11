@@ -1,81 +1,72 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
-import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
+import { pt } from '../utils/anim/global.js';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
-import EventCard from '../components/EventCard/EventCard.jsx';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '../components/Button/Button.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { format, parseISO } from 'date-fns';
-import DogEditableField from '../components/Edit/EditDog/DogEditableField.jsx';
-import EventEditableField from '../components/Edit/EditEvent/EventEditableField';
-import EditName from '../components/Edit/EditEvent/EditName.jsx';
-import EditDescription from '../components/Edit/EditEvent/EditDescription.jsx';
-import EditDate from '../components/Edit/EditEvent/EditDate.jsx';
-import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import UserAvatarGroup from '../components/UserAvatarGroup/UserAvatarGroup.jsx';
 import { useNavigate } from 'react-router-dom';
+import EditableText from '../components/EditableText/EditableText.jsx';
+import { eventSchema } from '../utils/eventSchema.js';
 
 const IndividualEvent = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [isAttending, setIsAttending] = useState(false);
-    const [attendees, setAttendees] = useState([]);
     const { user } = useContext(UserContext);
 
-    const { data: event, error } = useQuery(
-        ['event', id],
-        () => fetch(`/api/events/${id}`).then((res) => res.json()),
+    const { data: event, refetch: refetchEvent } = useQuery(['event', id], () =>
+        fetch(`/api/events/${id}`).then((res) => res.json())
+    );
+
+    const { mutate: editEvent } = useMutation(
+        (data) =>
+            fetch(`/api/events/${id}/edit`, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+                body: JSON.stringify({ ...event, ...data }),
+            }).then((res) => res.json()),
         {
-            onSuccess: (data) => {
-                setIsAttending(
-                    data?.attendees?.some(
-                        (attendee) => attendee?.id === user?.id
-                    )
-                );
-                setAttendees(data?.attendees);
-            },
+            onSuccess: async (data) => await refetchEvent(),
         }
     );
 
-    const attendEvent = async () => {
-        try {
-            const res = await fetch(`/api/events/${id}/attend`, {
+    const { mutate: leaveEvent } = useMutation(
+        () =>
+            fetch(`/api/events/${id}/leave`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     ...authHeader(),
                 },
-            });
-            await res.json();
-            setIsAttending(true);
-            setAttendees([...attendees, user]);
-        } catch (err) {
-            console.error(err);
+            }).then((res) => res.json()),
+        {
+            onSuccess: async (data) => await refetchEvent(),
         }
-    };
-    const leaveEvent = async () => {
-        try {
-            const res = await fetch(`/api/events/${id}/leave`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...authHeader(),
-                },
-            });
-            await res.json();
-            setIsAttending(false);
-            setAttendees(
-                attendees.filter((attendee) => attendee.id !== user.id)
-            );
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    );
 
-    if (!event) return <main></main>;
+    const { mutate: attendEvent } = useMutation(
+        () =>
+            fetch(`/api/events/${id}/attend`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+            }).then((res) => res.json()),
+        {
+            onSuccess: async (data) => await refetchEvent(),
+        }
+    );
+
+    if (!event) return null;
 
     return (
         <motion.main {...pt}>
@@ -86,46 +77,53 @@ const IndividualEvent = () => {
                 <div
                     className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
                 >
-                    <EventEditableField
-                        event={event}
-                        EditComponent={EditName}
-                        defaultValue={event.name}
-                    >
-                        <h1 className={`font-brand font-bold text-5xl`}>
-                            {event.name}
-                        </h1>
-                    </EventEditableField>
-                    <div className={'text-xl'}>
-                        <EventEditableField
-                            event={event}
-                            EditComponent={EditDate}
-                            defaultValue={format(
-                                parseISO(event.date),
-                                'yyyy-MM-dd'
-                            )}
-                        >
-                            {format(parseISO(event.date), 'MM/dd/yyyy')}
-                        </EventEditableField>
-                    </div>
+                    <EditableText
+                        defaultValue={event?.name}
+                        className={`font-brand font-bold text-5xl`}
+                        validation={eventSchema.name}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) => editEvent({ name: value })}
+                    />
+                    <EditableText
+                        displayValue={format(
+                            parseISO(event.date),
+                            'MM/dd/yyyy'
+                        )}
+                        defaultValue={format(
+                            parseISO(event?.date),
+                            'yyyy-MM-dd'
+                        )}
+                        className={` text-xl`}
+                        validation={eventSchema.date}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) => editEvent({ date: value })}
+                        type={'date'}
+                    />
                 </div>
                 <div>
-                    <EventEditableField
-                        event={event}
-                        EditComponent={EditDescription}
+                    <EditableText
+                        type="textarea"
                         defaultValue={event.description}
+                        validation={eventSchema.description}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) =>
+                            editEvent({ description: value })
+                        }
                     >
-                        <p>{event.description}</p>
-                    </EventEditableField>
+                        {event.description}
+                    </EditableText>
                 </div>
                 {/*<EventCard event={event.name} />*/}
                 <Button
                     onClick={() => {
                         if (!user) return navigate('/login');
-                        isAttending ? leaveEvent() : attendEvent();
+                        event?.attendees?.some((a) => a?.id === user?.id)
+                            ? leaveEvent()
+                            : attendEvent();
                     }}
                 >
                     {user
-                        ? isAttending
+                        ? event?.attendees?.some((a) => a?.id === user?.id)
                             ? 'I will not be attending'
                             : 'I will be attending'
                         : 'Login to attend'}
@@ -134,7 +132,7 @@ const IndividualEvent = () => {
                 <div className={'flex'}>
                     <div className="avatar-group -space-x-6 flex-wrap overflow-visible">
                         <UserAvatarGroup
-                            users={attendees}
+                            users={event?.attendees}
                             avatarClassName={'w-16 h-16 md:w-24 md:h-24'}
                         />
                     </div>

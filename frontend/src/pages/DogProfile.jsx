@@ -1,24 +1,44 @@
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../components/Button/Button.jsx';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
-import { differenceInYears, parse, parseISO } from 'date-fns';
+import { differenceInYears, parseISO } from 'date-fns';
 import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import LinkDogs from '../components/LinkDogs/LinkDogs.jsx';
 import { UserContext } from '../context/UserContext.jsx';
-import { fetchUser, getCurrentUser } from '../utils/user/userActions.js';
-import DogEditableField from '../components/Edit/EditDog/DogEditableField.jsx';
-import EditName from '../components/Edit/EditDog/EditName.jsx';
-import EditDescription from '../components/Edit/EditDog/EditDescription.jsx';
-import EditWeight from '../components/Edit/EditDog/EditWeight.jsx';
+import EditableText from '../components/EditableText/EditableText.jsx';
+import { dogSchema } from '../utils/dogSchema.js';
+import { authHeader } from '../utils/auth/authHeader.js';
 
 const DogProfile = () => {
     const { id } = useParams();
     const { user } = useContext(UserContext);
-    const { data: dog, error } = useQuery(['dog', id], () =>
+    const {
+        data: dog,
+        error,
+        refetch: refetchDog,
+    } = useQuery(['dog', id], () =>
         fetch(`/api/dogs/${id}`).then((res) => res.json())
+    );
+
+    const { mutate: updateDog } = useMutation(
+        (data) =>
+            fetch(`/api/dogs/${id}/edit`, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+                body: JSON.stringify({ ...dog, ...data }),
+            }).then((res) => res.json()),
+        {
+            onSuccess: async (data) => {
+                await refetchDog();
+            },
+        }
     );
 
     const [linkUpDialog, setLinkUpDialog] = useState(false);
@@ -35,7 +55,7 @@ const DogProfile = () => {
         <motion.main {...pt}>
             <div className={`flex flex-wrap md:flex-nowrap p-4`}>
                 <div
-                    className={`flex flex-wrap flex-grow md:flex-nowrap md:justify-[unset] justify-center gap-3`}
+                    className={`flex basis-full md:basis-2/3 flex-wrap  md:flex-nowrap md:justify-[unset] justify-center gap-3`}
                 >
                     {dog.images.map((image, idx) => (
                         <div
@@ -67,28 +87,38 @@ const DogProfile = () => {
                 </AnimatePresence>
 
                 <div
-                    className="relative m-4
-                bg-base-100 rounded-3xl z-1 px-4"
+                    className="relative m-4 px-4
+                bg-base-100 rounded-3xl z-1 "
                 >
                     {/*Left card*/}
-                    <div className="w-full mb-6 ">
-                        <div className={`flex justify-center`}>
-                            <h1 className="card-title text-5xl md:text-7xl font-bold py-4 font-brand">
-                                <DogEditableField
-                                    dog={dog}
-                                    EditComponent={EditName}
+                    <div className="w-full mb-6">
+                        <div className={`flex `}>
+                            <h1 className="flex flex-wrap md:flex-nowrap card-title text-6xl md:text-6xl font-bold py-4 font-brand">
+                                <EditableText
                                     defaultValue={dog?.name}
-                                >
-                                    {dog?.name}
-                                </DogEditableField>
+                                    editable={dog?.owner.id === user?.id}
+                                    validation={dogSchema.name}
+                                    onEdit={({ value }) =>
+                                        updateDog({ name: value })
+                                    }
+                                />
                                 ,&nbsp;
-                                {differenceInYears(
-                                    new Date(),
-                                    parseISO(dog?.dob)
-                                )}
+                                <EditableText
+                                    type={'date'}
+                                    displayValue={differenceInYears(
+                                        new Date(),
+                                        parseISO(dog?.dob)
+                                    )}
+                                    defaultValue={dog?.age}
+                                    editable={dog?.owner.id === user?.id}
+                                    validation={dogSchema.dob}
+                                    onEdit={({ value }) =>
+                                        updateDog({ dob: value })
+                                    }
+                                />
                             </h1>
                         </div>
-                        <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex flex-wrap items-center gap-2">
                             {dog?.breeds?.map((breed, idx) => (
                                 <div
                                     key={idx}
@@ -97,26 +127,29 @@ const DogProfile = () => {
                                     {breed.breedName}
                                 </div>
                             ))}
-                            <div className="badge badge-primary py-3 px-2">
-                                <DogEditableField
-                                    defaultValue={dog?.weight}
-                                    dog={dog}
-                                    EditComponent={EditWeight}
-                                >
-                                    {dog?.weight}lbs
-                                </DogEditableField>
-                            </div>
+                            <EditableText
+                                type="number"
+                                className={`badge badge-primary py-3 px-2 my-3`}
+                                displayValue={`${dog?.weight}lbs`}
+                                defaultValue={dog?.weight}
+                                editable={dog?.owner.id === user?.id}
+                                validation={dogSchema.weight}
+                                onEdit={({ value }) =>
+                                    updateDog({ weight: value })
+                                }
+                            />
                         </div>
                         <div>
-                            <DogEditableField
-                                dog={dog}
-                                defaultValue={dog.description}
-                                EditComponent={EditDescription}
-                            >
-                                <p className={`text-2xl font-light`}>
-                                    {dog.description}
-                                </p>
-                            </DogEditableField>
+                            <EditableText
+                                type="textarea"
+                                className={`text-2xl font-light`}
+                                defaultValue={dog?.description}
+                                editable={dog?.owner.id === user?.id}
+                                validation={dogSchema.description}
+                                onEdit={({ value }) =>
+                                    updateDog({ description: value })
+                                }
+                            />
                         </div>
                         {user?.id !== dog?.owner?.id && user && (
                             <div className="card-actions justify-center pt-6">

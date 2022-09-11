@@ -1,9 +1,8 @@
 import { useValidate } from '../../utils/hooks/useValidate.js';
-import * as yup from 'yup';
-import FormPage from '../Form/FormPage.jsx';
+import PageWrapper from './PageWrapper.jsx';
 import React from 'react';
 import Button from '../Button/Button.jsx';
-import { dogSchema } from './dogSchema.js';
+import { dogSchema } from '../../utils/dogSchema.js';
 
 const DogDescription = ({ changeStep, formData }) => {
     const { register, errors, handleSubmit } = useValidate({
@@ -13,7 +12,7 @@ const DogDescription = ({ changeStep, formData }) => {
     const _changeStep = (dir) =>
         handleSubmit((data) => changeStep(dir, data))();
     return (
-        <FormPage errors={errors}>
+        <PageWrapper errors={errors}>
             <div className="w-full">
                 <label className="label">
                     <span className="label-text">
@@ -31,7 +30,7 @@ const DogDescription = ({ changeStep, formData }) => {
                 <Button onClick={() => _changeStep(-1)}>Previous</Button>
                 <Button onClick={() => _changeStep(1)}>Next</Button>
             </div>
-        </FormPage>
+        </PageWrapper>
     );
 };
 

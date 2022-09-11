@@ -1,4 +1,4 @@
-export const pt = {
+export const fadeIn = {
     initial: {
         opacity: 0,
     },
@@ -8,8 +8,11 @@ export const pt = {
     exit: {
         opacity: 0,
     },
+};
 
-    style: {
-        paddingTop: '7rem',
+export const pt = {
+    ...fadeIn,
+    transition: {
+        duration: 0.25,
     },
 };

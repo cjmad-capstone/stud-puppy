@@ -1,8 +1,8 @@
 import Button from '../components/Button/Button.jsx';
 import { motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { useForm } from 'react-hook-form';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { registerUser } from '../utils/user/userActions.js';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
@@ -28,7 +28,10 @@ const Login = () => {
                 .string()
                 .required('Email is required')
                 .email('Email is invalid'),
-            zipCode: yup.number().required('Zip code is required'),
+            zipCode: yup
+                .number()
+                .typeError('Zipcode must be a number')
+                .required('Zip code is required'),
             password: yup.string().required('Password is required'),
             passwordConfirm: yup
                 .string()
@@ -49,7 +52,7 @@ const Login = () => {
             <motion.div className={'w-full md:w-1/2'} layout>
                 {(Object.keys(errors).length > 0 || error) && (
                     <motion.div
-                        className="alert alert-error shadow-lg my-4"
+                        className="alert items-start alert-error shadow-lg my-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >

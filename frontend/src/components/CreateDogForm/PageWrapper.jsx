@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import _ from 'lodash';
-const FormPage = ({ children, errors }) => {
+const PageWrapper = ({ children, errors }) => {
     const errorVariants = {
         in: {
             opacity: 1,
@@ -20,8 +20,7 @@ const FormPage = ({ children, errors }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { delay: 0.25 } }}
-            className={`p-4 gap-4 relative bg-[hsl(0_70%_97%)]  rounded-xl 
-            w-3/4 md:w-1/2 flex flex-col items-center justify-center`}
+            className={`p-4 border-1 gap-4 bg-base-100 relative rounded-xl w-3/4 md:w-1/2 flex flex-col items-center justify-center`}
         >
             <AnimatePresence>
                 {!_.isEmpty(errors) && (
@@ -50,10 +49,10 @@ const FormPage = ({ children, errors }) => {
                 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: 'linear' }}
-                className={`absolute shadow-2xl -inset-2 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-secondary to-accent`}
+                className={`absolute shadow-xl -inset-3 bg-red-100 -z-20 rounded-xl bg-gradient-to-br from-primary/75 to-secondary/75`}
             />
         </motion.section>
     );
 };
 
-export default FormPage;
+export default PageWrapper;

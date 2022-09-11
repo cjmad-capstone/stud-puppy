@@ -1,20 +1,9 @@
 import { AiFillHome } from 'react-icons/ai';
-import { BiSearchAlt } from 'react-icons/bi';
-import { HiUserCircle } from 'react-icons/hi';
 
-import React, {
-    useContext,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from 'react';
-import { motion } from 'framer-motion';
+import React, { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Nav.module.css';
-import { FiLogIn, FiLogOut } from 'react-icons/fi';
-import { fetchUser } from '../../utils/user/userActions.js';
 import { UserContext } from '../../context/UserContext.jsx';
+
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 
 const Nav = () => {
@@ -24,8 +13,7 @@ const Nav = () => {
 
     return (
         <nav
-            className={`fixed w-[calc(100%_-_2rem)] z-50 m-4 px-4 py-3 flex items-center 
-            rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-medium lowercase font-brand `}
+            className={`sticky w-[calc(100%_-_2rem)] z-50 top-4 m-4 px-4 py-3 flex items-center rounded-xl h-16 bg-gradient-to-br from-rose-400 to-red-500 shadow-xl font-medium lowercase font-brand `}
         >
             <Link to={'/'}>
                 <span className={`text-3xl block text-slate-50`}>

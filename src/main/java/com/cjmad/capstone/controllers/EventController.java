@@ -82,7 +82,7 @@ public class EventController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity deleteEvent(@PathVariable long id) {
+    public ResponseEntity<?> deleteEvent(@PathVariable long id) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         Event event = eventsRepository.findById(id).orElseThrow();
         if(event.getCreator().getId() != user.getId())
