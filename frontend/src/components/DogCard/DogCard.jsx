@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { FILESTACK_ENDPOINT } from '../../utils/consts.js';

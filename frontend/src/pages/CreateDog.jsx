@@ -75,7 +75,6 @@ const CreateDog = () => {
             {...pt}
             className={'relative flex flex-col justify-center items-center'}
         >
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
             <AnimatePresence mode="wait">
                 {steps.map((el, idx) => step === idx && el)}
                 {step === steps.length && (

@@ -24,6 +24,7 @@ import AllDogs from './pages/AllDogs.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 
 import { UserContext } from './context/UserContext.jsx';
+import Testing from './pages/Testing.jsx';
 
 function App() {
     const location = useLocation();
@@ -61,6 +62,7 @@ function App() {
                     <Route path={'/*'} element={<ErrorPage />} />
                     <Route path={'/alldogs'} element={<AllDogs />} />
                     <Route path={'/about'} element={<AboutPage />} />
+                    <Route path={'/testing'} element={<Testing />} />
                 </Routes>
             </AnimatePresence>
             {/*<Footer />*/}

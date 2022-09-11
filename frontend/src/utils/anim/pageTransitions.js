@@ -8,8 +8,4 @@ export const pt = {
     exit: {
         opacity: 0,
     },
-
-    style: {
-        paddingTop: '7rem',
-    },
 };
