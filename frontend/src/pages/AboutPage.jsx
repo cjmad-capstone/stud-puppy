@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import AboutCard from '../components/AboutCard/AboutCard.jsx';
 import React from 'react';
 

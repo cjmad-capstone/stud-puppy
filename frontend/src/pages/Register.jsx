@@ -1,6 +1,6 @@
 import Button from '../components/Button/Button.jsx';
 import { motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { useForm } from 'react-hook-form';
 import React, { useCallback, useEffect, useState } from 'react';
 import { registerUser } from '../utils/user/userActions.js';

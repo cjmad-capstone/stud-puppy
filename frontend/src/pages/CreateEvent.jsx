@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { authHeader } from '../utils/auth/authHeader.js';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useValidate } from '../utils/hooks/useValidate.js';
 import * as _ from 'lodash';

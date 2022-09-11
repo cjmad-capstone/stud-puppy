@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import Button from '../components/Button/Button.jsx';
 import React from 'react';
 import { Link } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import { DogNameAndBreed } from '../components/CreateDogForm/DogNameAndBreed.jsx';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { motion } from 'framer-motion';
 import { DogSexAndWeight } from '../components/CreateDogForm/DogSexAndWeight.jsx';
 import { DogDescription } from '../components/CreateDogForm/DogDescription';

@@ -1,4 +1,4 @@
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../components/Button/Button.jsx';
 import { Link, useParams } from 'react-router-dom';

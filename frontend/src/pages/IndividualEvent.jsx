@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
 import EventCard from '../components/EventCard/EventCard.jsx';

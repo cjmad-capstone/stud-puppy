@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { withAuth } from '../utils/auth/withAuth.jsx';
-import { pt } from '../utils/anim/pageTransitions.js';
+import { pt } from '../utils/anim/global.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext.jsx';
 import DogCard from '../components/DogCard/DogCard.jsx';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import EventCard from '../components/EventCard/EventCard.jsx';
 import { BiCamera } from 'react-icons/all';
 import { PickerInline } from 'filestack-react';
