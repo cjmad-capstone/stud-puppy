@@ -20,7 +20,7 @@ function EventCard({ event, editable, onDelete }) {
                     {/*Creator Avatar*/}
                     <Link
                         to={`/users/${event?.creator?.id}`}
-                        className={`flex items-center gap-3`}
+                        className={`flex items-center flex-wrap gap-3`}
                     >
                         <figure
                             className={`w-16 h-16 rounded-full overflow-hidden`}

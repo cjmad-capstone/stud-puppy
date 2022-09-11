@@ -92,8 +92,8 @@ const DogProfile = () => {
                 >
                     {/*Left card*/}
                     <div className="w-full mb-6">
-                        <div className={`flex justify-center`}>
-                            <h1 className="flex flex-wrap md:flex-nowrap card-title text-5xl md:text-6xl font-bold py-4 font-brand">
+                        <div className={`flex `}>
+                            <h1 className="flex flex-wrap md:flex-nowrap card-title text-6xl md:text-6xl font-bold py-4 font-brand">
                                 <EditableText
                                     defaultValue={dog?.name}
                                     editable={dog?.owner.id === user?.id}

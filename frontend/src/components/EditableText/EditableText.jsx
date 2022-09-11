@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useValidate } from '../../utils/hooks/useValidate.js';
@@ -47,6 +47,12 @@ const EditableText = ({
         resetField('value');
         setEditMode(false);
     };
+    const valRef = React.useRef();
+    const [valWidth, setValWidth] = React.useState(0);
+
+    useLayoutEffect(() => {
+        setValWidth(valRef?.current?.offsetWidth);
+    }, [valRef]);
 
     return (
         <div
@@ -59,6 +65,7 @@ const EditableText = ({
                 {!editMode ? (
                     <motion.div
                         key={'view'}
+                        ref={valRef}
                         className={`${className}`}
                         onClick={() => editable && setEditMode(true)}
                         {...animProps}
@@ -73,7 +80,7 @@ const EditableText = ({
                     >
                         {type === 'textarea' ? (
                             <textarea
-                                className={`bg-inherit  textarea textarea-bordered textarea-primary`}
+                                className={`bg-inherit w-full textarea textarea-bordered textarea-primary`}
                                 defaultValue={defaultValue}
                                 {...inputProps}
                             />
@@ -81,7 +88,8 @@ const EditableText = ({
                             <input
                                 type={type}
                                 className={`bg-inherit input input-bordered input-primary`}
-                                style={{ fontSize: 'max(50%, 1rem)' }}
+                                // style={{ fontSize: 'max(50%, 1rem)' }}
+                                style={{ width: `max(${valWidth}px, 75%)` }}
                                 defaultValue={defaultValue}
                                 {...inputProps}
                             />

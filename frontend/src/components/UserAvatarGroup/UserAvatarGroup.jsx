@@ -5,7 +5,7 @@ import { FILESTACK_ENDPOINT } from '../../utils/consts.js';
 
 const UserAvatarGroup = ({ users, avatarSize = '6rem', avatarClassName }) => {
     return (
-        <div className="avatar-group -space-x-6">
+        <div className="avatar-group  -space-x-6">
             <AnimatePresence>
                 {users.map((user, idx) => (
                     <motion.div

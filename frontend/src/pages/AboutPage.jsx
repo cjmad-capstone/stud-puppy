@@ -63,19 +63,22 @@ const AboutPage = () => {
                     />
                 </div>
                 <p className="decoration-8 w-fit mb-5 mt-5 mx-auto">
-                    <span className={`font-bold text-xl font-brand`}>
+                    <a
+                        href="https://github.com/cjmad-capstone/stud-puppy#readme"
+                        className={`font-bold text-xl font-brand`}
+                    >
                         Pugs 'n' Kisses
-                    </span>{' '}
-                    is a full-stack web application that allows you to find your
-                    best buddy, a play date. It's complete with a modern design
-                    made using React.js, styled with TailwindCSS, animated with
-                    Framer Motion. The user can sign up for an account then get
-                    to creating their dog's profile. It allows dog-owners to
-                    collaborate in an effort to help their furry friend live
-                    their best life. Our team was able to design and implement a
-                    RESTful API using Spring Boot with full CRUD functionality
-                    that communicates with the frontend authenticated with JSON
-                    Web Tokens.
+                    </a>
+                    &nbsp; is a full-stack web application that allows you to
+                    find your best buddy, a play date. It's complete with a
+                    modern design made using React.js, styled with TailwindCSS,
+                    animated with Framer Motion. The user can sign up for an
+                    account then get to creating their dog's profile. It allows
+                    dog-owners to collaborate in an effort to help their furry
+                    friend live their best life. Our team was able to design and
+                    implement a RESTful API using Spring Boot with full CRUD
+                    functionality that communicates with the frontend
+                    authenticated with JSON Web Tokens.
                 </p>
             </div>
         </motion.main>
