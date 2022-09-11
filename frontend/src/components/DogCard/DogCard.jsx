@@ -16,6 +16,7 @@ function DogCard({ dog, editable, onDelete }) {
         <>
             <AnimatedCard>
                 <Card.Image
+                    className={`w-full h-[250px] object-cover`}
                     src={`${FILESTACK_ENDPOINT}/${dog?.images[0].url}`}
                     alt={`Photo of ${dog?.name}`}
                 />

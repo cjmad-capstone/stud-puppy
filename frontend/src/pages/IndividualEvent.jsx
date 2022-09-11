@@ -1,21 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useContext, useState } from 'react';
+import { motion } from 'framer-motion';
 import { pt } from '../utils/anim/global.js';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { authHeader } from '../utils/auth/authHeader.js';
-import EventCard from '../components/EventCard/EventCard.jsx';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '../components/Button/Button.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { format, parseISO } from 'date-fns';
-import DogEditableField from '../components/Edit/EditDog/DogEditableField.jsx';
-import EventEditableField from '../components/Edit/EditEvent/EventEditableField';
-import EditName from '../components/Edit/EditEvent/EditName.jsx';
-import EditDescription from '../components/Edit/EditEvent/EditDescription.jsx';
-import EditDate from '../components/Edit/EditEvent/EditDate.jsx';
-import { FILESTACK_ENDPOINT } from '../utils/consts.js';
 import UserAvatarGroup from '../components/UserAvatarGroup/UserAvatarGroup.jsx';
 import { useNavigate } from 'react-router-dom';
+import EditableText from '../components/EditableText/EditableText.jsx';
+import { eventSchema } from '../utils/eventSchema.js';
 
 const IndividualEvent = () => {
     const { id } = useParams();
@@ -25,7 +20,7 @@ const IndividualEvent = () => {
     const [attendees, setAttendees] = useState([]);
     const { user } = useContext(UserContext);
 
-    const { data: event, error } = useQuery(
+    const { data: event, refetch: refetchEvent } = useQuery(
         ['event', id],
         () => fetch(`/api/events/${id}`).then((res) => res.json()),
         {
@@ -36,6 +31,25 @@ const IndividualEvent = () => {
                     )
                 );
                 setAttendees(data?.attendees);
+            },
+            enabled: !!id,
+        }
+    );
+
+    const { mutate } = useMutation(
+        (data) =>
+            fetch(`/api/events/${id}/edit`, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    ...authHeader(),
+                },
+                body: JSON.stringify({ ...event, ...data }),
+            }).then((res) => res.json()),
+        {
+            onSuccess: async (data) => {
+                const test = await refetchEvent();
             },
         }
     );
@@ -86,36 +100,39 @@ const IndividualEvent = () => {
                 <div
                     className={`flex flex-col items-start md:flex-row  md:items-center justify-between`}
                 >
-                    <EventEditableField
-                        event={event}
-                        EditComponent={EditName}
-                        defaultValue={event.name}
-                    >
-                        <h1 className={`font-brand font-bold text-5xl`}>
-                            {event.name}
-                        </h1>
-                    </EventEditableField>
-                    <div className={'text-xl'}>
-                        <EventEditableField
-                            event={event}
-                            EditComponent={EditDate}
-                            defaultValue={format(
-                                parseISO(event.date),
-                                'yyyy-MM-dd'
-                            )}
-                        >
-                            {format(parseISO(event.date), 'MM/dd/yyyy')}
-                        </EventEditableField>
-                    </div>
+                    <EditableText
+                        defaultValue={event?.name}
+                        className={`font-brand font-bold text-5xl`}
+                        validation={eventSchema.name}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) => mutate({ name: value })}
+                    />
+                    <EditableText
+                        displayValue={format(
+                            parseISO(event.date),
+                            'MM/dd/yyyy'
+                        )}
+                        defaultValue={format(
+                            parseISO(event?.date),
+                            'yyyy-MM-dd'
+                        )}
+                        className={` text-xl`}
+                        validation={eventSchema.date}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) => mutate({ date: value })}
+                        type={'date'}
+                    />
                 </div>
                 <div>
-                    <EventEditableField
-                        event={event}
-                        EditComponent={EditDescription}
+                    <EditableText
+                        type="textarea"
                         defaultValue={event.description}
+                        validation={eventSchema.description}
+                        editable={user?.id === event?.creator?.id}
+                        onEdit={({ value }) => mutate({ description: value })}
                     >
-                        <p>{event.description}</p>
-                    </EventEditableField>
+                        {event.description}
+                    </EditableText>
                 </div>
                 {/*<EventCard event={event.name} />*/}
                 <Button

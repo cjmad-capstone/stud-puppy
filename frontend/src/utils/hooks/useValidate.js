@@ -8,11 +8,14 @@ const useValidate = (schema) => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
+        resetField,
+        getValues,
     } = useForm({
         resolver: yupResolver(schemaObject),
     });
 
-    return { register, handleSubmit, errors };
+    return { register, handleSubmit, errors, reset, resetField, getValues };
 };
 
 export { useValidate };
