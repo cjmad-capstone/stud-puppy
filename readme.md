@@ -18,3 +18,9 @@ A full-stack web application that allows you to find your best buddy, a play dat
 
 ## Demos
 https://pugsnkisses.love
+
+https://user-images.githubusercontent.com/36522884/189708226-09ba8feb-82a7-49e8-b8ba-6d594a9722a1.mp4
+
+https://user-images.githubusercontent.com/36522884/189708261-7d267d23-e334-4e5c-b1ee-89c750bb8b48.mp4
+
+https://user-images.githubusercontent.com/36522884/189708287-8f13c31c-f93e-4348-9ead-c9753d029dc2.mp4
