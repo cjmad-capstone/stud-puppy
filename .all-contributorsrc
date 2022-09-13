@@ -39,9 +39,18 @@
     },
     {
       "login": "CGALLE39",
-      "name": "CGALLE39",
+      "name": "Cyntia Gallegos",
       "avatar_url": "https://avatars.githubusercontent.com/u/103457637?v=4",
       "profile": "https://github.com/CGALLE39",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mattjio",
+      "name": "Matthew Jio",
+      "avatar_url": "https://avatars.githubusercontent.com/u/103457145?v=4",
+      "profile": "https://github.com/mattjio",
       "contributions": [
         "code"
       ]
