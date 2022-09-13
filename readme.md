@@ -16,6 +16,17 @@ A full-stack web application that allows you to find your best buddy, a play dat
 * [Filestack](https://www.filestack.com/)
 * [Dog.ceo API](https://dog.ceo/dog-api/)
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Demos
 https://pugsnkisses.love
 
