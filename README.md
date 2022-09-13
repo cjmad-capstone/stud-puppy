@@ -21,6 +21,16 @@ A full-stack web application that allows you to find your best buddy, a play dat
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/ajrod-dev"><img src="https://avatars.githubusercontent.com/u/103453298?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alexander Rodriguez</b></sub></a><br /><a href="https://github.com/cjmad-capstone/stud-puppy/commits?author=ajrod-dev" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/daltonkyemiller"><img src="https://avatars.githubusercontent.com/u/36522884?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dalton Kye Miller</b></sub></a><br /><a href="https://github.com/cjmad-capstone/stud-puppy/commits?author=daltonkyemiller" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/JustinWelsh"><img src="https://avatars.githubusercontent.com/u/91049016?v=4?s=100" width="100px;" alt=""/><br /><sub><b>JustinWelsh</b></sub></a><br /><a href="https://github.com/cjmad-capstone/stud-puppy/commits?author=JustinWelsh" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/CGALLE39"><img src="https://avatars.githubusercontent.com/u/103457637?v=4?s=100" width="100px;" alt=""/><br /><sub><b>CGALLE39</b></sub></a><br /><a href="https://github.com/cjmad-capstone/stud-puppy/commits?author=CGALLE39" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
