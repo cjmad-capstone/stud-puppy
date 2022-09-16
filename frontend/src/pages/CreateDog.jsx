@@ -1,5 +1,11 @@
 import { DogNameAndBreed } from '../components/CreateDogForm/DogNameAndBreed.jsx';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+} from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { pt } from '../utils/anim/global.js';
 import { motion } from 'framer-motion';
@@ -35,30 +41,32 @@ const CreateDog = () => {
         setStep((prev) => prev + direction);
     };
 
-    const props = { changeStep, formData, setFormData };
+    const steps = useMemo(() => {
+        const props = { changeStep, formData, setFormData };
 
-    const steps = [
-        {
-            title: 'Name & Breed',
-            component: <DogNameAndBreed key="dog-name" {...props} />,
-        },
-        {
-            title: 'Sex & Weight',
-            component: <DogSexAndWeight key="dog-sex-weight" {...props} />,
-        },
-        {
-            title: 'Dob & Zip',
-            component: <DogDOBAndZip key="dog-dob" {...props} />,
-        },
-        {
-            title: 'Description',
-            component: <DogDescription key="dog-desc" {...props} />,
-        },
-        {
-            title: 'Images',
-            component: <DogImages key="dog-images" {...props} />,
-        },
-    ];
+        return [
+            {
+                title: 'Name & Breed',
+                component: <DogNameAndBreed key="dog-name" {...props} />,
+            },
+            {
+                title: 'Sex & Weight',
+                component: <DogSexAndWeight key="dog-sex-weight" {...props} />,
+            },
+            {
+                title: 'Dob & Zip',
+                component: <DogDOBAndZip key="dog-dob" {...props} />,
+            },
+            {
+                title: 'Description',
+                component: <DogDescription key="dog-desc" {...props} />,
+            },
+            {
+                title: 'Images',
+                component: <DogImages key="dog-images" {...props} />,
+            },
+        ];
+    }, [formData]);
 
     const submitForm = useCallback(async () => {
         const newFormData = { ...formData };
@@ -87,8 +95,9 @@ const CreateDog = () => {
 
     const mainRef = useRef();
 
+    // Scrolls to center form
     useEffect(() => {
-        mainRef?.current?.scrollIntoView();
+        mainRef?.current?.scrollIntoView({ behavior: 'smooth' });
     }, [mainRef]);
 
     return (
@@ -98,11 +107,17 @@ const CreateDog = () => {
             className={'relative flex flex-col justify-center items-center'}
         >
             <ul className="steps py-6 font-brand">
-                {steps.map((_step, index) => (
+                {steps.map((_step, idx) => (
                     <li
-                        key={index}
+                        key={idx}
                         className={`step ${
-                            index <= step ? 'step-primary' : ''
+                            idx < step
+                                ? 'step-success after:content-["✓"] after:text-green-800'
+                                : 'after:content-[counter(step)]'
+                        } ${
+                            idx === step
+                                ? 'after:border-4 after:border-success'
+                                : ''
                         }`}
                     >
                         {_step.title}
