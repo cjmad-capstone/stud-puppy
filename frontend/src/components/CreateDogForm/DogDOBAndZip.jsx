@@ -13,8 +13,10 @@ const DogDOBAndZip = ({ changeStep, formData }) => {
 
     const [zip, errs] = useZip();
 
-    const _changeStep = (dir) =>
+    const _changeStep = (dir) => {
+        if (dir < 0) return changeStep(dir, {});
         handleSubmit((data) => changeStep(dir, data))();
+    };
 
     return (
         <PageWrapper errors={errors}>

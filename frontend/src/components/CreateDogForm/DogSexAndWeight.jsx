@@ -11,8 +11,11 @@ const DogSexAndWeight = ({ changeStep, formData }) => {
         loveable: dogSchema.loveable,
     });
 
-    const _changeStep = (dir) =>
+    const _changeStep = (dir) => {
+        if (dir < 0) return changeStep(dir, {});
         handleSubmit((data) => changeStep(dir, data))();
+    };
+
     return (
         <PageWrapper errors={errors}>
             <div className="w-full flex flex-col gap-2">

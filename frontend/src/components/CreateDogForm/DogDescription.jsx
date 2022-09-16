@@ -9,8 +9,11 @@ const DogDescription = ({ changeStep, formData }) => {
         description: dogSchema.description,
     });
 
-    const _changeStep = (dir) =>
+    const _changeStep = (dir) => {
+        if (dir < 0) return changeStep(dir, {});
         handleSubmit((data) => changeStep(dir, data))();
+    };
+
     return (
         <PageWrapper errors={errors}>
             <div className="w-full">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import _ from 'lodash';
+
 const PageWrapper = ({ children, errors }) => {
     const errorVariants = {
         in: {

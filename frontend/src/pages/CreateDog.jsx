@@ -38,11 +38,26 @@ const CreateDog = () => {
     const props = { changeStep, formData, setFormData };
 
     const steps = [
-        <DogNameAndBreed key="dog-name" {...props} />,
-        <DogSexAndWeight key="dog-sex-weight" {...props} />,
-        <DogDOBAndZip key="dog-dob" {...props} />,
-        <DogDescription key="dog-desc" {...props} />,
-        <DogImages key="dog-images" {...props} />,
+        {
+            title: 'Name & Breed',
+            component: <DogNameAndBreed key="dog-name" {...props} />,
+        },
+        {
+            title: 'Sex & Weight',
+            component: <DogSexAndWeight key="dog-sex-weight" {...props} />,
+        },
+        {
+            title: 'Dob & Zip',
+            component: <DogDOBAndZip key="dog-dob" {...props} />,
+        },
+        {
+            title: 'Description',
+            component: <DogDescription key="dog-desc" {...props} />,
+        },
+        {
+            title: 'Images',
+            component: <DogImages key="dog-images" {...props} />,
+        },
     ];
 
     const submitForm = useCallback(async () => {
@@ -80,10 +95,22 @@ const CreateDog = () => {
         <motion.main
             {...pt}
             ref={mainRef}
-            className={'relative flex justify-center items-center'}
+            className={'relative flex flex-col justify-center items-center'}
         >
+            <ul className="steps py-6 font-brand">
+                {steps.map((_step, index) => (
+                    <li
+                        key={index}
+                        className={`step ${
+                            index <= step ? 'step-primary' : ''
+                        }`}
+                    >
+                        {_step.title}
+                    </li>
+                ))}
+            </ul>
             <AnimatePresence mode="wait">
-                {steps.map((el, idx) => step === idx && el)}
+                {steps.map((el, idx) => step === idx && el.component)}
                 {step === steps.length && (
                     <motion.div
                         initial={{ opacity: 0 }}
